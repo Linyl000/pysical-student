@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/user/user",
+    "pages/course/course",
+    "pages/score/score"
+  ],
+  "subPackages": [
+    {
+      "root": "pages_other",
+      "pages": [
+        "first-info/first-info",
+        "add-course/add-course",
+        "teacher-say/teacher-say",
+        "study-records/study-records",
+        "number/number",
+        "user-info/user-info",
+        "course-list/course-list",
+        "curriculum/curriculum",
+        "get-result/get-result",
+        "theory/theory",
+        "practice/practice",
+        "wait-result/wait-result",
+        "course-intro/course-intro"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#fff"
+  },
+  "tabBar": {
+    "color": "#000",
+    "selectedColor": "#5f4fde",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/course/course",
+        "text": "作业"
+      },
+      {
+        "pagePath": "pages/score/score",
+        "text": "成绩"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

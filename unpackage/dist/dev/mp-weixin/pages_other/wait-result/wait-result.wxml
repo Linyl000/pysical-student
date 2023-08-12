@@ -1,0 +1,1 @@
+<view class="page"><view class="wait _div"><image src="/static/wait-result.png"></image></view><view class="tips-title" lines="1">请耐心等待评定结果...</view></view>

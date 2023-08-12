@@ -1,0 +1,168 @@
+{
+	"pages": [{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录" //用户页面
+			}
+		}, {
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+				// "onReachBottomDistance": 150,  上拉加载更多 和onReachBottom()配套使用
+				// "enablePullDownRefresh": true,  下拉刷新 和onPullDownRefresh()配套使用
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "福师大智慧体育云平台",
+				"navigationBarBackgroundColor": "#8364f2",
+				"navigationBarTextStyle": "#fff"
+			}
+		}
+
+		, {
+			"path": "pages/course/course",
+			"style": {
+				"navigationBarTitleText": "作业",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/score/score",
+			"style": {
+				"navigationBarTitleText": "成绩",
+				"enablePullDownRefresh": false
+			}
+
+		}
+	],
+	"subPackages": [{
+		"root": "pages_other",
+		"pages": [{
+			"path": "first-info/first-info",
+			"style": {
+				"navigationBarTitleText": "信息填写",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "add-course/add-course",
+			"style": {
+				"navigationBarTitleText": "添加课程",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "teacher-say/teacher-say",
+			"style": {
+				"navigationBarTitleText": "教师评价",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "study-records/study-records",
+			"style": {
+				"navigationBarTitleText": "学习记录",
+				"navigationBarBackgroundColor": "#F8F8F8",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "number/number",
+			"style": {
+				"navigationBarTitleText": "积分排名",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "user-info/user-info",
+			"style": {
+				"navigationBarTitleText": "个人信息",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "course-list/course-list",
+			"style": {
+				"navigationBarTitleText": "课程列表",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "curriculum/curriculum",
+			"style": {
+				"navigationBarTitleText": "课程详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "get-result/get-result",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "theory/theory",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "practice/practice",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "wait-result/wait-result",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "course-intro/course-intro",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}]
+	}],
+	"tabBar": {
+		"color": "#000",
+		"selectedColor": "#5f4fde",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"text": "首页"
+			// "iconPath": "static/index_f.png",
+			// "selectedIconPath": "static/index_t.png"
+		}, {
+			"pagePath": "pages/course/course",
+			"text": "作业"
+			// "iconPath": "static/index_f.png",
+			// "selectedIconPath": "static/index_t.png"
+		}, {
+			"pagePath": "pages/score/score",
+			"text": "成绩"
+			// "iconPath": "static/index_f.png",
+			// "selectedIconPath": "static/index_t.png"
+		}, {
+			"pagePath": "pages/user/user",
+			"text": "我的"
+			// "iconPath": "static/user_f.png",
+			// "selectedIconPath": "static/user_t.png"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#fff"
+		// "backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {}
+}
