@@ -113,13 +113,10 @@ export default {
 <style lang="scss">
 @import '@/uni_modules/uview-ui/index.scss';
 /*  #ifdef  H5  */
-body {
-	max-width: 560px; //最大宽度自己可以调整
-	margin: auto !important;
-	.page {
-		width: 100%;
-	}
-}
+// body {
+// 	max-width: 560px; //最大宽度自己可以调整
+// 	margin: auto !important;
+// }
 /*  #endif  */
 /*每个页面公共css */
 // page {

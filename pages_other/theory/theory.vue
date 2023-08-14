@@ -1,4 +1,3 @@
-<!-- 考试页 -->
 <template>
 	<view class="page_big" :style="{ height: screenheight + 'px' }">
 		<questionlist

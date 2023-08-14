@@ -5,7 +5,7 @@
 				<text lines="1" style="color: #000;">Hello，</text>
 				<text lines="1" style="color: #5D4FDC;">杜若</text>
 			</view>
-			<u-icon name="plus-circle" size="28" @click="goAddCourse"></u-icon>
+			<!-- <u-icon name="plus-circle" size="28" @click="goAddCourse"></u-icon> -->
 		</view>
 		<view class="group_9">
 			<view class="image-text_6">

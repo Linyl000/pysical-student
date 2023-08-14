@@ -10,7 +10,7 @@
 					<text lines="1" class="text_3">杜若</text>
 					<text lines="1" class="text_4">大数据二班</text>
 				</view>
-				<u-icon name="edit-pen" color="#fff" size="28" @click="goUserInfo"></u-icon>
+				<!-- <u-icon name="edit-pen" color="#fff" size="28" @click="goUserInfo"></u-icon> -->
 			</view>
 		</view>
 		<div class="section2">

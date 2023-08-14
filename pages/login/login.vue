@@ -9,13 +9,14 @@
 			<view class="tag_1"><text lines="1" class="text_4">学生端</text></view>
 		</view>
 		<text lines="1" decode="true" class="text_5">福州师范大学体育课程服务平台&nbsp;&nbsp;</text>
-		<view class="button_1"><text lines="1" class="text_6">微信用户一键登录</text></view>
+		<view class="button_1" @click="goFirstInfo"><text lines="1" class="text_6">账号密码登录</text></view>
 		<view class="image-text_3">
-			<view class="checkbox_1"></view>
+			<u-checkbox-group v-model="checkboxValue1"><u-checkbox shape="circle" label="" activeColor="#5D4FDC"></u-checkbox></u-checkbox-group>
 			<view class="text-group_1">
-				<text lines="1" class="text_7">请认真阅读</text>
-				<text lines="1" class="text_8">用户协议，隐私协议</text>
-				<text lines="1" class="text_9">后登录</text>
+				<text>请认真阅读</text>
+				<text style="color:#5D4FDC;">用户协议，</text>
+				<text style="color:#5D4FDC;">隐私协议</text>
+				<text>后登录</text>
 			</view>
 		</view>
 		<image
@@ -28,7 +29,22 @@
 <script>
 export default {
 	data() {
-		return {};
+		return { checkboxValue1: [''] };
+	},
+	methods: {
+		goFirstInfo() {
+			if (!this.checkboxValue1.length) {
+				uni.showToast({
+					duration: 2000,
+					title: '请勾选同意用户协议，隐私协议按钮',
+					icon: 'none'
+				});
+				return;
+			}
+			uni.navigateTo({
+				url: '/pages_other/first-info/first-info'
+			});
+		}
 	}
 };
 </script>
@@ -51,7 +67,7 @@ export default {
 	width: 288rpx;
 	height: 48rpx;
 	overflow-wrap: break-word;
- 
+
 	font-size: 48rpx;
 	font-family: PingFangSC-Semibold;
 	font-weight: 600;
@@ -115,64 +131,17 @@ export default {
 	line-height: 120rpx;
 }
 .image-text_3 {
-	width: 460rpx;
-	height: 48rpx;
 	flex-direction: row;
 	display: flex;
 	justify-content: space-between;
-	margin: 24rpx 0 382rpx 146rpx;
-}
-.checkbox_1 {
-	border-radius: 100%;
-	width: 36rpx;
-	height: 36rpx;
-	border: 1px solid rgba(136, 136, 136, 1);
-	margin-top: 6rpx;
-	display: flex;
-	flex-direction: column;
+	margin: 0 auto;
+	margin-top: 20rpx;
 }
 .text-group_1 {
-	width: 408rpx;
-	height: 48rpx;
-	overflow-wrap: break-word;
-	font-size: 0rpx;
-	font-family: PingFangSC-Regular;
-	font-weight: normal;
+	font-size: 26rpx;
 	text-align: center;
 	line-height: 48rpx;
-}
-.text_7 {
-	width: 408rpx;
-	height: 48rpx;
-	overflow-wrap: break-word;
 	color: rgba(136, 136, 136, 1);
-	font-size: 24rpx;
-	font-family: PingFangSC-Regular;
-	font-weight: normal;
-	text-align: left;
-	line-height: 48rpx;
-}
-.text_8 {
-	width: 408rpx;
-	height: 48rpx;
-	overflow-wrap: break-word;
-	color: rgba(93, 79, 220, 1);
-	font-size: 24rpx;
-	font-family: PingFangSC-Regular;
-	font-weight: normal;
-	text-align: left;
-	line-height: 48rpx;
-}
-.text_9 {
-	width: 408rpx;
-	height: 48rpx;
-	overflow-wrap: break-word;
-	color: rgba(136, 136, 136, 1);
-	font-size: 24rpx;
-	font-family: PingFangSC-Regular;
-	font-weight: normal;
-	text-align: left;
-	line-height: 48rpx;
 }
 .image_4 {
 	position: absolute;

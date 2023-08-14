@@ -2,8 +2,6 @@
   "navigationBarTitleText": "信息填写",
   "enablePullDownRefresh": false,
   "usingComponents": {
-    "u--input": "/uni_modules/uview-ui/components/u--input/u--input",
-    "u-radio-group": "/uni_modules/uview-ui/components/u-radio-group/u-radio-group",
-    "u-radio": "/uni_modules/uview-ui/components/u-radio/u-radio"
+    "u--input": "/uni_modules/uview-ui/components/u--input/u--input"
   }
 }

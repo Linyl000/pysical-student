@@ -1,14 +1,12 @@
 <template>
 	<view class="page">
-		<view class="input_1"><u--input placeholder="请输入姓名" v-model="value" @change="change" border="none" fontSize="18"></u--input></view>
-		<view class="input_1">
-			<u--input placeholder="请输入学号" v-model="value2" @change="change" border="none" fontSize="18"></u--input>
-		</view>
-		<u-radio-group v-model="value3" placement="row" size="24" labelSize="24">
+		<view class="input_1"><u--input placeholder="请输入学号" v-model="value" border="none" fontSize="18"></u--input></view>
+		<view class="input_1"><u--input placeholder="请输入密码" v-model="value2" border="none" fontSize="18"></u--input></view>
+		<!-- 		<u-radio-group v-model="value3" placement="row" size="24" labelSize="24">
 			<u-radio activeColor="#5d4fdc" label="男"></u-radio>
 			<u-radio activeColor="#5d4fdc" label="女"></u-radio>
-		</u-radio-group>
-		<view class="button_1">保存信息</view>
+		</u-radio-group> -->
+		<view class="button_1" @click="goIndex">登录</view>
 	</view>
 </template>
 
@@ -16,6 +14,21 @@
 export default {
 	data() {
 		return {};
+	},
+	methods: {
+		goIndex() {
+			// if (!this.checkboxValue1.length) {
+			// 	uni.showToast({
+			// 		duration: 2000,
+			// 		title: '学号不能为空',
+			// 		icon: 'none'
+			// 	});
+			// 	return;
+			// }
+			uni.switchTab({
+				url: '/pages/index/index'
+			});
+		}
 	}
 };
 </script>

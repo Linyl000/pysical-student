@@ -105,64 +105,17 @@
   line-height: 120rpx;
 }
 .image-text_3 {
-  width: 460rpx;
-  height: 48rpx;
   flex-direction: row;
   display: flex;
   justify-content: space-between;
-  margin: 24rpx 0 382rpx 146rpx;
-}
-.checkbox_1 {
-  border-radius: 100%;
-  width: 36rpx;
-  height: 36rpx;
-  border: 1px solid #888888;
-  margin-top: 6rpx;
-  display: flex;
-  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 20rpx;
 }
 .text-group_1 {
-  width: 408rpx;
-  height: 48rpx;
-  overflow-wrap: break-word;
-  font-size: 0rpx;
-  font-family: PingFangSC-Regular;
-  font-weight: normal;
+  font-size: 26rpx;
   text-align: center;
   line-height: 48rpx;
-}
-.text_7 {
-  width: 408rpx;
-  height: 48rpx;
-  overflow-wrap: break-word;
   color: #888888;
-  font-size: 24rpx;
-  font-family: PingFangSC-Regular;
-  font-weight: normal;
-  text-align: left;
-  line-height: 48rpx;
-}
-.text_8 {
-  width: 408rpx;
-  height: 48rpx;
-  overflow-wrap: break-word;
-  color: #5d4fdc;
-  font-size: 24rpx;
-  font-family: PingFangSC-Regular;
-  font-weight: normal;
-  text-align: left;
-  line-height: 48rpx;
-}
-.text_9 {
-  width: 408rpx;
-  height: 48rpx;
-  overflow-wrap: break-word;
-  color: #888888;
-  font-size: 24rpx;
-  font-family: PingFangSC-Regular;
-  font-weight: normal;
-  text-align: left;
-  line-height: 48rpx;
 }
 .image_4 {
   position: absolute;
