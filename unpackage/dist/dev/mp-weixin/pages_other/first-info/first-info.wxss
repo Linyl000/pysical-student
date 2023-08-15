@@ -330,4 +330,8 @@
 .data-v-6ef0f2b7 .u-input {
   height: 100%;
 }
+.login-code-img.data-v-6ef0f2b7 {
+  width: 200rpx;
+  height: 60rpx;
+}
 

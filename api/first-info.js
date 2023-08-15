@@ -8,6 +8,6 @@ export function login(data) {
 	return post('/login', data)
 }
 //获取验证码
-export function getCodeImg(get) {
-	return post('/captchaImage', get)
+export function getCodeImg() {
+	return get('/captchaImage')
 }

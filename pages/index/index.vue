@@ -1,12 +1,14 @@
 <template>
-	<view class="page">
-		<view class="group_8">
-			<view class="text-wrapper_1">
-				<text lines="1" style="color: #000;">Hello，</text>
-				<text lines="1" style="color: #5D4FDC;">杜若</text>
+	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
+		<template #top>
+			<view class="group_8">
+				<view class="text-wrapper_1">
+					<text lines="1" style="color: #000;">Hello，</text>
+					<text lines="1" style="color: #5D4FDC;">杜若</text>
+				</view>
+				<!-- <u-icon name="plus-circle" size="28" @click="goAddCourse"></u-icon> -->
 			</view>
-			<!-- <u-icon name="plus-circle" size="28" @click="goAddCourse"></u-icon> -->
-		</view>
+		</template>
 		<view class="group_9">
 			<view class="image-text_6">
 				<view class="box_1"></view>
@@ -15,30 +17,41 @@
 			<!-- 	<view class="image-text_7"><text lines="1" class="text-group_2">查看</text></view> -->
 		</view>
 		<div class="course">
-			<view lines="1" class="co-name">主要课程</view>
-			<div class="one-course" v-for="i in 5" :key="i" @click="goMyCourse">
-				<view lines="1" class="title">跳绳 - 王老师</view>
-				<view lines="1" class="detail">普拉提普拉提普拉提普拉提普拉提普拉提普拉提普拉提普拉提普拉提普拉提</view>
+			<!-- <view lines="1" class="co-name">主要课程</view> -->
+			<div class="one-course" v-for="i in list" :key="i.courseId" @click="goMyCourse(i)">
+				<view lines="1" class="title">{{ courseName }} - {{ teacherName }}</view>
+				<view lines="1" class="detail">{{ courseIntroduce }}</view>
 			</div>
 		</div>
-	</view>
+	</z-paging>
 </template>
 
 <script>
+import { courseList } from '@/api/index.js';
 export default {
 	data() {
-		return {};
+		return { list: [] };
 	},
-	onLoad() {},
+
 	methods: {
+		getList(page, limit) {
+			courseList()
+				.then(res => {
+					this.list = res.rows;
+					this.$refs.paging.complete(res.rows);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
+				});
+		},
 		goAddCourse() {
 			uni.navigateTo({
 				url: '/pages_other/add-course/add-course'
 			});
 		},
-		goMyCourse() {
+		goMyCourse(i) {
 			uni.navigateTo({
-				url: '/pages_other/course-list/course-list'
+				url: '/pages_other/course-list/course-list?courseId=' + i.courseId
 			});
 		}
 	}
