@@ -1,13 +1,13 @@
 <template>
 	<view class="page">
-		<view class="title">【作业】太极八法五步-第六式</view>
-		<view class="cut-off-time">最后截止时间：&nbsp;04-03&nbsp;23:59</view>
+		<view class="title">{{'【'+( item.taskType=='1'?'考核':'作业')+'】'+item.examPaperName}}</view>
+		<view class="cut-off-time">{{"最后截止时间："+item.endTime}}</view>
 		<view class="demand-box">
 			<view class="demand-img"></view>
 			<text lines="1" class="demand-text">要求</text>
 		</view>
 		<text class="description">
-			拍摄完整的八段锦练习视频上传到本作业。要求露出完整的面容，禁止代替他人完成练习，练习可在线完成也可以上传本地视频。
+			{{'分数达到'+item.passScore+'视为合格'}}
 		</text>
 		<view class="button_1" @click="goHomeworkOrTest">去完成/去修改</view>
 	</view>
@@ -16,7 +16,13 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			item:null
+			
+		};
+	},
+	onLoad({item}) {
+		 this.item=JSON.parse(item)
 	},
 	methods: {
 		goHomeworkOrTest() {
@@ -24,7 +30,7 @@ export default {
 			// 	url: '/pages_other/practice/practice' //实践
 			// });
 			uni.navigateTo({
-				url: '/pages_other/theory/theory' //理论
+				url: `/pages_other/theory/theory?item=${JSON.stringify(this.item)}` //理论
 			});
 		}
 	}

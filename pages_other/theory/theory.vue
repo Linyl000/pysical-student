@@ -5,7 +5,7 @@
 			:exampagenum="exampagenum"
 			:answerData="answerData"
 			:startTime="60"
-			:isRemaining="false"
+			:isRemaining="true"
 			@changeQues="changeQues"
 			@changeOptions="changeOptions"
 			@collectChange="collectChange"
@@ -16,10 +16,14 @@
 
 <script>
 import questionlist from '../../components/question-list/question-list.vue';
+import * as request from '@/api/api.js'
 export default {
 	//声明组件   实例化组件
 	components: {
 		questionlist
+	},
+	onLoad({item}){
+		 this.item=item
 	},
 	data() {
 		return {
@@ -40,7 +44,8 @@ export default {
 			//答题卡数据
 			examNumData: null,
 			//当前为第几题标识
-			exampagenum: 0
+			exampagenum: 0,
+			item:null
 		};
 	},
 	computed: {
@@ -62,295 +67,27 @@ export default {
 		this.screenheight = uni.getSystemInfoSync().windowHeight;
 		this.getTime();
 	},
-	onLoad() {
+	onLoad({item}) {
+		this.item=JSON.parse(item)
 		this.initExam();
 	},
 	methods: {
 		initExam() {
-			this.answerData = [
-				{
-					id: 100001, //主键
-					title: '测试单选题哦1', //题目标题
-					type: 1, //题目类型( 1.单选题  2.多选题  3.判断题  4.简答题 )
-					// isCollect: 1, //判断是否有收藏
-					isAnswered: false, //是否作答
-					// rightkey: 'A', //正确答案
-					// analysis: '我是题目的解析11111111111', //解析
-					questionAnswerList: [
-						{
-							//选项列表
-							id: 110001,
-							answerTitle: 'A', //选项标题
-							content: 'content--->AAAAAAAA', //选项内容
-							// isCorrect: 1, //是否是正确答案( 1是   2否 )
-							status: 0 //选择状态
-						},
-						{
-							id: 110002,
-							answerTitle: 'B',
-							content: 'content--->BBBBBBBB',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110003,
-							answerTitle: 'C',
-							content: 'content--->CCCCCCC',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110004,
-							answerTitle: 'D',
-							content: 'content--->DDDDDDD',
-							// isCorrect: 2,
-							status: 0
-						}
-					]
-				},
-				//-----------
-				{
-					id: 100002, //主键
-					title: '测试单选题哦2', //题目标题
-					type: 1, //题目类型( 1.单选题  2.多选题  3.判断题  4.简答题 )
-					// isCollect: 1, //判断是否有收藏
-					isAnswered: false, //是否作答
-					// rightkey: 'A', //正确答案
-					// analysis: '我是题目的解析11111111111', //解析
-					questionAnswerList: [
-						{
-							//选项列表
-							id: 110001,
-							answerTitle: 'A', //选项标题
-							content: 'content--->AAAAAAAA', //选项内容
-							// isCorrect: 1, //是否是正确答案( 1是   2否 )
-							status: 0 //选择状态
-						},
-						{
-							id: 110002,
-							answerTitle: 'B',
-							content: 'content--->BBBBBBBB',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110003,
-							answerTitle: 'C',
-							content: 'content--->CCCCCCC',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110004,
-							answerTitle: 'D',
-							content: 'content--->DDDDDDD',
-							// isCorrect: 2,
-							status: 0
-						}
-					]
-				},
-				{
-					id: 100003, //主键
-					title: '测试单选题哦3', //题目标题
-					type: 1, //题目类型( 1.单选题  2.多选题  3.判断题  4.简答题 )
-					// isCollect: 1, //判断是否有收藏
-					isAnswered: false, //是否作答
-					// rightkey: 'A', //正确答案
-					// analysis: '我是题目的解析11111111111', //解析
-					questionAnswerList: [
-						{
-							//选项列表
-							id: 110001,
-							answerTitle: 'A', //选项标题
-							content: 'content--->AAAAAAAA', //选项内容
-							// isCorrect: 1, //是否是正确答案( 1是   2否 )
-							status: 0 //选择状态
-						},
-						{
-							id: 110002,
-							answerTitle: 'B',
-							content: 'content--->BBBBBBBB',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110003,
-							answerTitle: 'C',
-							content: 'content--->CCCCCCC',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110004,
-							answerTitle: 'D',
-							content: 'content--->DDDDDDD',
-							// isCorrect: 2,
-							status: 0
-						}
-					]
-				},
-				{
-					id: 100004, //主键
-					title: '测试单选题哦4', //题目标题
-					type: 1, //题目类型( 1.单选题  2.多选题  3.判断题  4.简答题 )
-					// isCollect: 1, //判断是否有收藏
-					isAnswered: false, //是否作答
-					// rightkey: 'A', //正确答案
-					// analysis: '我是题目的解析11111111111', //解析
-					questionAnswerList: [
-						{
-							//选项列表
-							id: 110001,
-							answerTitle: 'A', //选项标题
-							content: 'content--->AAAAAAAA', //选项内容
-							// isCorrect: 1, //是否是正确答案( 1是   2否 )
-							status: 0 //选择状态
-						},
-						{
-							id: 110002,
-							answerTitle: 'B',
-							content: 'content--->BBBBBBBB',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110003,
-							answerTitle: 'C',
-							content: 'content--->CCCCCCC',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110004,
-							answerTitle: 'D',
-							content: 'content--->DDDDDDD',
-							// isCorrect: 2,
-							status: 0
-						}
-					]
-				},
-				{
-					id: 100005, //主键
-					title: '测试单选题哦5', //题目标题
-					type: 1, //题目类型( 1.单选题  2.多选题  3.判断题  4.简答题 )
-					// isCollect: 1, //判断是否有收藏
-					isAnswered: false, //是否作答
-					// rightkey: 'A', //正确答案
-					// analysis: '我是题目的解析11111111111', //解析
-					questionAnswerList: [
-						{
-							//选项列表
-							id: 110001,
-							answerTitle: 'A', //选项标题
-							content: 'content--->AAAAAAAA', //选项内容
-							// isCorrect: 1, //是否是正确答案( 1是   2否 )
-							status: 0 //选择状态
-						},
-						{
-							id: 110002,
-							answerTitle: 'B',
-							content: 'content--->BBBBBBBB',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110003,
-							answerTitle: 'C',
-							content: 'content--->CCCCCCC',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110004,
-							answerTitle: 'D',
-							content: 'content--->DDDDDDD',
-							// isCorrect: 2,
-							status: 0
-						}
-					]
-				},
-				{
-					id: 100006, //主键
-					title: '测试单选题哦6', //题目标题
-					type: 1, //题目类型( 1.单选题  2.多选题  3.判断题  4.简答题 )
-					// isCollect: 1, //判断是否有收藏
-					isAnswered: false, //是否作答
-					// rightkey: 'A', //正确答案
-					// analysis: '我是题目的解析11111111111', //解析
-					questionAnswerList: [
-						{
-							//选项列表
-							id: 110001,
-							answerTitle: 'A', //选项标题
-							content: 'content--->AAAAAAAA', //选项内容
-							// isCorrect: 1, //是否是正确答案( 1是   2否 )
-							status: 0 //选择状态
-						},
-						{
-							id: 110002,
-							answerTitle: 'B',
-							content: 'content--->BBBBBBBB',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110003,
-							answerTitle: 'C',
-							content: 'content--->CCCCCCC',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110004,
-							answerTitle: 'D',
-							content: 'content--->DDDDDDD',
-							// isCorrect: 2,
-							status: 0
-						}
-					]
-				},
-				{
-					id: 100007, //主键
-					title: '测试单选题哦7', //题目标题
-					type: 1, //题目类型( 1.单选题  2.多选题  3.判断题  4.简答题 )
-					// isCollect: 1, //判断是否有收藏
-					isAnswered: false, //是否作答
-					// rightkey: 'A', //正确答案
-					// analysis: '我是题目的解析11111111111', //解析
-					questionAnswerList: [
-						{
-							//选项列表
-							id: 110001,
-							answerTitle: 'A', //选项标题
-							content: 'content--->AAAAAAAA', //选项内容
-							// isCorrect: 1, //是否是正确答案( 1是   2否 )
-							status: 0 //选择状态
-						},
-						{
-							id: 110002,
-							answerTitle: 'B',
-							content: 'content--->BBBBBBBB',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110003,
-							answerTitle: 'C',
-							content: 'content--->CCCCCCC',
-							// isCorrect: 2,
-							status: 0
-						},
-						{
-							id: 110004,
-							answerTitle: 'D',
-							content: 'content--->DDDDDDD',
-							// isCorrect: 2,
-							status: 0
-						}
-					]
-				}
-			];
-
+			console.log(this.item)
+			request.get(`/exam/title/practice/work/${this.item.id}`).then(({data})=>{
+				this.answerData=data.map(i=>{
+					console.log(i,'li')
+					 i.type=1
+					 i.isAnswered=false
+					 i.questionAnswerList=i.questionAnswerList.map(i=>{
+						 i.id=i.content
+						 i.status=0
+						 return i
+					 })
+					 return i
+					 
+				})
+			})
 			//this.initExamNumData();
 		},
 
@@ -422,11 +159,27 @@ export default {
 			}
 		},
 		//交卷
-		runRes() {
+		runRes(e) {
+			
 			uni.showModal({
 				title: '是否交卷？',
 				success: res => {
 					if (res.confirm) {
+						let answers=e.map(i=>{
+							return {
+								id:i.id,
+								answer:i.myAnswer
+							}
+						})
+						request.put('/exam/examDetail/practice/work/submit',{examRecordDetails:answers}).then(({code})=>{
+							if(code!=200){
+								 uni.showToast({
+								 					duration: 2000,
+								 					title: '提交失败',
+								 					icon: 'none'
+								 				});
+							}
+						})
 						uni.navigateBack({ delta: 2 });
 					}
 				}

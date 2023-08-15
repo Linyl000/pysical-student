@@ -251,7 +251,7 @@ export default {
 			} else if (item.type == 4) {
 				typeText = '：（简答题）';
 			}
-			return '<p style="float: left;">' + index + typeText + '</p>' + item.title;
+			return '<p style="float: left;">' + index + typeText + '</p>' + item.examTitle;
 		},
 		// 答案选项初始样式
 		changeAnswer(state) {
@@ -300,7 +300,8 @@ export default {
 				answerData: this.answerData[this.exampagenum],
 				indexs: this.exampagenum
 			};
-			this.$emit('changeOptions', obj);
+			console.log(obj)
+			this.$emit('changeOptions', obj,this.answerData);
 
 			this.$set(this.examNumData[this.exampagenum], 'state', 1);
 		},
@@ -346,7 +347,7 @@ export default {
 		isQuestionCollect(index) {},
 		//交卷对话框显示
 		dialogChangeshow() {
-			this.$emit('runRes');
+			this.$emit('runRes',this.answerData);
 		}
 	}
 };
