@@ -23860,6 +23860,228 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
   props: {} };exports.default = _default;
 
+/***/ }),
+/* 492 */,
+/* 493 */,
+/* 494 */,
+/* 495 */,
+/* 496 */,
+/* 497 */,
+/* 498 */,
+/* 499 */,
+/* 500 */,
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */,
+/* 508 */,
+/* 509 */,
+/* 510 */,
+/* 511 */,
+/* 512 */,
+/* 513 */,
+/* 514 */,
+/* 515 */,
+/* 516 */,
+/* 517 */,
+/* 518 */,
+/* 519 */,
+/* 520 */,
+/* 521 */,
+/* 522 */,
+/* 523 */,
+/* 524 */,
+/* 525 */,
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */,
+/* 533 */,
+/* 534 */,
+/* 535 */,
+/* 536 */
+/*!***************************************************!*\
+  !*** F:/uniApp/pysical-student/api/first-info.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.login = login;exports.getCodeImg = getCodeImg;var _api = __webpack_require__(/*! @/api/api.js */ 537);
+
+
+
+
+//登录
+function login(data) {
+  return (0, _api.post)('/login', data);
+}
+//获取验证码
+function getCodeImg(get) {
+  return (0, _api.post)('/captchaImage', get);
+}
+
+/***/ }),
+/* 537 */
+/*!********************************************!*\
+  !*** F:/uniApp/pysical-student/api/api.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {var _main = _interopRequireDefault(__webpack_require__(/*! @/main.js */ 0));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
+var commoneUrl = "http://120.76.132.152:8091"; //公共路径 
+
+//post请求封装
+function postRequest(url, data) {
+  var promise = new Promise(function (resolve, reject) {
+    //data不存在 返回一个空对象
+    if (!data) {
+      data = {};
+    }
+    var postData = data;
+    if (uni.getStorageSync('userTel')) {
+      //如果本地保存了登陆状态(如手机号)  提供默认传参方式
+      // postData['userid'] = uni.getStorageSync('userinfo').id
+    }
+    uni.request({
+      url: commoneUrl + url,
+      data: postData,
+      method: 'POST',
+      // dataType:"jsonp",
+      // jsonp:"callbackparam",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名
+      // jsonpCallback:"success_jsonpCallback",
+      header: {
+        'content-type': 'application/json;charset=UTF-8'
+        // 'token': uni.getStorageSync('token')
+        //token可以不要，看后端
+      },
+      success: function success(res) {
+        resolve(res.data);
+      },
+      fail: function fail(e) {
+        reject('网络出错');
+      } });
+
+  });
+  return promise;
+}
+
+//get请求封装
+function getRequest(url, data) {
+  var promise = new Promise(function (resolve, reject) {
+    //data不存在 返回一个空对象
+    if (!data) {
+      data = {};
+    }
+    var postData = data;
+    if (uni.getStorageSync('userTel')) {
+      //如果本地保存了登陆状态(如手机号)  提供默认传参方式
+      // postData['userid'] = uni.getStorageSync('userinfo').id
+    }
+    uni.request({
+      url: commoneUrl + url,
+      data: postData,
+      method: "GET",
+      dataType: 'json',
+      header: {
+        'content-type': 'application/json'
+        // 'token': uni.getStorageSync('token')
+        // 'user-token': uni.getStorageSync('userinfo').token
+      },
+      success: function success(res) {
+        resolve(res.data);
+      },
+      fail: function fail(e) {
+        reject('网络出错');
+      } });
+
+  });
+  return promise;
+}
+//put请求封装
+function putRequest(url, data, heads) {
+  var promise = new Promise(function (resolve, reject) {
+    //data不存在 返回一个空对象
+    if (!data) {
+      data = {};
+    }
+    var postData = data;
+    if (uni.getStorageSync('userTel')) {
+      //如果本地保存了登陆状态(如手机号)  提供默认传参方式
+      // postData['userid'] = uni.getStorageSync('userinfo').id
+    }
+    uni.request({
+      url: commoneUrl + url,
+      data: postData,
+      method: "PUT",
+      dataType: 'json',
+      header: {
+        'content-type': 'application/json'
+        // 'token': uni.getStorageSync('token')
+        // 'user-token': uni.getStorageSync('userinfo').token
+      },
+      success: function success(res) {
+        resolve(res.data);
+      },
+      fail: function fail(e) {
+        reject('网络出错');
+      } });
+
+  });
+  return promise;
+}
+//del请求封装
+function delRequest(url, data) {
+  var promise = new Promise(function (resolve, reject) {
+    //data不存在 返回一个空对象
+    if (!data) {
+      data = {};
+    }
+    var postData = data;
+    if (uni.getStorageSync('userTel')) {
+      //如果本地保存了登陆状态(如手机号)  提供默认传参方式
+      // postData['userid'] = uni.getStorageSync('userinfo').id
+    }
+    uni.request({
+      url: commoneUrl + url,
+      data: postData,
+      method: "DELETE",
+      dataType: 'json',
+      header: {
+        'content-type': 'application/json'
+        // 'token': uni.getStorageSync('token')
+        // 'user-token': uni.getStorageSync('userinfo').token
+      },
+      success: function success(res) {
+        resolve(res.data);
+      },
+      fail: function fail(e) {
+        reject('网络出错');
+      } });
+
+  });
+  return promise;
+}
+module.exports = {
+  post: postRequest,
+  get: getRequest,
+  put: putRequest,
+  del: delRequest,
+  ip: commoneUrl
+  // userId : userId
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
 /***/ })
 ]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map

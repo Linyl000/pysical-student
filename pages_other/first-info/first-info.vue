@@ -1,7 +1,20 @@
 <template>
 	<view class="page">
-		<view class="input_1"><u--input placeholder="请输入学号" v-model="value" border="none" fontSize="18"></u--input></view>
-		<view class="input_1"><u--input placeholder="请输入密码" v-model="value2" border="none" fontSize="18"></u--input></view>
+		<view class="input_1"><u--input placeholder="请输入学号" v-model="username" border="none" fontSize="18"></u--input></view>
+		<view class="input_1">
+			<u--input placeholder="请输入密码" v-model="password" border="none" fontSize="18" :password="pwd">
+				<template slot="suffix">
+					<u-icon :name="pwd ? 'eye-off' : 'eye'" size="33" @click="pwd = !pwd"></u-icon>
+				</template>
+			</u--input>
+		</view>
+		<view class="input_1">
+			<u--input placeholder="请输入验证码" v-model="code" border="none" fontSize="18">
+				<template slot="suffix">
+					<img :src="codeUrl" @click="getCode" class="login-code-img" />
+				</template>
+			</u--input>
+		</view>
 		<!-- 		<u-radio-group v-model="value3" placement="row" size="24" labelSize="24">
 			<u-radio activeColor="#5d4fdc" label="男"></u-radio>
 			<u-radio activeColor="#5d4fdc" label="女"></u-radio>
@@ -11,22 +24,42 @@
 </template>
 
 <script>
+import { login, getCodeImg } from '@/api/first-info.js';
 export default {
 	data() {
-		return {};
+		return {
+			username: '',
+			password: '',
+			pwd: true
+		};
+	},
+	onLoad() {
+		this.getCode();
 	},
 	methods: {
 		goIndex() {
-			// if (!this.checkboxValue1.length) {
-			// 	uni.showToast({
-			// 		duration: 2000,
-			// 		title: '学号不能为空',
-			// 		icon: 'none'
-			// 	});
-			// 	return;
-			// }
-			uni.switchTab({
-				url: '/pages/index/index'
+			if (!this.username || !this.password) {
+				uni.showToast({
+					duration: 2000,
+					title: '学号或密码不能为空',
+					icon: 'none'
+				});
+				return;
+			}
+			login({ username, password }).then(res => {
+				console.log(res);
+				uni.switchTab({
+					url: '/pages/index/index'
+				});
+			});
+		},
+		getCode() {
+			getCodeImg().then(res => {
+				this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled;
+				if (this.captchaEnabled) {
+					this.codeUrl = 'data:image/gif;base64,' + res.img;
+					this.loginForm.uuid = res.uuid;
+				}
 			});
 		}
 	}
