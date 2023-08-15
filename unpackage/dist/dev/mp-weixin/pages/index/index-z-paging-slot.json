@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "index-z-paging-slot": "/pages/index/index-z-paging-slot",
+    "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging"
+  }
+}

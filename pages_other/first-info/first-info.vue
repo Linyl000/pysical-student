@@ -8,13 +8,14 @@
 				</template>
 			</u--input>
 		</view>
-		<view class="input_1">
+
+		<!-- 	<view class="input_1">
 			<u--input placeholder="请输入验证码" v-model="code" border="none" fontSize="18">
 				<template slot="suffix">
-					<img :src="codeUrl" @click="getCode" class="login-code-img" />
+					<image :src="codeUrl" @click="getCode" mode="widthFix" class="login-code-img"></image>
 				</template>
 			</u--input>
-		</view>
+		</view> -->
 		<!-- 		<u-radio-group v-model="value3" placement="row" size="24" labelSize="24">
 			<u-radio activeColor="#5d4fdc" label="男"></u-radio>
 			<u-radio activeColor="#5d4fdc" label="女"></u-radio>
@@ -30,7 +31,10 @@ export default {
 		return {
 			username: '',
 			password: '',
-			pwd: true
+			pwd: true,
+			codeUrl: null,
+			uuid: null,
+			captchaEnabled: null
 		};
 	},
 	onLoad() {
@@ -58,7 +62,7 @@ export default {
 				this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled;
 				if (this.captchaEnabled) {
 					this.codeUrl = 'data:image/gif;base64,' + res.img;
-					this.loginForm.uuid = res.uuid;
+					this.uuid = res.uuid;
 				}
 			});
 		}
@@ -98,5 +102,9 @@ export default {
 }
 /deep/.u-input {
 	height: 100%;
+}
+.login-code-img {
+	width: 200rpx;
+	height: 60rpx;
 }
 </style>

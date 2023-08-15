@@ -1,16 +1,19 @@
 <template>
-	<view class="page">
-		<view class="type-list">
-			<view class="text-wrapper" :class="{ active: current === 0 }" @click="current = 0">课时</view>
-			<view class="text-wrapper" :class="{ active: current === 1 }" @click="current = 1">练习成绩</view>
-			<!-- 		<view class="text-wrapper" :class="{ active: current === 2 }" @click="current = 2">考核成绩</view> -->
-		</view>
+	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
+		<template #top>
+			<view class="type-list">
+				<view class="text-wrapper" :class="{ active: current === 0 }" @click="current = 0">课时</view>
+				<view class="text-wrapper" :class="{ active: current === 1 }" @click="current = 1">练习成绩</view>
+				<!-- 		<view class="text-wrapper" :class="{ active: current === 2 }" @click="current = 2">考核成绩</view> -->
+			</view>
+		</template>
+
 		<div v-if="current == 0" class="type">
-			<div class="title">【课程】xxxxxxxxxxxxx</div>
-			<div class="type-item" v-for="(i, index) in 10" @click="goCurriculum">
-				<div class="item-title">{{ index + 1 }}.xxxxx</div>
-				<u-icon name="file-text" color="#5d4fdc" size="24"></u-icon>
-				<u-icon name="play-circle" color="#5d4fdc" size="24"></u-icon>
+			<div class="title">【课程】{{ list[0].courseName }}</div>
+			<div class="type-item" v-for="(i, index) in list" @click="goCurriculum">
+				<div class="item-title">{{ index + 1 }}.taskName</div>
+				<u-icon v-if="i.courseType == 0" name="file-text" color="#5d4fdc" size="24"></u-icon>
+				<u-icon v-if="i.courseType == 1" name="play-circle" color="#5d4fdc" size="24"></u-icon>
 			</div>
 		</div>
 		<div v-if="current == 1 || current == 2" class="type">
@@ -22,7 +25,7 @@
 				<div>练习时间</div>
 				<div>分数</div>
 			</div>
-			<div class="small-colum" v-for="i in 10" :key="i">
+			<div class="small-colum" v-for="i in list" :key="i">
 				<div>111</div>
 				<div>222</div>
 				<div>333</div>
@@ -32,17 +35,29 @@
 				</div>
 			</div>
 		</div>
-	</view>
+	</z-paging>
 </template>
 
 <script>
+import { coureseTaskList } from '@/api/course-list.js';
 export default {
 	data() {
 		return {
-			current: 0
+			current: 0,
+			list: []
 		};
 	},
 	methods: {
+		getList(page, limit) {
+			coureseTaskList()
+				.then(res => {
+					this.list = res.rows;
+					this.$refs.paging.complete(res.rows);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
+				});
+		},
 		goCurriculum() {
 			uni.navigateTo({
 				url: '/pages_other/curriculum/curriculum'
