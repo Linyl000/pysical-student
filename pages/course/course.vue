@@ -4,7 +4,7 @@
 			lineColor="#5d4fdc"
 			:list="list1"
 			lineWidth="40"
-		   @change="typeChange"
+
 			:itemStyle="{
 				height: '100rpx'
 			}"
@@ -12,6 +12,7 @@
 				fontWeight: 'bold'
 			}"
 			lineHeight="5"
+			@change="tabChange"
 		></u-tabs>
 		<view class="type-list">
 			<view class="text-wrapper" :class="{ active: current === undefined }" @click="current = undefined">全部</view>
@@ -25,11 +26,18 @@
 				<!-- 未开始 已完成 未完成 待评分 超时 -->
 				<view class="time complete uncomplete wait expired">{{i.finishStatus=='1'?'完成':'未完成'}}</view>
 			</view>
+			
 			<view class="teacher-and-time">
-				<view class="teacher-name">{{i.teacherName}}</view>
-				<text lines="1" class="remaining-time uncomplete-and-expired other-types">{{ i.finishStatus=='1'? "得分"+i.workScore:"最后截止时间："+i.endTime}}</text>
+							<view class="teacher-name">{{i.teacherName}}</view>
+							<text lines="1" class="remaining-time uncomplete-and-expired other-types">
+								{{
+									i.finishStatus=='1'?'得分'+i.workScore:'截止时间'+i.lastTime
+								}}
+								
+							</text>
 			</view>
-		</view>
+			
+	</view>
 	</view>
 </template>
 
@@ -48,7 +56,7 @@ export default {
 				}
 			],
 			current: undefined,
-			type:0,
+			type:0,	 
 			paperList:[]
 		};
 	},
@@ -58,23 +66,38 @@ export default {
 				url: `/pages_other/course-intro/course-intro?item=${JSON.stringify(i)}`
 			});
 		},
-		getWorkList(taskType,finishStatus){
-			request.get('/work/studentWork/list',{taskType,courseType:0,finishStatus}).then(({rows})=>{
-				this.paperList=rows
-			})
-		},
 		typeChange({index}){
 			this.type=index
-			this.getWorkList(index,this.current)
+			this.getPaperList(index,this.current)
 		},
 	},
 	watch:{
 		current:{
 			handler(newValue,oldValue){
-				this.getWorkList(this.type,newValue)
+				this.getPaperList()
 			},
-			immediate:true
+			// immediate:true
 		}
+	},
+	methods: {
+		goCourseIntro(item) {
+			uni.navigateTo({
+				url: `/pages_other/course-intro/course-intro?item=${JSON.stringify(item)}`
+			});
+		},
+		getPaperList(){
+			 request.get('/work/studentWork/list',{taskType:this.type,courseType:0,finishStatus:this.current}).then(({rows})=>{
+				 this.paperList=rows
+				 
+			 })
+		},
+		tabChange({index}){
+			this.type=index
+			this.getPaperList()
+		}
+	},
+	mounted() {
+		this.getPaperList()
 	}
 };
 </script>

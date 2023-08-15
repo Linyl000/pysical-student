@@ -22,7 +22,9 @@ export default {
 		};
 	},
 	onLoad({item}) {
+		console.log(item)
 		 this.item=JSON.parse(item)
+		 console.log(this.item)
 	},
 	methods: {
 		goHomeworkOrTest() {

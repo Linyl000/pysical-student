@@ -25,7 +25,8 @@ function postRequest(url, data) {
 			header: {
 				'content-type': 'application/json;charset=UTF-8',
 				'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImIxNTNkMmQ2LTVjZDAtNGU3My05MTIwLWExZjE4NjdlMjg3MiJ9.gBaTm0S2-JM5FpiIDQRjP4swPeNcTxY_79fXq4_doZpl1bGKet8SuweLDsXXe2qCi3sGq3yibAwrCAHBgNVZ-Q'
-				// 'token': uni.getStorageSync('token')
+
+
 				//token可以不要，看后端
 			},
 			success: function(res) {
@@ -52,6 +53,8 @@ function getRequest(url, data) {
 			header: {
 				'content-type': 'application/json',
 				'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImIxNTNkMmQ2LTVjZDAtNGU3My05MTIwLWExZjE4NjdlMjg3MiJ9.gBaTm0S2-JM5FpiIDQRjP4swPeNcTxY_79fXq4_doZpl1bGKet8SuweLDsXXe2qCi3sGq3yibAwrCAHBgNVZ-Q'
+
+		
 				// 'user-token': uni.getStorageSync('userinfo').token
 			},
 			success: function(res) {
