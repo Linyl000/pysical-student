@@ -147,10 +147,7 @@
   position: absolute;
   width: 750rpx;
   left: 0;
-  bottom: -170rpx;
-}
-.one-two-three image.data-v-651386f7 {
-  width: 100%;
+  bottom: 0rpx;
 }
 .four-and-other.data-v-651386f7 {
   height: 120rpx;

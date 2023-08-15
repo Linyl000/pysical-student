@@ -50,7 +50,7 @@
 					</view>
 				</view>
 			</view>
-			<div class="one-two-three"><image src="@/static/one-two-three.png" mode="aspectFit"></image></div>
+			<image class="one-two-three" src="@/static/one-two-three.png" mode="widthFix"></image>
 		</view>
 		<!-- 我 -->
 		<view class="four-and-other ">
@@ -236,10 +236,10 @@ export default {
 	position: absolute;
 	width: 750rpx;
 	left: 0;
-	bottom: -170rpx;
-	image {
-		width: 100%;
-	}
+	bottom: 0rpx;
+	// image {
+	// 	width: 100%;
+	// }
 }
 .four-and-other {
 	height: 120rpx;
@@ -261,7 +261,7 @@ export default {
 }
 .text_17 {
 	flex: 1;
- 
+
 	font-size: 32rpx;
 	font-weight: 600;
 	white-space: nowrap;
@@ -278,7 +278,7 @@ export default {
 	width: 136rpx;
 	height: 72rpx;
 	overflow-wrap: break-word;
- 
+
 	font-size: 48rpx;
 	font-family: PingFangSC-Semibold;
 	font-weight: 600;

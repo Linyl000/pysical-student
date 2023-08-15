@@ -11,7 +11,7 @@
 		<text lines="1" decode="true" class="text_5">福州师范大学体育课程服务平台&nbsp;&nbsp;</text>
 		<view class="button_1" @click="goFirstInfo"><text lines="1" class="text_6">账号密码登录</text></view>
 		<view class="image-text_3">
-			<u-checkbox-group v-model="checkboxValue1"><u-checkbox shape="circle" label="" activeColor="#5D4FDC"></u-checkbox></u-checkbox-group>
+			<u-checkbox-group v-model="checkboxValue1"><u-checkbox shape="circle" label=" " activeColor="#5D4FDC"></u-checkbox></u-checkbox-group>
 			<view class="text-group_1">
 				<text>请认真阅读</text>
 				<text style="color:#5D4FDC;">用户协议，</text>
