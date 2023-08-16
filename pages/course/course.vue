@@ -24,7 +24,7 @@
 			<view class="title-and-time">
 				<text lines="1" class="title"> {{'【'+( i.taskType=='1'?'考核':'作业')+'】'+i.examPaperName}}</text>
 				<!-- 未开始 已完成 未完成 待评分 超时 -->
-				<view class="time complete uncomplete wait expired">{{i.finishStatus=='1'?'完成':'未完成'}}</view>
+				<view class="time complete uncomplete wait expired" >{{i.finishStatus=='1'?'完成':'未完成'}}</view>
 			</view>
 			
 			<view class="teacher-and-time">
@@ -60,17 +60,6 @@ export default {
 			paperList:[]
 		};
 	},
-	methods: {
-		goCourseIntro(i) {
-			uni.navigateTo({
-				url: `/pages_other/course-intro/course-intro?item=${JSON.stringify(i)}`
-			});
-		},
-		typeChange({index}){
-			this.type=index
-			this.getPaperList(index,this.current)
-		},
-	},
 	watch:{
 		current:{
 			handler(newValue,oldValue){
@@ -80,10 +69,25 @@ export default {
 		}
 	},
 	methods: {
-		goCourseIntro(item) {
-			uni.navigateTo({
-				url: `/pages_other/course-intro/course-intro?item=${JSON.stringify(item)}`
-			});
+		goCourseIntro(i) {
+			if(i.lastType==1){
+				 uni.navigateTo({
+				 	url: `/pages_other/course-intro/course-intro?item=${JSON.stringify(i)}`
+				 });
+			}else if(i.lastType==0){
+				uni.showToast({
+									duration: 2000,
+									title: '活动未开始',
+									icon: 'none'
+								});
+			}else{
+				uni.showToast({
+									duration: 2000,
+									title: '活动已结束',
+									icon: 'none'
+								});
+			}
+			
 		},
 		getPaperList(){
 			 request.get('/work/studentWork/list',{taskType:this.type,courseType:0,finishStatus:this.current}).then(({rows})=>{
