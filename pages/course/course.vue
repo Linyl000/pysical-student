@@ -4,7 +4,6 @@
 			lineColor="#5d4fdc"
 			:list="list1"
 			lineWidth="40"
-
 			:itemStyle="{
 				height: '100rpx'
 			}"
@@ -15,34 +14,58 @@
 			@change="tabChange"
 		></u-tabs>
 		<view class="type-list">
-			<view class="text-wrapper" :class="{ active: current === undefined }" @click="current = undefined">全部</view>
+			<view class="text-wrapper" :class="{ active: current === 2 }" @click="current = 2">全部</view>
 			<view class="text-wrapper" :class="{ active: current === 1 }" @click="current = 1">已完成</view>
 			<view class="text-wrapper" :class="{ active: current === 0 }" @click="current = 0">未完成</view>
 		</view>
 		<!-- 未开始：不能点  未完成：去题目详情做题   完成：去题目详情可以修改  超时+已完成/待评分：去结果页/评分页  超时+未完成：去题目详情不能做题  -->
 		<view class="list-item" v-for="i in paperList" @click="goCourseIntro(i)">
 			<view class="title-and-time">
-				<text lines="1" class="title"> {{'【'+( i.taskType=='1'?'考核':'作业')+'】'+i.examPaperName}}</text>
+				<text lines="1" class="title">{{ '【' + (i.courseType == '1' ? '视频' : '理论') + '】' + i.examPaperName }}</text>
 				<!-- 未开始 已完成 未完成 待评分 超时 -->
-				<view class="time complete uncomplete wait expired" >{{i.finishStatus=='1'?'完成':'未完成'}}</view>
+				<view
+					:class="[
+						'time',
+						{ complete: i.finishStatus == '1' },
+						{ wait: i.finishStatus == '2' },
+						{ uncomplete: i.finishStatus == '0' },
+						{ expired: i.finishStatus == '0' && i.lastTime == '已结束' }
+					]"
+				>
+					{{
+						i.finishStatus == '1'
+							? '完成'
+							: i.finishStatus == '2'
+							? '待评分'
+							: i.finishStatus == '0' && i.lastTime == '已结束'
+							? '已超时'
+							: '未完成'
+					}}
+				</view>
 			</view>
-			
+
 			<view class="teacher-and-time">
-							<view class="teacher-name">{{i.teacherName}}</view>
-							<text lines="1" class="remaining-time uncomplete-and-expired other-types">
-								{{
-									i.finishStatus=='1'?'得分'+i.workScore:'截止时间'+i.lastTime
-								}}
-								
-							</text>
+				<view class="teacher-name">{{ i.teacherName }}</view>
+
+				<span class="remaining-time" v-if="i.lastType == 0">未开始</span>
+				<span class="remaining-time uncomplete-and-expired" v-if="i.lastType == 1 && i.finishStatus == '0'">
+					{{ '截止时间' + i.lastTime }}
+				</span>
+				<span
+					class="remaining-time"
+					v-if="(i.lastType == 1 && (i.finishStatus == '2' || i.finishStatus == '1')) || (i.lastType == 2 && i.finishStatus !== '0')"
+				>
+					{{ i.workScore === -1 ? '评分中' : i.workScore === -2 ? '成绩出错，等待教师复核' : '得分' + i.workScore }}
+				</span>
+				<span class="remaining-time" v-if="i.lastType == 2 && i.finishStatus == '0'">已超时</span>
+				<!-- {{ i.finishStatus == '1' ? '得分' + i.workScore : '截止时间' + i.lastTime }} -->
 			</view>
-			
-	</view>
+		</view>
 	</view>
 </template>
 
 <script>
-import * as request from '@/api/api.js'
+import * as request from '@/api/api.js';
 
 export default {
 	data() {
@@ -55,53 +78,56 @@ export default {
 					name: '考核列表'
 				}
 			],
-			current: undefined,
-			type:0,	 
-			paperList:[]
+			current: 2,
+			type: 0,
+			paperList: []
 		};
 	},
-	watch:{
-		current:{
-			handler(newValue,oldValue){
-				this.getPaperList()
-			},
+	watch: {
+		current: {
+			handler(newValue, oldValue) {
+				this.getPaperList();
+			}
 			// immediate:true
 		}
 	},
 	methods: {
 		goCourseIntro(i) {
-			if(i.lastType==1){
-				 uni.navigateTo({
-				 	url: `/pages_other/course-intro/course-intro?item=${JSON.stringify(i)}`
-				 });
-			}else if(i.lastType==0){
+			if (i.lastType == 1 && i.finishStatus == '0') {
+				uni.navigateTo({
+					url: `/pages_other/course-intro/course-intro?item=${JSON.stringify(i)}`
+				});
+			} else if (i.lastType == 0) {
 				uni.showToast({
-									duration: 2000,
-									title: '活动未开始',
-									icon: 'none'
-								});
-			}else{
+					duration: 2000,
+					title: '未开始',
+					icon: 'none'
+				});
+			} else {
 				uni.showToast({
-									duration: 2000,
-									title: '活动已结束',
-									icon: 'none'
-								});
+					duration: 2000,
+					title: '已结束',
+					icon: 'none'
+				});
 			}
-			
 		},
-		getPaperList(){
-			 request.get('/work/studentWork/list',{taskType:this.type,courseType:0,finishStatus:this.current}).then(({rows})=>{
-				 this.paperList=rows
-				 
-			 })
+		getPaperList() {
+			let body = { taskType: this.type };
+			if (!this.current === 2) {
+				body.finishStatus = this.current;
+			}
+
+			request.get('/work/studentWork/list', body).then(({ rows }) => {
+				this.paperList = rows;
+			});
 		},
-		tabChange({index}){
-			this.type=index
-			this.getPaperList()
+		tabChange({ index }) {
+			this.type = index;
+			this.getPaperList();
 		}
 	},
 	mounted() {
-		this.getPaperList()
+		this.getPaperList();
 	}
 };
 </script>
@@ -158,7 +184,7 @@ export default {
 		width: 436rpx;
 		height: 48rpx;
 		overflow-wrap: break-word;
-	 
+
 		font-size: 32rpx;
 		font-family: PingFangSC-Semibold;
 		font-weight: 600;
@@ -177,7 +203,6 @@ export default {
 		text-align: center;
 		font-weight: 600;
 		border-bottom-left-radius: 20rpx;
-		background: #61ad67;
 	}
 	.complete {
 		background: #61ad67;
@@ -199,19 +224,16 @@ export default {
 	margin-top: 30rpx;
 
 	.teacher-name {
-	 
 		font-size: 28rpx;
 		margin-left: 16rpx;
 	}
 	.remaining-time {
 		font-size: 24rpx;
 		text-align: right;
+		color: rgba(136, 136, 136, 1);
 	}
 	.uncomplete-and-expired {
 		color: rgba(224, 105, 105, 1);
-	}
-	.other-types {
-		color: rgba(136, 136, 136, 1);
 	}
 }
 </style>

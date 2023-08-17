@@ -1,12 +1,12 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
-		<template #top>
+		<!-- 		<template #top>
 			<view class="type-list">
 				<view class="text-wrapper" :class="{ active: current === 0 }" @click="current = 0">课时</view>
 				<view class="text-wrapper" :class="{ active: current === 1 }" @click="current = 1">作业成绩</view>
 				<view class="text-wrapper" :class="{ active: current === 2 }" @click="current = 2">考核成绩</view>
 			</view>
-		</template>
+		</template> -->
 
 		<div v-if="current == 0" class="type">
 			<div class="title">【课程】{{ list[0].courseName }}</div>
@@ -54,6 +54,7 @@ export default {
 	// this.$refs.paging.reload();
 	methods: {
 		getList(page, limit) {
+			console.log(111);
 			if (this.current === 0) {
 				coureseTaskList({ courseId: this.courseId })
 					.then(res => {

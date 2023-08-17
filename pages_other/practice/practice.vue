@@ -1,51 +1,120 @@
 <template>
 	<view class="page">
-		<view class="title">【作业】太极八法五步-第六式</view>
-		<view class="cut-off-time">最后截止时间：&nbsp;04-03&nbsp;23:59</view>
+		<view class="title">{{ '【' + (item.courseType == '1' ? '视频' : '理论') + '】' + item.examPaperName }}</view>
+		<view class="cut-off-time">{{ '最后截止时间：' + item.endTime }}</view>
 		<view class="demand-box">
 			<view class="demand-img"></view>
 			<text lines="1" class="demand-text">要求</text>
 		</view>
-		<text class="description">
-			拍摄完整的八段锦练习视频上传到本作业。要求露出完整的面容，禁止代替他人完成练习，练习可在线完成也可以上传本地视频。
-		</text>
+		<text class="description">{{ '分数达到' + item.passScore + '视为合格' }}</text>
 		<!-- 视频图片 -->
-		<div class="have-video">
+		<div v-if="workVideo" class="have-video">
 			<div class="icon"><u-icon name="play-right-fill" color="#fff" size="28"></u-icon></div>
 			<view class="name-and-size">
-				<text lines="1" class="name">八段锦视频.mp4</text>
-				<text lines="1" class="size">23.0M</text>
+				<text lines="1" class="name">{{ originalFilename }}.mp4</text>
+				<text lines="1" class="size">{{ size }}M</text>
 			</view>
 			<div class="delete" @click="deleteVideo">删除</div>
 		</div>
 
-		<div class="up-box" @click="selectVideo">
+		<div v-else class="up-box" @click="selectVideo">
 			<img v-if="vtype === 1" src="../../static/video-img.jpg" mode="" />
 			<img v-if="vtype === 2" src="../../static/up-video.png" />
 		</div>
-		<view class="button_1" @click="goWait">提交</view>
+		<view class="button_1" @click="submit">提交</view>
 	</view>
 </template>
 
 <script>
+import { start, submit } from '@/api/practice.js';
+import { ip } from '@/api/api.js';
 export default {
 	data() {
 		return {
 			//显示视频上传状态
-			vtype: 1
+			vtype: 1,
+			item: null,
+			workVideo: '',
+			size: '',
+			originalFilename: '',
+			upMediaOrImg: false
 		};
 	},
+	onLoad({ item }) {
+		this.item = JSON.parse(item);
+	},
 	methods: {
-		getWait() {
-			uni.navigateTo({
-				url: '/pages_other/wait-result/wait-result'
+		selectVideo() {
+			this.start();
+			uni.chooseMedia({
+				maxDuration: 60,
+				count: 1,
+				sourceType: ['album', 'camera'],
+				compressed: true,
+				mediaType: ['video'],
+				success: r => {
+					// console.log('r');
+					// console.log(r);
+					this.vtype = 2;
+					let linShi2 = r.tempFiles[0].tempFilePath;
+					this.size = (r.tempFiles[0].size / (1024 * 1024)).toFixed(2);
+					//上传中不可提交
+					this.upMediaOrImg = true;
+					uni.uploadFile({
+						url: ip + '/common/upload',
+						filePath: linShi2,
+						name: 'file',
+						header: {
+							Authorization: uni.getStorageSync('token')
+						},
+						success: uploadFileRes => {
+							this.vtype = 1;
+							console.log(uploadFileRes);
+							this.workVideo = JSON.parse(uploadFileRes.data).url;
+							let name = JSON.parse(uploadFileRes.data).originalFilename;
+							this.originalFilename = name.substring(0, 8) + '...' + name.slice(-4);
+							this.upMediaOrImg = false;
+							console.log(this.workVideo);
+						},
+						fail() {
+							this.upMediaOrImg = false;
+							uni.showToast({
+								title: '视频上传失败',
+								icon: 'none',
+								duration: 2000
+							});
+						}
+					});
+				}
 			});
 		},
-		selectVideo() {
-			//
-		},
 		deleteVideo() {
-			//
+			this.workVideo = '';
+		},
+		start() {
+			start({ id: this.item.id }).then(res => {});
+		},
+		submit() {
+			if (!this.workVideo) {
+				uni.showToast({
+					duration: 2000,
+					title: '请提交视频！',
+					icon: 'none'
+				});
+			}
+			if (this.upMediaOrImg) {
+				uni.showToast({
+					duration: 2000,
+					title: '请等待视频上传完成！',
+					icon: 'none'
+				});
+			}
+			submit({ id: this.item.id, workVideo: this.workVideo }).then(res => {
+				console.log(res);
+				uni.navigateTo({
+					url: `/pages_other/wait-result/wait-result`
+				});
+			});
 		}
 	}
 };
@@ -59,7 +128,7 @@ export default {
 	width: 546rpx;
 	height: 48rpx;
 	overflow-wrap: break-word;
- 
+
 	font-size: 40rpx;
 	font-family: PingFangSC-Semibold;
 	font-weight: 600;
@@ -68,7 +137,6 @@ export default {
 	line-height: 48rpx;
 }
 .cut-off-time {
- 
 	font-size: 30rpx;
 	margin-top: 16rpx;
 }
@@ -85,13 +153,12 @@ export default {
 		margin-right: 12rpx;
 	}
 	.demand-text {
-	 
 		font-size: 32rpx;
 	}
 }
 .description {
 	margin-top: 26rpx;
- 
+
 	line-height: 1.7;
 }
 .have-video {
@@ -120,28 +187,22 @@ export default {
 		flex-direction: column;
 		justify-content: space-between;
 		.name {
-			width: 236rpx;
-			height: 48rpx;
-			overflow-wrap: break-word;
-		 
+			// width: 354rpx;
+			// overflow-wrap: break-word;
 			font-size: 32rpx;
-			font-family: PingFangSC-Semibold;
 			font-weight: 600;
-			text-align: left;
-			white-space: nowrap;
-			line-height: 48rpx;
+			// white-space: normal; /* 允许文本换行 */
+			// line-height: 48rpx;
+			// display: -webkit-box;
+			// -webkit-box-orient: vertical;
+			// -webkit-line-clamp: 1; /* 设置最多显示两行文本 */
+			// text-overflow: ellipsis; /* 超出两行显示省略号 */
+			// overflow: hidden; /* 隐藏超出部分的文本 */
 		}
 		.size {
-			width: 84rpx;
-			height: 40rpx;
 			overflow-wrap: break-word;
 			color: rgba(136, 136, 136, 1);
 			font-size: 28rpx;
-			font-family: PingFangSC-Regular;
-			font-weight: normal;
-			text-align: right;
-			white-space: nowrap;
-			line-height: 40rpx;
 			margin-top: 8rpx;
 		}
 	}
@@ -153,7 +214,8 @@ export default {
 	margin-top: 36rpx;
 	width: 220rpx;
 	height: 220rpx;
-	image {
+	image,
+	img {
 		width: 100%;
 		height: 100%;
 	}

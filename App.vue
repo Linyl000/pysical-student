@@ -118,7 +118,7 @@ export default {
 // 	margin: auto !important;
 // }
 .page {
-	min-height: 90;
+	min-height: 100vh;
 }
 /*  #endif  */
 /*每个页面公共css */

@@ -156,10 +156,10 @@ var components
 try {
   components = {
     zPaging: function() {
-      return Promise.all(/*! import() | uni_modules/z-paging/components/z-paging/z-paging */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/z-paging/components/z-paging/z-paging")]).then(__webpack_require__.bind(null, /*! @/uni_modules/z-paging/components/z-paging/z-paging.vue */ 305))
+      return Promise.all(/*! import() | uni_modules/z-paging/components/z-paging/z-paging */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/z-paging/components/z-paging/z-paging")]).then(__webpack_require__.bind(null, /*! @/uni_modules/z-paging/components/z-paging/z-paging.vue */ 306))
     },
     uIcon: function() {
-      return Promise.all(/*! import() | uni_modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uview-ui/components/u-icon/u-icon.vue */ 376))
+      return Promise.all(/*! import() | uni_modules/uview-ui/components/u-icon/u-icon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uview-ui/components/u-icon/u-icon")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uview-ui/components/u-icon/u-icon.vue */ 339))
     }
   }
 } catch (e) {
@@ -183,19 +183,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  if (!_vm._isMounted) {
-    _vm.e0 = function($event) {
-      _vm.current = 0
-    }
-
-    _vm.e1 = function($event) {
-      _vm.current = 1
-    }
-
-    _vm.e2 = function($event) {
-      _vm.current = 2
-    }
-  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -311,7 +298,7 @@ var _courseList = __webpack_require__(/*! @/api/course-list.js */ 236); //
 //
 //
 var _default = { data: function data() {return { current: 0, list: [], courseId: null };}, onLoad: function onLoad(option) {this.courseId = option.courseId;}, // this.$refs.paging.reload();
-  methods: { getList: function getList(page, limit) {var _this = this;if (this.current === 0) {(0, _courseList.coureseTaskList)({ courseId: this.courseId }).then(function (res) {_this.list = res.rows;_this.$refs.paging.complete(res.rows);}).catch(function (res) {_this.$refs.paging.complete(false);});} else if (this.current === 1) {console.log(111);} else {console.log(222);}}, goCurriculum: function goCurriculum(i) {uni.navigateTo({ url: '/pages_other/curriculum/curriculum?i=' + JSON.stringify(i) });} } };exports.default = _default;
+  methods: { getList: function getList(page, limit) {var _this = this;console.log(111);if (this.current === 0) {(0, _courseList.coureseTaskList)({ courseId: this.courseId }).then(function (res) {_this.list = res.rows;_this.$refs.paging.complete(res.rows);}).catch(function (res) {_this.$refs.paging.complete(false);});} else if (this.current === 1) {console.log(111);} else {console.log(222);}}, goCurriculum: function goCurriculum(i) {uni.navigateTo({ url: '/pages_other/curriculum/curriculum?i=' + JSON.stringify(i) });} } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

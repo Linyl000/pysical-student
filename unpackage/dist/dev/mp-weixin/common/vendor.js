@@ -19721,6 +19721,13 @@ function postRequest(url, data) {
         //token可以不要，看后端
       },
       success: function success(res) {
+        if (res.data.code === 401) {
+          uni.removeStorageSync('token');
+          uni.redirectTo({
+            url: '/pages_other/first-info/first-info' });
+
+          return;
+        }
         resolve(res.data);
       },
       fail: function fail(e) {
@@ -19742,11 +19749,16 @@ function getRequest(url, data) {
       header: {
         'content-type': 'application/json',
         'Authorization': uni.getStorageSync('token')
-
-
         // 'user-token': uni.getStorageSync('userinfo').token
       },
       success: function success(res) {
+        if (res.data.code === 401) {
+          uni.removeStorageSync('token');
+          uni.redirectTo({
+            url: '/pages_other/first-info/first-info' });
+
+          return;
+        }
         resolve(res.data);
       },
       fail: function fail(e) {
@@ -19778,6 +19790,13 @@ function putRequest(url, data, heads) {
         'Authorization': uni.getStorageSync('token') },
 
       success: function success(res) {
+        if (res.data.code === 401) {
+          uni.removeStorageSync('token');
+          uni.redirectTo({
+            url: '/pages_other/first-info/first-info' });
+
+          return;
+        }
         resolve(res.data);
       },
       fail: function fail(e) {
@@ -19809,6 +19828,13 @@ function delRequest(url, data) {
         'Authorization': uni.getStorageSync('token') },
 
       success: function success(res) {
+        if (res.data.code === 401) {
+          uni.removeStorageSync('token');
+          uni.redirectTo({
+            url: '/pages_other/first-info/first-info' });
+
+          return;
+        }
         resolve(res.data);
       },
       fail: function fail(e) {
@@ -20019,7 +20045,30 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /***/ }),
 /* 269 */,
 /* 270 */,
-/* 271 */,
+/* 271 */
+/*!*************************************************!*\
+  !*** F:/uniApp/pysical-student/api/practice.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.start = start;exports.submit = submit;var _api = __webpack_require__(/*! @/api/api.js */ 153);
+
+
+
+
+//视频练习开始
+function start(data) {
+  return (0, _api.get)('/work/studentWork/practice/video/', data);
+}
+
+//视频练习提交
+function submit(data) {
+  return (0, _api.get)('/work/studentWork/practice/video/submit', data);
+}
+
+/***/ }),
 /* 272 */,
 /* 273 */,
 /* 274 */,
@@ -20042,7 +20091,8 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* 291 */,
 /* 292 */,
 /* 293 */,
-/* 294 */
+/* 294 */,
+/* 295 */
 /*!*******************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-checkbox-group/props.js ***!
   \*******************************************************************************************/
@@ -20131,14 +20181,14 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 295 */,
 /* 296 */,
 /* 297 */,
 /* 298 */,
 /* 299 */,
 /* 300 */,
 /* 301 */,
-/* 302 */
+/* 302 */,
+/* 303 */
 /*!*************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-checkbox/props.js ***!
   \*************************************************************************************/
@@ -20215,12 +20265,12 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 303 */,
 /* 304 */,
 /* 305 */,
 /* 306 */,
 /* 307 */,
-/* 308 */
+/* 308 */,
+/* 309 */
 /*!***********************************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/z-paging-main.js?vue&type=script&lang=js& ***!
   \***********************************************************************************************************************/
@@ -20229,13 +20279,13 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./z-paging-main.js?vue&type=script&lang=js& */ 309);
+/* harmony import */ var _D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./z-paging-main.js?vue&type=script&lang=js& */ 310);
 /* harmony import */ var _D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
  /* harmony default export */ __webpack_exports__["default"] = (_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_D_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_z_paging_main_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 309 */
+/* 310 */
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/z-paging-main.js?vue&type=script&lang=js& ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -20245,28 +20295,28 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 35));
 
-var _zPagingStatic = _interopRequireDefault(__webpack_require__(/*! ./z-paging-static */ 310));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! ./z-paging-constant */ 311));
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! ./z-paging-utils */ 312));
+var _zPagingStatic = _interopRequireDefault(__webpack_require__(/*! ./z-paging-static */ 311));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! ./z-paging-constant */ 312));
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! ./z-paging-utils */ 313));
 
 
 
 
 
 
-var _commonLayout = _interopRequireDefault(__webpack_require__(/*! ./modules/common-layout */ 317));
-var _dataHandle = _interopRequireDefault(__webpack_require__(/*! ./modules/data-handle */ 318));
-var _i18n = _interopRequireDefault(__webpack_require__(/*! ./modules/i18n */ 321));
-var _nvue = _interopRequireDefault(__webpack_require__(/*! ./modules/nvue */ 326));
-var _empty = _interopRequireDefault(__webpack_require__(/*! ./modules/empty */ 327));
-var _refresher = _interopRequireDefault(__webpack_require__(/*! ./modules/refresher */ 328));
-var _loadMore = _interopRequireDefault(__webpack_require__(/*! ./modules/load-more */ 329));
-var _loading = _interopRequireDefault(__webpack_require__(/*! ./modules/loading */ 330));
-var _scroller = _interopRequireDefault(__webpack_require__(/*! ./modules/scroller */ 331));
-var _backToTop = _interopRequireDefault(__webpack_require__(/*! ./modules/back-to-top */ 332));
-var _virtualList = _interopRequireDefault(__webpack_require__(/*! ./modules/virtual-list */ 333));
+var _commonLayout = _interopRequireDefault(__webpack_require__(/*! ./modules/common-layout */ 318));
+var _dataHandle = _interopRequireDefault(__webpack_require__(/*! ./modules/data-handle */ 319));
+var _i18n = _interopRequireDefault(__webpack_require__(/*! ./modules/i18n */ 322));
+var _nvue = _interopRequireDefault(__webpack_require__(/*! ./modules/nvue */ 327));
+var _empty = _interopRequireDefault(__webpack_require__(/*! ./modules/empty */ 328));
+var _refresher = _interopRequireDefault(__webpack_require__(/*! ./modules/refresher */ 329));
+var _loadMore = _interopRequireDefault(__webpack_require__(/*! ./modules/load-more */ 330));
+var _loading = _interopRequireDefault(__webpack_require__(/*! ./modules/loading */ 331));
+var _scroller = _interopRequireDefault(__webpack_require__(/*! ./modules/scroller */ 332));
+var _backToTop = _interopRequireDefault(__webpack_require__(/*! ./modules/back-to-top */ 333));
+var _virtualList = _interopRequireDefault(__webpack_require__(/*! ./modules/virtual-list */ 334));
 
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! ./z-paging-enum */ 319));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var zPagingRefresh = function zPagingRefresh() {__webpack_require__.e(/*! require.ensure | uni_modules/z-paging/components/z-paging/components/z-paging-refresh */ "uni_modules/z-paging/components/z-paging/components/z-paging-refresh").then((function () {return resolve(__webpack_require__(/*! ../components/z-paging-refresh */ 434));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var zPagingLoadMore = function zPagingLoadMore() {__webpack_require__.e(/*! require.ensure | uni_modules/z-paging/components/z-paging/components/z-paging-load-more */ "uni_modules/z-paging/components/z-paging/components/z-paging-load-more").then((function () {return resolve(__webpack_require__(/*! ../components/z-paging-load-more */ 441));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var zPagingEmptyView = function zPagingEmptyView() {__webpack_require__.e(/*! require.ensure | uni_modules/z-paging/components/z-paging-empty-view/z-paging-empty-view */ "uni_modules/z-paging/components/z-paging-empty-view/z-paging-empty-view").then((function () {return resolve(__webpack_require__(/*! ../../z-paging-empty-view/z-paging-empty-view */ 427));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! ./z-paging-enum */ 320));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var zPagingRefresh = function zPagingRefresh() {__webpack_require__.e(/*! require.ensure | uni_modules/z-paging/components/z-paging/components/z-paging-refresh */ "uni_modules/z-paging/components/z-paging/components/z-paging-refresh").then((function () {return resolve(__webpack_require__(/*! ../components/z-paging-refresh */ 435));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var zPagingLoadMore = function zPagingLoadMore() {__webpack_require__.e(/*! require.ensure | uni_modules/z-paging/components/z-paging/components/z-paging-load-more */ "uni_modules/z-paging/components/z-paging/components/z-paging-load-more").then((function () {return resolve(__webpack_require__(/*! ../components/z-paging-load-more */ 442));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var zPagingEmptyView = function zPagingEmptyView() {__webpack_require__.e(/*! require.ensure | uni_modules/z-paging/components/z-paging-empty-view/z-paging-empty-view */ "uni_modules/z-paging/components/z-paging-empty-view/z-paging-empty-view").then((function () {return resolve(__webpack_require__(/*! ../../z-paging-empty-view/z-paging-empty-view */ 428));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 var systemInfo = uni.getSystemInfoSync();var _default2 =
 
@@ -20667,7 +20717,7 @@ var systemInfo = uni.getSystemInfoSync();var _default2 =
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 310 */
+/* 311 */
 /*!************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/z-paging-static.js ***!
   \************************************************************************************************/
@@ -20689,7 +20739,7 @@ var _default =
   base64BackToTop: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIBAMAAABfdrOtAAAAElBMVEVRUVH+/v5HcEyZmZlRUVFRUVGm1ByOAAAABnRSTlPMzADMTZAJBBGsAAAEnElEQVR42t2cS27jMAyGf7/2U+QCQeDsbeQCgZDujaC5/1UmkzaJn+JDFGcw3LdfflKibJkkDnxrL7dbg7sNt6+L4O8OYBM+B0ys+QrGkHZG+OEEQ8g6go8Bx1GIGMdpNOQyIG6XdMgnSPtKhLQDGEZFBgYMkhKFtGBb0EIEjDgFRowoBVaMGAWpMedEfxMiZtwpUsgZCqtlkCNUdpVAWigtCCCDFtLwIWeoreZCWiRYYEKGFEjDg+yRZCUH0iLRAgNyToXUNCRZyMqWhGnUN2IPm3wSlwJ7IUspyCBkIQUZhCykIIeQuRTkEDKXAuM9srrtYbrZN7Y98giZSoFd+t1OxmMITG0dcrSFXFchZ1tIvQZpYWxhBbK3hpQrkMEa0iwh5t4a+QvZvDXyF7J5a+Qv5PPW21/I5623v5DPW29/IaO3Xv5Clrw1y1/Ikrdm+Qs5svw83yNnSJ5BQb4F/F7EIEJSnThGBAXxkFQfLOviQUE8JAUPsosHBfGQfDAtHhREQ1JxIV00KIgmrnRI84S0yAd5BAXxxJUck0f6Qnwr9qmr6xF5xLMjcwn/iudIEAdWnyjkEXlQKZiRVzoqRyLbgeUKKR8Q4alY7cSnoxzSf2ggsqehKr6YVpcXpOd7H93f60cKhOd7Re2LteUF4eLqiVS1mr0ge4io6C2+soaFkJ7MuuuQs1yITEp9hwwKISIpzR2iESKSIoT0rLNwuVHQqoSIpAQJpGce60vIUSdEIuUqgPTsJ5QFZK8UIpBS8iG94GFrDjlrhfCl8CG96Llxmle4kEr6vKWBPIVo9kqDQSRk9/3cWoikcCFPAd33v4dIChPyEvLzBA6RlEYWke4JEUnhKXkLeUEKxRHJFfKCQHGucIW8IdZSRkLeEGMpYyEjiK2UsZARxFTKRMgYYillImQMMZQyFTKB2EmZCplAuFLIHT8TMoWwpQwiIVMIUwqpZP5bp5CCvCTiQKr5f5lCQN+tPCBn2ZvVDFJwIDUP0m1BYAfZYRNSsCB7BqTbhoARePIxtZ9tgwWkoJcwCalmv3MBAemtO4R6dah2HaKQqj8Zvp9sQDjvJ21+SPCBHPJDDk6QITekEV7gqCC19CpKAym9IMfckKv4olMBCeIrWwVEfvkshzQekO9r9P1/ALk+IG1eSPCDiCJfyG+FyU+A6ZCa/piZDinpz7LpkCv5gdkAEshP5emQhv7onw6pGeULyZCSUYiRDAmMkpJkCKs4JhFSq8p8hJBSVbAkhARV6ZUQoisik0FqXTmcDHLVFfbJIEFXoiiCNMpiSxGkVJaNiiBBWQArgTTaUl4JpNQWJUsgQVteXQg+AKkLxQWFGKW+5J2+eVp4S168X3CF1CltCKdTJ8lb84YK2bUBO+wZW0Pqv9nk4tKu49N45NJC5dMM5tLW5tOg59Jq6NM06dL+abFXwr/RkuvTXJwae1abtE/Dt0/ruksTvs84AZ/BCC4jHnyGVfiM3VBQFANEXEah+Ax18RlP4zNox2dkkM/wI58xTn8yDCXGYCDV3W5RGSajtXyGhG1jbpbjzpwGt/0MJft8jqC7iUbQ/QZaxdnKqcIftwAAAABJRU5ErkJggg==' };exports.default = _default;
 
 /***/ }),
-/* 311 */
+/* 312 */
 /*!**************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/z-paging-constant.js ***!
   \**************************************************************************************************/
@@ -20710,7 +20760,7 @@ var _default =
   listCellIndexUniqueKey: 'zp_unique_index' };exports.default = _default;
 
 /***/ }),
-/* 312 */
+/* 313 */
 /*!***********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/z-paging-utils.js ***!
   \***********************************************************************************************/
@@ -20720,9 +20770,9 @@ var _default =
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
-var _zPagingConfig = _interopRequireDefault(__webpack_require__(/*! ./z-paging-config */ 313));
-var _index = _interopRequireDefault(__webpack_require__(/*! ../config/index */ 314));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! ./z-paging-constant */ 311));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]工具类
+var _zPagingConfig = _interopRequireDefault(__webpack_require__(/*! ./z-paging-config */ 314));
+var _index = _interopRequireDefault(__webpack_require__(/*! ../config/index */ 315));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! ./z-paging-constant */ 312));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]工具类
 
 var storageKey = 'Z-PAGING-REFRESHER-TIME-STORAGE-KEY';
 var config = null;
@@ -20734,10 +20784,10 @@ var timeoutMap = {};
                      */
 
 try {
-  var contextKeys = __webpack_require__(315).keys();
+  var contextKeys = __webpack_require__(316).keys();
   if (contextKeys.length) {
     var suffix = '.js';
-    config = __webpack_require__(316)("./z-paging-config" + suffix);
+    config = __webpack_require__(317)("./z-paging-config" + suffix);
   }
 } catch (e) {}
 
@@ -20940,7 +20990,7 @@ function _toKebab(value) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 313 */
+/* 314 */
 /*!************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/z-paging-config.js ***!
   \************************************************************************************************/
@@ -20971,7 +21021,7 @@ function getConfig() {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 314 */
+/* 315 */
 /*!******************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/config/index.js ***!
   \******************************************************************************************/
@@ -20984,28 +21034,10 @@ var _default =
 {};exports.default = _default;
 
 /***/ }),
-/* 315 */
+/* 316 */
 /*!******************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging sync nonrecursive \z-paging-config$ ***!
   \******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function webpackEmptyContext(req) {
-	var e = new Error("Cannot find module '" + req + "'");
-	e.code = 'MODULE_NOT_FOUND';
-	throw e;
-}
-webpackEmptyContext.keys = function() { return []; };
-webpackEmptyContext.resolve = webpackEmptyContext;
-module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 315;
-
-/***/ }),
-/* 316 */
-/*!*************************************************************************************!*\
-  !*** F:/uniApp/pysical-student/uni_modules/z-paging sync ^\.\/z\-paging\-config.*$ ***!
-  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -21021,6 +21053,24 @@ webpackEmptyContext.id = 316;
 
 /***/ }),
 /* 317 */
+/*!*************************************************************************************!*\
+  !*** F:/uniApp/pysical-student/uni_modules/z-paging sync ^\.\/z\-paging\-config.*$ ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function webpackEmptyContext(req) {
+	var e = new Error("Cannot find module '" + req + "'");
+	e.code = 'MODULE_NOT_FOUND';
+	throw e;
+}
+webpackEmptyContext.keys = function() { return []; };
+webpackEmptyContext.resolve = webpackEmptyContext;
+module.exports = webpackEmptyContext;
+webpackEmptyContext.id = 317;
+
+/***/ }),
+/* 318 */
 /*!******************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/common-layout.js ***!
   \******************************************************************************************************/
@@ -21145,7 +21195,7 @@ var _default =
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 318 */
+/* 319 */
 /*!****************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/data-handle.js ***!
   \****************************************************************************************************/
@@ -21154,10 +21204,10 @@ var _default =
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 312));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 311));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 319));
-var _zPagingInterceptor = _interopRequireDefault(__webpack_require__(/*! ../z-paging-interceptor */ 320));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}var _default2 =
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 313));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 312));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 320));
+var _zPagingInterceptor = _interopRequireDefault(__webpack_require__(/*! ../z-paging-interceptor */ 321));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}var _default2 =
 
 {
   props: {
@@ -21871,7 +21921,7 @@ var _zPagingInterceptor = _interopRequireDefault(__webpack_require__(/*! ../z-pa
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 319 */
+/* 320 */
 /*!**********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/z-paging-enum.js ***!
   \**********************************************************************************************/
@@ -21923,7 +21973,7 @@ var _default =
     Always: 'always' } };exports.default = _default;
 
 /***/ }),
-/* 320 */
+/* 321 */
 /*!*****************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/z-paging-interceptor.js ***!
   \*****************************************************************************************************/
@@ -21980,7 +22030,7 @@ function _getApp() {
   _handleLanguage2Local: _handleLanguage2Local };exports.default = _default;
 
 /***/ }),
-/* 321 */
+/* 322 */
 /*!*********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/i18n.js ***!
   \*********************************************************************************************/
@@ -21990,12 +22040,12 @@ function _getApp() {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 var _uniI18n = __webpack_require__(/*! @dcloudio/uni-i18n */ 3);
-var _index = _interopRequireDefault(__webpack_require__(/*! ../../i18n/index.js */ 322));
+var _index = _interopRequireDefault(__webpack_require__(/*! ../../i18n/index.js */ 323));
 
 
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 312));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 311));
-var _zPagingInterceptor = _interopRequireDefault(__webpack_require__(/*! ../z-paging-interceptor */ 320));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]i18n模块
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 313));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 312));
+var _zPagingInterceptor = _interopRequireDefault(__webpack_require__(/*! ../z-paging-interceptor */ 321));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]i18n模块
 var _initVueI18n = (0, _uniI18n.initVueI18n)(_index.default),t = _initVueI18n.t;var _default =
 {
   data: function data() {
@@ -22089,7 +22139,7 @@ var _initVueI18n = (0, _uniI18n.initVueI18n)(_index.default),t = _initVueI18n.t;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 322 */
+/* 323 */
 /*!****************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/i18n/index.js ***!
   \****************************************************************************************/
@@ -22097,16 +22147,16 @@ var _initVueI18n = (0, _uniI18n.initVueI18n)(_index.default),t = _initVueI18n.t;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _en = _interopRequireDefault(__webpack_require__(/*! ./en.json */ 323));
-var _zhHans = _interopRequireDefault(__webpack_require__(/*! ./zh-Hans.json */ 324));
-var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 325));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _en = _interopRequireDefault(__webpack_require__(/*! ./en.json */ 324));
+var _zhHans = _interopRequireDefault(__webpack_require__(/*! ./zh-Hans.json */ 325));
+var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 326));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
   en: _en.default,
   'zh-Hans': _zhHans.default,
   'zh-Hant': _zhHant.default };exports.default = _default;
 
 /***/ }),
-/* 323 */
+/* 324 */
 /*!***************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/i18n/en.json ***!
   \***************************************************************************************/
@@ -22116,7 +22166,7 @@ var _zhHant = _interopRequireDefault(__webpack_require__(/*! ./zh-Hant.json */ 3
 module.exports = JSON.parse("{\"zp.refresher.default\":\"Pull down to refresh\",\"zp.refresher.pulling\":\"Release to refresh\",\"zp.refresher.refreshing\":\"Refreshing...\",\"zp.refresher.complete\":\"Refresh succeeded\",\"zp.loadingMore.default\":\"Click to load more\",\"zp.loadingMore.loading\":\"Loading...\",\"zp.loadingMore.noMore\":\"No more data\",\"zp.loadingMore.fail\":\"Load failed,click to reload\",\"zp.emptyView.title\":\"No data\",\"zp.emptyView.reload\":\"Reload\",\"zp.emptyView.error\":\"Sorry,load failed\",\"zp.refresherUpdateTime.title\":\"Last update: \",\"zp.refresherUpdateTime.none\":\"None\",\"zp.refresherUpdateTime.today\":\"Today\",\"zp.refresherUpdateTime.yesterday\":\"Yesterday\",\"zp.systemLoading.title\":\"Loading...\"}");
 
 /***/ }),
-/* 324 */
+/* 325 */
 /*!********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/i18n/zh-Hans.json ***!
   \********************************************************************************************/
@@ -22126,7 +22176,7 @@ module.exports = JSON.parse("{\"zp.refresher.default\":\"Pull down to refresh\",
 module.exports = JSON.parse("{\"zp.refresher.default\":\"继续下拉刷新\",\"zp.refresher.pulling\":\"松开立即刷新\",\"zp.refresher.refreshing\":\"正在刷新...\",\"zp.refresher.complete\":\"刷新成功\",\"zp.loadingMore.default\":\"点击加载更多\",\"zp.loadingMore.loading\":\"正在加载...\",\"zp.loadingMore.noMore\":\"没有更多了\",\"zp.loadingMore.fail\":\"加载失败，点击重新加载\",\"zp.emptyView.title\":\"没有数据哦~\",\"zp.emptyView.reload\":\"重新加载\",\"zp.emptyView.error\":\"很抱歉，加载失败\",\"zp.refresherUpdateTime.title\":\"最后更新：\",\"zp.refresherUpdateTime.none\":\"无\",\"zp.refresherUpdateTime.today\":\"今天\",\"zp.refresherUpdateTime.yesterday\":\"昨天\",\"zp.systemLoading.title\":\"加载中...\"}");
 
 /***/ }),
-/* 325 */
+/* 326 */
 /*!********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/i18n/zh-Hant.json ***!
   \********************************************************************************************/
@@ -22136,7 +22186,7 @@ module.exports = JSON.parse("{\"zp.refresher.default\":\"继续下拉刷新\",\"
 module.exports = JSON.parse("{\"zp.refresher.default\":\"繼續下拉重繪\",\"zp.refresher.pulling\":\"鬆開立即重繪\",\"zp.refresher.refreshing\":\"正在重繪...\",\"zp.refresher.complete\":\"重繪成功\",\"zp.loadingMore.default\":\"點擊加載更多\",\"zp.loadingMore.loading\":\"正在加載...\",\"zp.loadingMore.noMore\":\"沒有更多了\",\"zp.loadingMore.fail\":\"加載失敗，點擊重新加載\",\"zp.emptyView.title\":\"沒有數據哦~\",\"zp.emptyView.reload\":\"重新加載\",\"zp.emptyView.error\":\"很抱歉，加載失敗\",\"zp.refresherUpdateTime.title\":\"最後更新：\",\"zp.refresherUpdateTime.none\":\"無\",\"zp.refresherUpdateTime.today\":\"今天\",\"zp.refresherUpdateTime.yesterday\":\"昨天\",\"zp.systemLoading.title\":\"加載中...\"}");
 
 /***/ }),
-/* 326 */
+/* 327 */
 /*!*********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/nvue.js ***!
   \*********************************************************************************************/
@@ -22145,9 +22195,9 @@ module.exports = JSON.parse("{\"zp.refresher.default\":\"繼續下拉重繪\",\"
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 312));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 311));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 319));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]nvue独有部分模块
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 313));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 312));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 320));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]nvue独有部分模块
 var _default =
 
 
@@ -22295,7 +22345,7 @@ var _default =
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 327 */
+/* 328 */
 /*!**********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/empty.js ***!
   \**********************************************************************************************/
@@ -22304,7 +22354,7 @@ var _default =
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 312));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]空数据图view模块
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 313));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]空数据图view模块
 var _default2 =
 {
   props: {
@@ -22450,7 +22500,7 @@ var _default2 =
     } } };exports.default = _default2;
 
 /***/ }),
-/* 328 */
+/* 329 */
 /*!**************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/refresher.js ***!
   \**************************************************************************************************/
@@ -22459,9 +22509,9 @@ var _default2 =
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 312));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 311));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 319));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]下拉刷新view模块
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 313));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 312));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 320));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]下拉刷新view模块
 var _default2 =
 {
   props: {
@@ -23140,7 +23190,7 @@ var _default2 =
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 329 */
+/* 330 */
 /*!**************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/load-more.js ***!
   \**************************************************************************************************/
@@ -23149,8 +23199,8 @@ var _default2 =
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 35));
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 312));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 319));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default2 =
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 313));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 320));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default2 =
 
 {
   props: {
@@ -23463,7 +23513,7 @@ var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-
     } } };exports.default = _default2;
 
 /***/ }),
-/* 330 */
+/* 331 */
 /*!************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/loading.js ***!
   \************************************************************************************************/
@@ -23472,8 +23522,8 @@ var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 312));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 319));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]loading相关模块
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 313));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 320));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]loading相关模块
 var _default =
 {
   props: {
@@ -23565,7 +23615,7 @@ var _default =
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 331 */
+/* 332 */
 /*!*************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/scroller.js ***!
   \*************************************************************************************************/
@@ -23574,8 +23624,8 @@ var _default =
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 35));
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 312));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 319));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 313));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 320));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
 
 
 
@@ -24036,7 +24086,7 @@ var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 332 */
+/* 333 */
 /*!****************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/back-to-top.js ***!
   \****************************************************************************************************/
@@ -24045,7 +24095,7 @@ var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 312));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]点击返回顶部view模块
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 313));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} // [z-paging]点击返回顶部view模块
 var _default2 =
 {
   props: {
@@ -24143,7 +24193,7 @@ var _default2 =
     } } };exports.default = _default2;
 
 /***/ }),
-/* 333 */
+/* 334 */
 /*!*****************************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/z-paging/components/z-paging/js/modules/virtual-list.js ***!
   \*****************************************************************************************************/
@@ -24152,9 +24202,9 @@ var _default2 =
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 35));
-var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 312));
-var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 311));
-var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 319));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default2 =
+var _zPagingUtils = _interopRequireDefault(__webpack_require__(/*! .././z-paging-utils */ 313));
+var _zPagingConstant = _interopRequireDefault(__webpack_require__(/*! .././z-paging-constant */ 312));
+var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-enum */ 320));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default2 =
 
 {
   props: {
@@ -24546,7 +24596,6 @@ var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-
     } } };exports.default = _default2;
 
 /***/ }),
-/* 334 */,
 /* 335 */,
 /* 336 */,
 /* 337 */,
@@ -24555,573 +24604,8 @@ var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-
 /* 340 */,
 /* 341 */,
 /* 342 */,
-/* 343 */
-/*!***************************************************************************************!*\
-  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-cell-group/props.js ***!
-  \***************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 分组标题
-    title: {
-      type: String,
-      default: uni.$u.props.cellGroup.title },
-
-    // 是否显示外边框
-    border: {
-      type: Boolean,
-      default: uni.$u.props.cellGroup.border } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 344 */,
-/* 345 */,
-/* 346 */,
-/* 347 */,
-/* 348 */,
-/* 349 */,
-/* 350 */,
-/* 351 */
-/*!*********************************************************************************!*\
-  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-cell/props.js ***!
-  \*********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default2 = {
-  props: {
-    // 标题
-    title: {
-      type: [String, Number],
-      default: uni.$u.props.cell.title },
-
-    // 标题下方的描述信息
-    label: {
-      type: [String, Number],
-      default: uni.$u.props.cell.label },
-
-    // 右侧的内容
-    value: {
-      type: [String, Number],
-      default: uni.$u.props.cell.value },
-
-    // 左侧图标名称，或者图片链接(本地文件建议使用绝对地址)
-    icon: {
-      type: String,
-      default: uni.$u.props.cell.icon },
-
-    // 是否禁用cell
-    disabled: {
-      type: Boolean,
-      default: uni.$u.props.cell.disabled },
-
-    // 是否显示下边框
-    border: {
-      type: Boolean,
-      default: uni.$u.props.cell.border },
-
-    // 内容是否垂直居中(主要是针对右侧的value部分)
-    center: {
-      type: Boolean,
-      default: uni.$u.props.cell.center },
-
-    // 点击后跳转的URL地址
-    url: {
-      type: String,
-      default: uni.$u.props.cell.url },
-
-    // 链接跳转的方式，内部使用的是uView封装的route方法，可能会进行拦截操作
-    linkType: {
-      type: String,
-      default: uni.$u.props.cell.linkType },
-
-    // 是否开启点击反馈(表现为点击时加上灰色背景)
-    clickable: {
-      type: Boolean,
-      default: uni.$u.props.cell.clickable },
-
-    // 是否展示右侧箭头并开启点击反馈
-    isLink: {
-      type: Boolean,
-      default: uni.$u.props.cell.isLink },
-
-    // 是否显示表单状态下的必填星号(此组件可能会内嵌入input组件)
-    required: {
-      type: Boolean,
-      default: uni.$u.props.cell.required },
-
-    // 右侧的图标箭头
-    rightIcon: {
-      type: String,
-      default: uni.$u.props.cell.rightIcon },
-
-    // 右侧箭头的方向，可选值为：left，up，down
-    arrowDirection: {
-      type: String,
-      default: uni.$u.props.cell.arrowDirection },
-
-    // 左侧图标样式
-    iconStyle: {
-      type: [Object, String],
-      default: function _default() {
-        return uni.$u.props.cell.iconStyle;
-      } },
-
-    // 右侧箭头图标的样式
-    rightIconStyle: {
-      type: [Object, String],
-      default: function _default() {
-        return uni.$u.props.cell.rightIconStyle;
-      } },
-
-    // 标题的样式
-    titleStyle: {
-      type: [Object, String],
-      default: function _default() {
-        return uni.$u.props.cell.titleStyle;
-      } },
-
-    // 单位元的大小，可选值为large
-    size: {
-      type: String,
-      default: uni.$u.props.cell.size },
-
-    // 点击cell是否阻止事件传播
-    stop: {
-      type: Boolean,
-      default: uni.$u.props.cell.stop },
-
-    // 标识符，cell被点击时返回
-    name: {
-      type: [Number, String],
-      default: uni.$u.props.cell.name } } };exports.default = _default2;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 352 */,
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */,
-/* 357 */,
-/* 358 */,
-/* 359 */
-/*!*********************************************************************************!*\
-  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-tabs/props.js ***!
-  \*********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 滑块的移动过渡时间，单位ms
-    duration: {
-      type: Number,
-      default: uni.$u.props.tabs.duration },
-
-    // tabs标签数组
-    list: {
-      type: Array,
-      default: uni.$u.props.tabs.list },
-
-    // 滑块颜色
-    lineColor: {
-      type: String,
-      default: uni.$u.props.tabs.lineColor },
-
-    // 菜单选择中时的样式
-    activeStyle: {
-      type: [String, Object],
-      default: uni.$u.props.tabs.activeStyle },
-
-    // 菜单非选中时的样式
-    inactiveStyle: {
-      type: [String, Object],
-      default: uni.$u.props.tabs.inactiveStyle },
-
-    // 滑块长度
-    lineWidth: {
-      type: [String, Number],
-      default: uni.$u.props.tabs.lineWidth },
-
-    // 滑块高度
-    lineHeight: {
-      type: [String, Number],
-      default: uni.$u.props.tabs.lineHeight },
-
-    // 滑块背景显示大小，当滑块背景设置为图片时使用
-    lineBgSize: {
-      type: String,
-      default: uni.$u.props.tabs.lineBgSize },
-
-    // 菜单item的样式
-    itemStyle: {
-      type: [String, Object],
-      default: uni.$u.props.tabs.itemStyle },
-
-    // 菜单是否可滚动
-    scrollable: {
-      type: Boolean,
-      default: uni.$u.props.tabs.scrollable },
-
-    // 当前选中标签的索引
-    current: {
-      type: [Number, String],
-      default: uni.$u.props.tabs.current },
-
-    // 默认读取的键名
-    keyName: {
-      type: String,
-      default: uni.$u.props.tabs.keyName } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 360 */,
-/* 361 */,
-/* 362 */,
-/* 363 */,
-/* 364 */,
-/* 365 */,
-/* 366 */,
-/* 367 */
-/*!***********************************************************************************!*\
-  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-search/props.js ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 搜索框形状，round-圆形，square-方形
-    shape: {
-      type: String,
-      default: uni.$u.props.search.shape },
-
-    // 搜索框背景色，默认值#f2f2f2
-    bgColor: {
-      type: String,
-      default: uni.$u.props.search.bgColor },
-
-    // 占位提示文字
-    placeholder: {
-      type: String,
-      default: uni.$u.props.search.placeholder },
-
-    // 是否启用清除控件
-    clearabled: {
-      type: Boolean,
-      default: uni.$u.props.search.clearabled },
-
-    // 是否自动聚焦
-    focus: {
-      type: Boolean,
-      default: uni.$u.props.search.focus },
-
-    // 是否在搜索框右侧显示取消按钮
-    showAction: {
-      type: Boolean,
-      default: uni.$u.props.search.showAction },
-
-    // 右边控件的样式
-    actionStyle: {
-      type: Object,
-      default: uni.$u.props.search.actionStyle },
-
-    // 取消按钮文字
-    actionText: {
-      type: String,
-      default: uni.$u.props.search.actionText },
-
-    // 输入框内容对齐方式，可选值为 left|center|right
-    inputAlign: {
-      type: String,
-      default: uni.$u.props.search.inputAlign },
-
-    // input输入框的样式，可以定义文字颜色，大小等，对象形式
-    inputStyle: {
-      type: Object,
-      default: uni.$u.props.search.inputStyle },
-
-    // 是否启用输入框
-    disabled: {
-      type: Boolean,
-      default: uni.$u.props.search.disabled },
-
-    // 边框颜色
-    borderColor: {
-      type: String,
-      default: uni.$u.props.search.borderColor },
-
-    // 搜索图标的颜色，默认同输入框字体颜色
-    searchIconColor: {
-      type: String,
-      default: uni.$u.props.search.searchIconColor },
-
-    // 输入框字体颜色
-    color: {
-      type: String,
-      default: uni.$u.props.search.color },
-
-    // placeholder的颜色
-    placeholderColor: {
-      type: String,
-      default: uni.$u.props.search.placeholderColor },
-
-    // 左边输入框的图标，可以为uView图标名称或图片路径
-    searchIcon: {
-      type: String,
-      default: uni.$u.props.search.searchIcon },
-
-    searchIconSize: {
-      type: [Number, String],
-      default: uni.$u.props.search.searchIconSize },
-
-    // 组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"、"30px 20px"等写法
-    margin: {
-      type: String,
-      default: uni.$u.props.search.margin },
-
-    // 开启showAction时，是否在input获取焦点时才显示
-    animation: {
-      type: Boolean,
-      default: uni.$u.props.search.animation },
-
-    // 输入框的初始化内容
-    value: {
-      type: String,
-      default: uni.$u.props.search.value },
-
-    // 输入框最大能输入的长度，-1为不限制长度(来自uniapp文档)
-    maxlength: {
-      type: [String, Number],
-      default: uni.$u.props.search.maxlength },
-
-    // 搜索框高度，单位px
-    height: {
-      type: [String, Number],
-      default: uni.$u.props.search.height },
-
-    // 搜索框左侧文本
-    label: {
-      type: [String, Number, null],
-      default: uni.$u.props.search.label } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 368 */,
-/* 369 */,
-/* 370 */,
-/* 371 */,
-/* 372 */,
-/* 373 */,
-/* 374 */,
-/* 375 */
-/*!**********************************************************************************!*\
-  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-input/props.js ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 输入的值
-    value: {
-      type: [String, Number],
-      default: uni.$u.props.input.value },
-
-    // 输入框类型
-    // number-数字输入键盘，app-vue下可以输入浮点数，app-nvue和小程序平台下只能输入整数
-    // idcard-身份证输入键盘，微信、支付宝、百度、QQ小程序
-    // digit-带小数点的数字键盘，App的nvue页面、微信、支付宝、百度、头条、QQ小程序
-    // text-文本输入键盘
-    type: {
-      type: String,
-      default: uni.$u.props.input.type },
-
-    // 如果 textarea 是在一个 position:fixed 的区域，需要显示指定属性 fixed 为 true，
-    // 兼容性：微信小程序、百度小程序、字节跳动小程序、QQ小程序
-    fixed: {
-      type: Boolean,
-      default: uni.$u.props.input.fixed },
-
-    // 是否禁用输入框
-    disabled: {
-      type: Boolean,
-      default: uni.$u.props.input.disabled },
-
-    // 禁用状态时的背景色
-    disabledColor: {
-      type: String,
-      default: uni.$u.props.input.disabledColor },
-
-    // 是否显示清除控件
-    clearable: {
-      type: Boolean,
-      default: uni.$u.props.input.clearable },
-
-    // 是否密码类型
-    password: {
-      type: Boolean,
-      default: uni.$u.props.input.password },
-
-    // 最大输入长度，设置为 -1 的时候不限制最大长度
-    maxlength: {
-      type: [String, Number],
-      default: uni.$u.props.input.maxlength },
-
-    // 	输入框为空时的占位符
-    placeholder: {
-      type: String,
-      default: uni.$u.props.input.placeholder },
-
-    // 指定placeholder的样式类，注意页面或组件的style中写了scoped时，需要在类名前写/deep/
-    placeholderClass: {
-      type: String,
-      default: uni.$u.props.input.placeholderClass },
-
-    // 指定placeholder的样式
-    placeholderStyle: {
-      type: [String, Object],
-      default: uni.$u.props.input.placeholderStyle },
-
-    // 是否显示输入字数统计，只在 type ="text"或type ="textarea"时有效
-    showWordLimit: {
-      type: Boolean,
-      default: uni.$u.props.input.showWordLimit },
-
-    // 设置右下角按钮的文字，有效值：send|search|next|go|done，兼容性详见uni-app文档
-    // https://uniapp.dcloud.io/component/input
-    // https://uniapp.dcloud.io/component/textarea
-    confirmType: {
-      type: String,
-      default: uni.$u.props.input.confirmType },
-
-    // 点击键盘右下角按钮时是否保持键盘不收起，H5无效
-    confirmHold: {
-      type: Boolean,
-      default: uni.$u.props.input.confirmHold },
-
-    // focus时，点击页面的时候不收起键盘，微信小程序有效
-    holdKeyboard: {
-      type: Boolean,
-      default: uni.$u.props.input.holdKeyboard },
-
-    // 自动获取焦点
-    // 在 H5 平台能否聚焦以及软键盘是否跟随弹出，取决于当前浏览器本身的实现。nvue 页面不支持，需使用组件的 focus()、blur() 方法控制焦点
-    focus: {
-      type: Boolean,
-      default: uni.$u.props.input.focus },
-
-    // 键盘收起时，是否自动失去焦点，目前仅App3.0.0+有效
-    autoBlur: {
-      type: Boolean,
-      default: uni.$u.props.input.autoBlur },
-
-    // 是否去掉 iOS 下的默认内边距，仅微信小程序，且type=textarea时有效
-    disableDefaultPadding: {
-      type: Boolean,
-      default: uni.$u.props.input.disableDefaultPadding },
-
-    // 指定focus时光标的位置
-    cursor: {
-      type: [String, Number],
-      default: uni.$u.props.input.cursor },
-
-    // 输入框聚焦时底部与键盘的距离
-    cursorSpacing: {
-      type: [String, Number],
-      default: uni.$u.props.input.cursorSpacing },
-
-    // 光标起始位置，自动聚集时有效，需与selection-end搭配使用
-    selectionStart: {
-      type: [String, Number],
-      default: uni.$u.props.input.selectionStart },
-
-    // 光标结束位置，自动聚集时有效，需与selection-start搭配使用
-    selectionEnd: {
-      type: [String, Number],
-      default: uni.$u.props.input.selectionEnd },
-
-    // 键盘弹起时，是否自动上推页面
-    adjustPosition: {
-      type: Boolean,
-      default: uni.$u.props.input.adjustPosition },
-
-    // 输入框内容对齐方式，可选值为：left|center|right
-    inputAlign: {
-      type: String,
-      default: uni.$u.props.input.inputAlign },
-
-    // 输入框字体的大小
-    fontSize: {
-      type: [String, Number],
-      default: uni.$u.props.input.fontSize },
-
-    // 输入框字体颜色
-    color: {
-      type: String,
-      default: uni.$u.props.input.color },
-
-    // 输入框前置图标
-    prefixIcon: {
-      type: String,
-      default: uni.$u.props.input.prefixIcon },
-
-    // 前置图标样式，对象或字符串
-    prefixIconStyle: {
-      type: [String, Object],
-      default: uni.$u.props.input.prefixIconStyle },
-
-    // 输入框后置图标
-    suffixIcon: {
-      type: String,
-      default: uni.$u.props.input.suffixIcon },
-
-    // 后置图标样式，对象或字符串
-    suffixIconStyle: {
-      type: [String, Object],
-      default: uni.$u.props.input.suffixIconStyle },
-
-    // 边框类型，surround-四周边框，bottom-底部边框，none-无边框
-    border: {
-      type: String,
-      default: uni.$u.props.input.border },
-
-    // 是否只读，与disabled不同之处在于disabled会置灰组件，而readonly则不会
-    readonly: {
-      type: Boolean,
-      default: uni.$u.props.input.readonly },
-
-    // 输入框形状，circle-圆形，square-方形
-    shape: {
-      type: String,
-      default: uni.$u.props.input.shape },
-
-    // 用于处理或者过滤输入框内容的方法
-    formatter: {
-      type: [Function, null],
-      default: uni.$u.props.input.formatter },
-
-    // 是否忽略组件内对文本合成系统事件的处理
-    ignoreCompositionEvent: {
-      type: Boolean,
-      default: true } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 376 */,
-/* 377 */,
-/* 378 */,
-/* 379 */,
-/* 380 */,
-/* 381 */
+/* 343 */,
+/* 344 */
 /*!*********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-icon/icons.js ***!
   \*********************************************************************************/
@@ -25344,7 +24828,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   'uicon-en': "\uE692" };exports.default = _default;
 
 /***/ }),
-/* 382 */
+/* 345 */
 /*!*********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-icon/props.js ***!
   \*********************************************************************************/
@@ -25441,9 +24925,574 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */
+/*!***************************************************************************************!*\
+  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-cell-group/props.js ***!
+  \***************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 分组标题
+    title: {
+      type: String,
+      default: uni.$u.props.cellGroup.title },
+
+    // 是否显示外边框
+    border: {
+      type: Boolean,
+      default: uni.$u.props.cellGroup.border } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */
+/*!*********************************************************************************!*\
+  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-cell/props.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default2 = {
+  props: {
+    // 标题
+    title: {
+      type: [String, Number],
+      default: uni.$u.props.cell.title },
+
+    // 标题下方的描述信息
+    label: {
+      type: [String, Number],
+      default: uni.$u.props.cell.label },
+
+    // 右侧的内容
+    value: {
+      type: [String, Number],
+      default: uni.$u.props.cell.value },
+
+    // 左侧图标名称，或者图片链接(本地文件建议使用绝对地址)
+    icon: {
+      type: String,
+      default: uni.$u.props.cell.icon },
+
+    // 是否禁用cell
+    disabled: {
+      type: Boolean,
+      default: uni.$u.props.cell.disabled },
+
+    // 是否显示下边框
+    border: {
+      type: Boolean,
+      default: uni.$u.props.cell.border },
+
+    // 内容是否垂直居中(主要是针对右侧的value部分)
+    center: {
+      type: Boolean,
+      default: uni.$u.props.cell.center },
+
+    // 点击后跳转的URL地址
+    url: {
+      type: String,
+      default: uni.$u.props.cell.url },
+
+    // 链接跳转的方式，内部使用的是uView封装的route方法，可能会进行拦截操作
+    linkType: {
+      type: String,
+      default: uni.$u.props.cell.linkType },
+
+    // 是否开启点击反馈(表现为点击时加上灰色背景)
+    clickable: {
+      type: Boolean,
+      default: uni.$u.props.cell.clickable },
+
+    // 是否展示右侧箭头并开启点击反馈
+    isLink: {
+      type: Boolean,
+      default: uni.$u.props.cell.isLink },
+
+    // 是否显示表单状态下的必填星号(此组件可能会内嵌入input组件)
+    required: {
+      type: Boolean,
+      default: uni.$u.props.cell.required },
+
+    // 右侧的图标箭头
+    rightIcon: {
+      type: String,
+      default: uni.$u.props.cell.rightIcon },
+
+    // 右侧箭头的方向，可选值为：left，up，down
+    arrowDirection: {
+      type: String,
+      default: uni.$u.props.cell.arrowDirection },
+
+    // 左侧图标样式
+    iconStyle: {
+      type: [Object, String],
+      default: function _default() {
+        return uni.$u.props.cell.iconStyle;
+      } },
+
+    // 右侧箭头图标的样式
+    rightIconStyle: {
+      type: [Object, String],
+      default: function _default() {
+        return uni.$u.props.cell.rightIconStyle;
+      } },
+
+    // 标题的样式
+    titleStyle: {
+      type: [Object, String],
+      default: function _default() {
+        return uni.$u.props.cell.titleStyle;
+      } },
+
+    // 单位元的大小，可选值为large
+    size: {
+      type: String,
+      default: uni.$u.props.cell.size },
+
+    // 点击cell是否阻止事件传播
+    stop: {
+      type: Boolean,
+      default: uni.$u.props.cell.stop },
+
+    // 标识符，cell被点击时返回
+    name: {
+      type: [Number, String],
+      default: uni.$u.props.cell.name } } };exports.default = _default2;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */
+/*!*********************************************************************************!*\
+  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-tabs/props.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 滑块的移动过渡时间，单位ms
+    duration: {
+      type: Number,
+      default: uni.$u.props.tabs.duration },
+
+    // tabs标签数组
+    list: {
+      type: Array,
+      default: uni.$u.props.tabs.list },
+
+    // 滑块颜色
+    lineColor: {
+      type: String,
+      default: uni.$u.props.tabs.lineColor },
+
+    // 菜单选择中时的样式
+    activeStyle: {
+      type: [String, Object],
+      default: uni.$u.props.tabs.activeStyle },
+
+    // 菜单非选中时的样式
+    inactiveStyle: {
+      type: [String, Object],
+      default: uni.$u.props.tabs.inactiveStyle },
+
+    // 滑块长度
+    lineWidth: {
+      type: [String, Number],
+      default: uni.$u.props.tabs.lineWidth },
+
+    // 滑块高度
+    lineHeight: {
+      type: [String, Number],
+      default: uni.$u.props.tabs.lineHeight },
+
+    // 滑块背景显示大小，当滑块背景设置为图片时使用
+    lineBgSize: {
+      type: String,
+      default: uni.$u.props.tabs.lineBgSize },
+
+    // 菜单item的样式
+    itemStyle: {
+      type: [String, Object],
+      default: uni.$u.props.tabs.itemStyle },
+
+    // 菜单是否可滚动
+    scrollable: {
+      type: Boolean,
+      default: uni.$u.props.tabs.scrollable },
+
+    // 当前选中标签的索引
+    current: {
+      type: [Number, String],
+      default: uni.$u.props.tabs.current },
+
+    // 默认读取的键名
+    keyName: {
+      type: String,
+      default: uni.$u.props.tabs.keyName } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */
+/*!***********************************************************************************!*\
+  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-search/props.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 搜索框形状，round-圆形，square-方形
+    shape: {
+      type: String,
+      default: uni.$u.props.search.shape },
+
+    // 搜索框背景色，默认值#f2f2f2
+    bgColor: {
+      type: String,
+      default: uni.$u.props.search.bgColor },
+
+    // 占位提示文字
+    placeholder: {
+      type: String,
+      default: uni.$u.props.search.placeholder },
+
+    // 是否启用清除控件
+    clearabled: {
+      type: Boolean,
+      default: uni.$u.props.search.clearabled },
+
+    // 是否自动聚焦
+    focus: {
+      type: Boolean,
+      default: uni.$u.props.search.focus },
+
+    // 是否在搜索框右侧显示取消按钮
+    showAction: {
+      type: Boolean,
+      default: uni.$u.props.search.showAction },
+
+    // 右边控件的样式
+    actionStyle: {
+      type: Object,
+      default: uni.$u.props.search.actionStyle },
+
+    // 取消按钮文字
+    actionText: {
+      type: String,
+      default: uni.$u.props.search.actionText },
+
+    // 输入框内容对齐方式，可选值为 left|center|right
+    inputAlign: {
+      type: String,
+      default: uni.$u.props.search.inputAlign },
+
+    // input输入框的样式，可以定义文字颜色，大小等，对象形式
+    inputStyle: {
+      type: Object,
+      default: uni.$u.props.search.inputStyle },
+
+    // 是否启用输入框
+    disabled: {
+      type: Boolean,
+      default: uni.$u.props.search.disabled },
+
+    // 边框颜色
+    borderColor: {
+      type: String,
+      default: uni.$u.props.search.borderColor },
+
+    // 搜索图标的颜色，默认同输入框字体颜色
+    searchIconColor: {
+      type: String,
+      default: uni.$u.props.search.searchIconColor },
+
+    // 输入框字体颜色
+    color: {
+      type: String,
+      default: uni.$u.props.search.color },
+
+    // placeholder的颜色
+    placeholderColor: {
+      type: String,
+      default: uni.$u.props.search.placeholderColor },
+
+    // 左边输入框的图标，可以为uView图标名称或图片路径
+    searchIcon: {
+      type: String,
+      default: uni.$u.props.search.searchIcon },
+
+    searchIconSize: {
+      type: [Number, String],
+      default: uni.$u.props.search.searchIconSize },
+
+    // 组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"、"30px 20px"等写法
+    margin: {
+      type: String,
+      default: uni.$u.props.search.margin },
+
+    // 开启showAction时，是否在input获取焦点时才显示
+    animation: {
+      type: Boolean,
+      default: uni.$u.props.search.animation },
+
+    // 输入框的初始化内容
+    value: {
+      type: String,
+      default: uni.$u.props.search.value },
+
+    // 输入框最大能输入的长度，-1为不限制长度(来自uniapp文档)
+    maxlength: {
+      type: [String, Number],
+      default: uni.$u.props.search.maxlength },
+
+    // 搜索框高度，单位px
+    height: {
+      type: [String, Number],
+      default: uni.$u.props.search.height },
+
+    // 搜索框左侧文本
+    label: {
+      type: [String, Number, null],
+      default: uni.$u.props.search.label } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
 /* 383 */,
 /* 384 */,
-/* 385 */,
+/* 385 */
+/*!**********************************************************************************!*\
+  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-input/props.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 输入的值
+    value: {
+      type: [String, Number],
+      default: uni.$u.props.input.value },
+
+    // 输入框类型
+    // number-数字输入键盘，app-vue下可以输入浮点数，app-nvue和小程序平台下只能输入整数
+    // idcard-身份证输入键盘，微信、支付宝、百度、QQ小程序
+    // digit-带小数点的数字键盘，App的nvue页面、微信、支付宝、百度、头条、QQ小程序
+    // text-文本输入键盘
+    type: {
+      type: String,
+      default: uni.$u.props.input.type },
+
+    // 如果 textarea 是在一个 position:fixed 的区域，需要显示指定属性 fixed 为 true，
+    // 兼容性：微信小程序、百度小程序、字节跳动小程序、QQ小程序
+    fixed: {
+      type: Boolean,
+      default: uni.$u.props.input.fixed },
+
+    // 是否禁用输入框
+    disabled: {
+      type: Boolean,
+      default: uni.$u.props.input.disabled },
+
+    // 禁用状态时的背景色
+    disabledColor: {
+      type: String,
+      default: uni.$u.props.input.disabledColor },
+
+    // 是否显示清除控件
+    clearable: {
+      type: Boolean,
+      default: uni.$u.props.input.clearable },
+
+    // 是否密码类型
+    password: {
+      type: Boolean,
+      default: uni.$u.props.input.password },
+
+    // 最大输入长度，设置为 -1 的时候不限制最大长度
+    maxlength: {
+      type: [String, Number],
+      default: uni.$u.props.input.maxlength },
+
+    // 	输入框为空时的占位符
+    placeholder: {
+      type: String,
+      default: uni.$u.props.input.placeholder },
+
+    // 指定placeholder的样式类，注意页面或组件的style中写了scoped时，需要在类名前写/deep/
+    placeholderClass: {
+      type: String,
+      default: uni.$u.props.input.placeholderClass },
+
+    // 指定placeholder的样式
+    placeholderStyle: {
+      type: [String, Object],
+      default: uni.$u.props.input.placeholderStyle },
+
+    // 是否显示输入字数统计，只在 type ="text"或type ="textarea"时有效
+    showWordLimit: {
+      type: Boolean,
+      default: uni.$u.props.input.showWordLimit },
+
+    // 设置右下角按钮的文字，有效值：send|search|next|go|done，兼容性详见uni-app文档
+    // https://uniapp.dcloud.io/component/input
+    // https://uniapp.dcloud.io/component/textarea
+    confirmType: {
+      type: String,
+      default: uni.$u.props.input.confirmType },
+
+    // 点击键盘右下角按钮时是否保持键盘不收起，H5无效
+    confirmHold: {
+      type: Boolean,
+      default: uni.$u.props.input.confirmHold },
+
+    // focus时，点击页面的时候不收起键盘，微信小程序有效
+    holdKeyboard: {
+      type: Boolean,
+      default: uni.$u.props.input.holdKeyboard },
+
+    // 自动获取焦点
+    // 在 H5 平台能否聚焦以及软键盘是否跟随弹出，取决于当前浏览器本身的实现。nvue 页面不支持，需使用组件的 focus()、blur() 方法控制焦点
+    focus: {
+      type: Boolean,
+      default: uni.$u.props.input.focus },
+
+    // 键盘收起时，是否自动失去焦点，目前仅App3.0.0+有效
+    autoBlur: {
+      type: Boolean,
+      default: uni.$u.props.input.autoBlur },
+
+    // 是否去掉 iOS 下的默认内边距，仅微信小程序，且type=textarea时有效
+    disableDefaultPadding: {
+      type: Boolean,
+      default: uni.$u.props.input.disableDefaultPadding },
+
+    // 指定focus时光标的位置
+    cursor: {
+      type: [String, Number],
+      default: uni.$u.props.input.cursor },
+
+    // 输入框聚焦时底部与键盘的距离
+    cursorSpacing: {
+      type: [String, Number],
+      default: uni.$u.props.input.cursorSpacing },
+
+    // 光标起始位置，自动聚集时有效，需与selection-end搭配使用
+    selectionStart: {
+      type: [String, Number],
+      default: uni.$u.props.input.selectionStart },
+
+    // 光标结束位置，自动聚集时有效，需与selection-start搭配使用
+    selectionEnd: {
+      type: [String, Number],
+      default: uni.$u.props.input.selectionEnd },
+
+    // 键盘弹起时，是否自动上推页面
+    adjustPosition: {
+      type: Boolean,
+      default: uni.$u.props.input.adjustPosition },
+
+    // 输入框内容对齐方式，可选值为：left|center|right
+    inputAlign: {
+      type: String,
+      default: uni.$u.props.input.inputAlign },
+
+    // 输入框字体的大小
+    fontSize: {
+      type: [String, Number],
+      default: uni.$u.props.input.fontSize },
+
+    // 输入框字体颜色
+    color: {
+      type: String,
+      default: uni.$u.props.input.color },
+
+    // 输入框前置图标
+    prefixIcon: {
+      type: String,
+      default: uni.$u.props.input.prefixIcon },
+
+    // 前置图标样式，对象或字符串
+    prefixIconStyle: {
+      type: [String, Object],
+      default: uni.$u.props.input.prefixIconStyle },
+
+    // 输入框后置图标
+    suffixIcon: {
+      type: String,
+      default: uni.$u.props.input.suffixIcon },
+
+    // 后置图标样式，对象或字符串
+    suffixIconStyle: {
+      type: [String, Object],
+      default: uni.$u.props.input.suffixIconStyle },
+
+    // 边框类型，surround-四周边框，bottom-底部边框，none-无边框
+    border: {
+      type: String,
+      default: uni.$u.props.input.border },
+
+    // 是否只读，与disabled不同之处在于disabled会置灰组件，而readonly则不会
+    readonly: {
+      type: Boolean,
+      default: uni.$u.props.input.readonly },
+
+    // 输入框形状，circle-圆形，square-方形
+    shape: {
+      type: String,
+      default: uni.$u.props.input.shape },
+
+    // 用于处理或者过滤输入框内容的方法
+    formatter: {
+      type: [Function, null],
+      default: uni.$u.props.input.formatter },
+
+    // 是否忽略组件内对文本合成系统事件的处理
+    ignoreCompositionEvent: {
+      type: Boolean,
+      default: true } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
 /* 386 */,
 /* 387 */,
 /* 388 */,
@@ -25455,7 +25504,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 394 */,
 /* 395 */,
 /* 396 */,
-/* 397 */
+/* 397 */,
+/* 398 */
 /*!*************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-textarea/props.js ***!
   \*************************************************************************************/
@@ -25582,12 +25632,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 398 */,
 /* 399 */,
 /* 400 */,
 /* 401 */,
 /* 402 */,
-/* 403 */
+/* 403 */,
+/* 404 */
 /*!***********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-picker/props.js ***!
   \***********************************************************************************/
@@ -25674,14 +25724,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 404 */,
 /* 405 */,
 /* 406 */,
 /* 407 */,
 /* 408 */,
 /* 409 */,
 /* 410 */,
-/* 411 */
+/* 411 */,
+/* 412 */
 /*!*********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-form/props.js ***!
   \*********************************************************************************/
@@ -25734,12 +25784,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 412 */,
 /* 413 */,
 /* 414 */,
 /* 415 */,
 /* 416 */,
-/* 417 */
+/* 417 */,
+/* 418 */
 /*!**************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-form-item/props.js ***!
   \**************************************************************************************/
@@ -25795,7 +25845,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 418 */,
 /* 419 */,
 /* 420 */,
 /* 421 */,
@@ -25830,7 +25879,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 450 */,
 /* 451 */,
 /* 452 */,
-/* 453 */
+/* 453 */,
+/* 454 */
 /*!*********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-line/props.js ***!
   \*********************************************************************************/
@@ -25871,14 +25921,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 454 */,
 /* 455 */,
 /* 456 */,
 /* 457 */,
 /* 458 */,
 /* 459 */,
 /* 460 */,
-/* 461 */
+/* 461 */,
+/* 462 */
 /*!**********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-badge/props.js ***!
   \**********************************************************************************/
@@ -25958,7 +26008,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 462 */,
 /* 463 */,
 /* 464 */,
 /* 465 */,
@@ -25972,7 +26021,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 473 */,
 /* 474 */,
 /* 475 */,
-/* 476 */
+/* 476 */,
+/* 477 */
 /*!**********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-popup/props.js ***!
   \**********************************************************************************/
@@ -26059,14 +26109,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 477 */,
 /* 478 */,
 /* 479 */,
 /* 480 */,
 /* 481 */,
 /* 482 */,
 /* 483 */,
-/* 484 */
+/* 484 */,
+/* 485 */
 /*!************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-toolbar/props.js ***!
   \************************************************************************************/
@@ -26108,14 +26158,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 485 */,
 /* 486 */,
 /* 487 */,
 /* 488 */,
 /* 489 */,
 /* 490 */,
 /* 491 */,
-/* 492 */
+/* 492 */,
+/* 493 */
 /*!*****************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-loading-icon/props.js ***!
   \*****************************************************************************************/
@@ -26182,14 +26232,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 493 */,
 /* 494 */,
 /* 495 */,
 /* 496 */,
 /* 497 */,
 /* 498 */,
 /* 499 */,
-/* 500 */
+/* 500 */,
+/* 501 */
 /*!***********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/libs/util/async-validator.js ***!
   \***********************************************************************************/
@@ -27541,10 +27591,10 @@ Schema.messages = messages;var _default =
 Schema;
 // # sourceMappingURL=index.js.map
 exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/node-libs-browser/mock/process.js */ 501)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/node-libs-browser/mock/process.js */ 502)))
 
 /***/ }),
-/* 501 */
+/* 502 */
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -27575,7 +27625,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 502);
+        if (!path) path = __webpack_require__(/*! path */ 503);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -27588,7 +27638,7 @@ exports.features = {};
 
 
 /***/ }),
-/* 502 */
+/* 503 */
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -27898,15 +27948,15 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 501)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 502)))
 
 /***/ }),
-/* 503 */,
 /* 504 */,
 /* 505 */,
 /* 506 */,
 /* 507 */,
-/* 508 */
+/* 508 */,
+/* 509 */
 /*!************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-overlay/props.js ***!
   \************************************************************************************/
@@ -27938,14 +27988,14 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 509 */,
 /* 510 */,
 /* 511 */,
 /* 512 */,
 /* 513 */,
 /* 514 */,
 /* 515 */,
-/* 516 */
+/* 516 */,
+/* 517 */
 /*!***************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-transition/props.js ***!
   \***************************************************************************************/
@@ -27977,7 +28027,7 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 517 */
+/* 518 */
 /*!********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-transition/transition.js ***!
   \********************************************************************************************/
@@ -27988,7 +28038,7 @@ var substr = 'ab'.substr(-1) === 'b'
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 35));
 
 
-var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 518));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} // 定义一个一定时间后自动成功的promise，让调用nextTick方法处，进入下一个then方法
+var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 519));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} // 定义一个一定时间后自动成功的promise，让调用nextTick方法处，进入下一个then方法
 var nextTick = function nextTick() {return new Promise(function (resolve) {return setTimeout(resolve, 1000 / 50);});}; // nvue动画模块实现细节抽离在外部文件
 
 // 定义类名，通过给元素动态切换类名，赋予元素一定的css动画样式
@@ -28142,7 +28192,7 @@ var getClassNames = function getClassNames(name) {return {
     } } };exports.default = _default;
 
 /***/ }),
-/* 518 */
+/* 519 */
 /*!**********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-transition/nvue.ani-map.js ***!
   \**********************************************************************************************/
@@ -28218,14 +28268,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     'leave-to': { opacity: 0, transform: 'scale(0.95)' } } };exports.default = _default;
 
 /***/ }),
-/* 519 */,
 /* 520 */,
 /* 521 */,
 /* 522 */,
 /* 523 */,
 /* 524 */,
 /* 525 */,
-/* 526 */
+/* 526 */,
+/* 527 */
 /*!***************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-status-bar/props.js ***!
   \***************************************************************************************/
@@ -28241,14 +28291,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 527 */,
 /* 528 */,
 /* 529 */,
 /* 530 */,
 /* 531 */,
 /* 532 */,
 /* 533 */,
-/* 534 */
+/* 534 */,
+/* 535 */
 /*!****************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-safe-bottom/props.js ***!
   \****************************************************************************************/

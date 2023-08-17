@@ -305,7 +305,7 @@
   flex-direction: row;
   display: flex;
   justify-content: space-between;
-  margin: 52rpx 0 0 32rpx;
+  margin: 52rpx 0 14rpx 32rpx;
 }
 .group_8 .text-wrapper_1.data-v-57280228 {
   width: 218rpx;
@@ -320,9 +320,8 @@
 }
 .group_9.data-v-57280228 {
   width: 680rpx;
-  flex-direction: row;
   justify-content: space-between;
-  margin: 48rpx auto 20rpx;
+  margin: 10rpx auto 20rpx;
 }
 .group_9 .image-text_6.data-v-57280228 {
   width: 176rpx;
@@ -362,6 +361,7 @@
   margin: 0 0 14rpx 36rpx;
 }
 .one-course.data-v-57280228 {
+  position: relative;
   width: 686rpx;
   height: 280rpx;
   background-size: 702rpx 296rpx;
@@ -371,6 +371,13 @@
   background-color: #ccc;
   border-radius: 20rpx;
   color: white;
+}
+.one-course image.data-v-57280228 {
+  position: absolute;
+  width: 686rpx;
+  height: 280rpx;
+  top: 0;
+  left: 0;
 }
 .one-course .title.data-v-57280228 {
   height: 60rpx;

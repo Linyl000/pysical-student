@@ -1,1 +1,1 @@
-<view class="page"><view class="wait _div"><image src="/static/wait-result.png"></image></view><view class="tips-title" lines="1">请耐心等待评定结果...</view></view>
+<view class="page"><view class="wait _div"><image src="/static/wait-result.png"></image></view><view class="tips-title" lines="1">请耐心等待评定结果...</view><view data-event-opts="{{[['tap',[['boBack',['$event']]]]]}}" class="button_1" bindtap="__e">返回</view></view>

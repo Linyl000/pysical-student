@@ -19,10 +19,12 @@
 		<div class="course">
 			<!-- <view lines="1" class="co-name">主要课程</view> -->
 			<div class="one-course" v-for="i in list" :key="i.courseId" @click="goMyCourse(i)">
+				<image :src="i.courseVideo" mode=""></image>
 				<view lines="1" class="title">{{ i.courseName }} - {{ i.teacherName }}</view>
 				<view lines="1" class="detail">{{ i.courseIntroduce }}</view>
 			</div>
 		</div>
+		<!-- <div style="width: 100%;height: 50px;"></div> -->
 	</z-paging>
 </template>
 
@@ -73,7 +75,7 @@ export default {
 	flex-direction: row;
 	display: flex;
 	justify-content: space-between;
-	margin: 52rpx 0 0 32rpx;
+	margin: 52rpx 0 14rpx 32rpx;
 
 	.text-wrapper_1 {
 		width: 218rpx;
@@ -89,10 +91,10 @@ export default {
 }
 .group_9 {
 	width: 680rpx;
-	flex-direction: row;
 	// display: flex;
+	// flex-direction: row;
 	justify-content: space-between;
-	margin: 48rpx auto 20rpx;
+	margin: 10rpx auto 20rpx;
 
 	.image-text_6 {
 		width: 176rpx;
@@ -133,6 +135,7 @@ export default {
 	margin: 0 0 14rpx 36rpx;
 }
 .one-course {
+	position: relative;
 	width: 686rpx;
 	height: 280rpx;
 	background-size: 702rpx 296rpx;
@@ -142,6 +145,13 @@ export default {
 	background-color: #ccc;
 	border-radius: 20rpx;
 	color: rgba(255, 255, 255, 1);
+	image {
+		position: absolute;
+		width: 686rpx;
+		height: 280rpx;
+		top: 0;
+		left: 0;
+	}
 	.title {
 		height: 60rpx;
 		overflow-wrap: break-word;

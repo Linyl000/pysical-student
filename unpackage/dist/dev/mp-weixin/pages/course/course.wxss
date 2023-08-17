@@ -366,7 +366,6 @@
   text-align: center;
   font-weight: 600;
   border-bottom-left-radius: 20rpx;
-  background: #61ad67;
 }
 .title-and-time .complete.data-v-b1db4d34 {
   background: #61ad67;
@@ -393,11 +392,9 @@
 .teacher-and-time .remaining-time.data-v-b1db4d34 {
   font-size: 24rpx;
   text-align: right;
+  color: #888888;
 }
 .teacher-and-time .uncomplete-and-expired.data-v-b1db4d34 {
   color: #e06969;
-}
-.teacher-and-time .other-types.data-v-b1db4d34 {
-  color: #888888;
 }
 

@@ -1,15 +1,13 @@
 <template>
 	<view class="page">
-		<view class="title">{{'【'+( item.taskType=='1'?'考核':'作业')+'】'+item.examPaperName}}</view>
-		<view class="cut-off-time">{{"最后截止时间："+item.endTime}}</view>
+		<view class="title">{{ '【' + (item.courseType == '1' ? '视频' : '理论') + '】' + item.examPaperName }}</view>
+		<view class="cut-off-time">{{ '最后截止时间：' + item.endTime }}</view>
 		<view class="demand-box">
 			<view class="demand-img"></view>
 			<text lines="1" class="demand-text">要求</text>
 		</view>
-		<text class="description">
-			{{'分数达到'+item.passScore+'视为合格'}}
-		</text>
-		<view class="button_1" @click="goHomeworkOrTest">去完成/去修改</view>
+		<text class="description">{{ '分数达到' + item.passScore + '视为合格' }}</text>
+		<view class="button_1" @click="goHomeworkOrTest">去完成</view>
 	</view>
 </template>
 
@@ -17,23 +15,25 @@
 export default {
 	data() {
 		return {
-			item:null
-			
+			item: null
 		};
 	},
-	onLoad({item}) {
-		console.log(item)
-		 this.item=JSON.parse(item)
-		 console.log(this.item)
+	onLoad({ item }) {
+		console.log(item);
+		this.item = JSON.parse(item);
+		console.log(this.item);
 	},
 	methods: {
 		goHomeworkOrTest() {
-			// uni.navigateTo({
-			// 	url: '/pages_other/practice/practice' //实践
-			// });
-			uni.navigateTo({
-				url: `/pages_other/theory/theory?item=${JSON.stringify(this.item)}` //理论
-			});
+			if (this.item.courseType == 0) {
+				uni.navigateTo({
+					url: `/pages_other/theory/theory?item=${JSON.stringify(this.item)}` //理论
+				});
+			} else {
+				uni.navigateTo({
+					url: '/pages_other/practice/practice?item=' + JSON.stringify(this.item) //实践
+				});
+			}
 		}
 	}
 };
@@ -47,7 +47,7 @@ export default {
 	width: 546rpx;
 	height: 48rpx;
 	overflow-wrap: break-word;
- 
+
 	font-size: 40rpx;
 	font-family: PingFangSC-Semibold;
 	font-weight: 600;
@@ -56,7 +56,6 @@ export default {
 	line-height: 48rpx;
 }
 .cut-off-time {
- 
 	font-size: 30rpx;
 	margin-top: 16rpx;
 }
@@ -73,13 +72,12 @@ export default {
 		margin-right: 12rpx;
 	}
 	.demand-text {
-	 
 		font-size: 32rpx;
 	}
 }
 .description {
 	margin-top: 26rpx;
- 
+
 	line-height: 1.7;
 }
 

@@ -2,6 +2,7 @@
 	<view class="page">
 		<div class="wait"><image src="@/static/wait-result.png"></image></div>
 		<view lines="1" class="tips-title">请耐心等待评定结果...</view>
+		<view class="button_1" @click="boBack">返回</view>
 	</view>
 </template>
 
@@ -9,6 +10,11 @@
 export default {
 	data() {
 		return {};
+	},
+	methods: {
+		goBack() {
+			uni.navigateBack({ delta: 2 });
+		}
 	}
 };
 </script>
@@ -24,10 +30,22 @@ export default {
 	}
 }
 .tips-title {
- 
 	font-size: 48rpx;
 	font-weight: 600;
 	text-align: center;
 	padding: 20rpx;
+}
+.button_1 {
+	border-radius: 48rpx;
+	width: 448rpx;
+	height: 96rpx;
+	margin: 40rpx auto;
+	font-size: 32rpx;
+	font-weight: 600;
+	text-align: center;
+	line-height: 96rpx;
+	color: rgba(255, 255, 255, 1);
+	// background-color: #dfe1e5;
+	background-color: rgba(93, 79, 220, 1);
 }
 </style>

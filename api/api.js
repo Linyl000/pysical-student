@@ -28,6 +28,13 @@ function postRequest(url, data) {
 				//token可以不要，看后端
 			},
 			success: function(res) {
+				if (res.data.code === 401) {
+					uni.removeStorageSync('token')
+					uni.redirectTo({
+						url: '/pages_other/first-info/first-info'
+					})
+					return
+				}
 				resolve(res.data);
 			},
 			fail: function(e) {
@@ -49,11 +56,16 @@ function getRequest(url, data) {
 			header: {
 				'content-type': 'application/json',
 				'Authorization': uni.getStorageSync('token')
-
-
 				// 'user-token': uni.getStorageSync('userinfo').token
 			},
 			success: function(res) {
+				if (res.data.code === 401) {
+					uni.removeStorageSync('token')
+					uni.redirectTo({
+						url: '/pages_other/first-info/first-info'
+					})
+					return
+				}
 				resolve(res.data);
 			},
 			fail: function(e) {
@@ -85,6 +97,13 @@ function putRequest(url, data, heads) {
 				'Authorization': uni.getStorageSync('token')
 			},
 			success: function(res) {
+				if (res.data.code === 401) {
+					uni.removeStorageSync('token')
+					uni.redirectTo({
+						url: '/pages_other/first-info/first-info'
+					})
+					return
+				}
 				resolve(res.data);
 			},
 			fail: function(e) {
@@ -116,6 +135,13 @@ function delRequest(url, data) {
 				'Authorization': uni.getStorageSync('token')
 			},
 			success: function(res) {
+				if (res.data.code === 401) {
+					uni.removeStorageSync('token')
+					uni.redirectTo({
+						url: '/pages_other/first-info/first-info'
+					})
+					return
+				}
 				resolve(res.data);
 			},
 			fail: function(e) {

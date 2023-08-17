@@ -156,7 +156,7 @@ var components
 try {
   components = {
     zPaging: function() {
-      return Promise.all(/*! import() | uni_modules/z-paging/components/z-paging/z-paging */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/z-paging/components/z-paging/z-paging")]).then(__webpack_require__.bind(null, /*! @/uni_modules/z-paging/components/z-paging/z-paging.vue */ 305))
+      return Promise.all(/*! import() | uni_modules/z-paging/components/z-paging/z-paging */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/z-paging/components/z-paging/z-paging")]).then(__webpack_require__.bind(null, /*! @/uni_modules/z-paging/components/z-paging/z-paging.vue */ 306))
     }
   }
 } catch (e) {
@@ -242,6 +242,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _index = __webpack_require__(/*! @/api/index.js */ 152);
 var _user = __webpack_require__(/*! @/api/user.js */ 154); //
 //
@@ -271,9 +273,9 @@ var _user = __webpack_require__(/*! @/api/user.js */ 154); //
 //
 //
 //
-var _default = { data: function data() {return { list: [], user: null };}, onLoad: function onLoad() {this.getInfo();}, methods: { getList: function getList(page, limit) {var _this = this;(0, _index.courseList)().then(function (res) {_this.list = res.rows;_this.$refs.paging.complete(res.rows);}).catch(function (res) {_this.$refs.paging.complete(false);});}, getInfo: function getInfo() {var _this2 = this;(0, _user.getInfo)().then(function (res) {_this2.user = res.user;});}, goAddCourse: function goAddCourse() {uni.navigateTo({ url: '/pages_other/add-course/add-course' });},
-    goMyCourse: function goMyCourse(i) {
-      uni.navigateTo({
+//
+//
+var _default = { data: function data() {return { list: [], user: null };}, onLoad: function onLoad() {this.getInfo();}, methods: { getList: function getList(page, limit) {var _this = this;(0, _index.courseList)().then(function (res) {_this.list = res.rows;_this.$refs.paging.complete(res.rows);}).catch(function (res) {_this.$refs.paging.complete(false);});}, getInfo: function getInfo() {var _this2 = this;(0, _user.getInfo)().then(function (res) {_this2.user = res.user;});}, goAddCourse: function goAddCourse() {uni.navigateTo({ url: '/pages_other/add-course/add-course' });}, goMyCourse: function goMyCourse(i) {uni.navigateTo({
         url: '/pages_other/course-list/course-list?courseId=' + i.courseId });
 
     } } };exports.default = _default;
