@@ -7,7 +7,3 @@ import {
 export function login(data) {
 	return post('/login', data)
 }
-//获取验证码
-export function getCodeImg() {
-	return get('/captchaImage')
-}

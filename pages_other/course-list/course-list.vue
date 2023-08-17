@@ -3,16 +3,16 @@
 		<template #top>
 			<view class="type-list">
 				<view class="text-wrapper" :class="{ active: current === 0 }" @click="current = 0">课时</view>
-				<view class="text-wrapper" :class="{ active: current === 1 }" @click="current = 1">练习成绩</view>
-				<!-- 		<view class="text-wrapper" :class="{ active: current === 2 }" @click="current = 2">考核成绩</view> -->
+				<view class="text-wrapper" :class="{ active: current === 1 }" @click="current = 1">作业成绩</view>
+				<view class="text-wrapper" :class="{ active: current === 2 }" @click="current = 2">考核成绩</view>
 			</view>
 		</template>
 
 		<div v-if="current == 0" class="type">
 			<div class="title">【课程】{{ list[0].courseName }}</div>
-			<div class="type-item" v-for="(i, index) in list" @click="goCurriculum">
-				<div class="item-title">{{ index + 1 }}.taskName</div>
-				<u-icon v-if="i.courseType == 0" name="file-text" color="#5d4fdc" size="24"></u-icon>
+			<div class="type-item" v-for="(i, index) in list" @click="goCurriculum(i)">
+				<div class="item-title">{{ index + 1 }}.{{ i.taskName }}</div>
+				<u-icon v-if="i.courseType == 0" name="file-text" color="#5d4fdc" size="26"></u-icon>
 				<u-icon v-if="i.courseType == 1" name="play-circle" color="#5d4fdc" size="24"></u-icon>
 			</div>
 		</div>
@@ -20,9 +20,9 @@
 			<div v-if="current == 1" class="title">【历史练习成绩】xxxxxxxxxxxxx</div>
 			<div v-if="current == 2" class="title">【历史考核成绩】xxxxxxxxxxxxx</div>
 			<div class="small-colum">
-				<div>考试时间</div>
+				<div>练习日期</div>
 				<div>章节</div>
-				<div>练习时间</div>
+				<div>练习时常</div>
 				<div>分数</div>
 			</div>
 			<div class="small-colum" v-for="i in list" :key="i">
@@ -44,23 +44,34 @@ export default {
 	data() {
 		return {
 			current: 0,
-			list: []
+			list: [],
+			courseId: null
 		};
 	},
+	onLoad(option) {
+		this.courseId = option.courseId;
+	},
+	// this.$refs.paging.reload();
 	methods: {
 		getList(page, limit) {
-			coureseTaskList()
-				.then(res => {
-					this.list = res.rows;
-					this.$refs.paging.complete(res.rows);
-				})
-				.catch(res => {
-					this.$refs.paging.complete(false);
-				});
+			if (this.current === 0) {
+				coureseTaskList({ courseId: this.courseId })
+					.then(res => {
+						this.list = res.rows;
+						this.$refs.paging.complete(res.rows);
+					})
+					.catch(res => {
+						this.$refs.paging.complete(false);
+					});
+			} else if (this.current === 1) {
+				console.log(111);
+			} else {
+				console.log(222);
+			}
 		},
-		goCurriculum() {
+		goCurriculum(i) {
 			uni.navigateTo({
-				url: '/pages_other/curriculum/curriculum'
+				url: '/pages_other/curriculum/curriculum?i=' + JSON.stringify(i)
 			});
 		}
 	}
@@ -81,8 +92,8 @@ export default {
 	padding: 0 20rpx;
 
 	.text-wrapper {
-		// width: 218rpx;
-		width: 322rpx;
+		width: 218rpx;
+		// width: 322rpx;
 		border-radius: 36rpx;
 		line-height: 66rpx;
 		text-align: center;

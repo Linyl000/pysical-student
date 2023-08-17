@@ -8,14 +8,6 @@
 				</template>
 			</u--input>
 		</view>
-
-		<!-- 	<view class="input_1">
-			<u--input placeholder="请输入验证码" v-model="code" border="none" fontSize="18">
-				<template slot="suffix">
-					<image :src="codeUrl" @click="getCode" mode="widthFix" class="login-code-img"></image>
-				</template>
-			</u--input>
-		</view> -->
 		<!-- 		<u-radio-group v-model="value3" placement="row" size="24" labelSize="24">
 			<u-radio activeColor="#5d4fdc" label="男"></u-radio>
 			<u-radio activeColor="#5d4fdc" label="女"></u-radio>
@@ -25,20 +17,17 @@
 </template>
 
 <script>
-import { login, getCodeImg } from '@/api/first-info.js';
+import { login } from '@/api/first-info.js';
 export default {
 	data() {
 		return {
-			username: '',
-			password: '',
+			username: '456789',
+			password: '123456',
 			pwd: true,
 			codeUrl: null,
 			uuid: null,
 			captchaEnabled: null
 		};
-	},
-	onLoad() {
-		this.getCode();
 	},
 	methods: {
 		goIndex() {
@@ -50,19 +39,12 @@ export default {
 				});
 				return;
 			}
-			login({ username, password }).then(res => {
-				console.log(res);
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			});
-		},
-		getCode() {
-			getCodeImg().then(res => {
-				this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled;
-				if (this.captchaEnabled) {
-					this.codeUrl = 'data:image/gif;base64,' + res.img;
-					this.uuid = res.uuid;
+			login({ username: this.username, password: this.password }).then(res => {
+				if (res.code === 200) {
+					uni.setStorageSync('token', res.token);
+					uni.switchTab({
+						url: '/pages/index/index'
+					});
 				}
 			});
 		}

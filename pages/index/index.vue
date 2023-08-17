@@ -4,7 +4,7 @@
 			<view class="group_8">
 				<view class="text-wrapper_1">
 					<text lines="1" style="color: #000;">Hello，</text>
-					<text lines="1" style="color: #5D4FDC;">杜若</text>
+					<text lines="1" style="color: #5D4FDC;">{{ user.nickName }}</text>
 				</view>
 				<!-- <u-icon name="plus-circle" size="28" @click="goAddCourse"></u-icon> -->
 			</view>
@@ -19,8 +19,8 @@
 		<div class="course">
 			<!-- <view lines="1" class="co-name">主要课程</view> -->
 			<div class="one-course" v-for="i in list" :key="i.courseId" @click="goMyCourse(i)">
-				<view lines="1" class="title">{{ courseName }} - {{ teacherName }}</view>
-				<view lines="1" class="detail">{{ courseIntroduce }}</view>
+				<view lines="1" class="title">{{ i.courseName }} - {{ i.teacherName }}</view>
+				<view lines="1" class="detail">{{ i.courseIntroduce }}</view>
 			</div>
 		</div>
 	</z-paging>
@@ -28,11 +28,14 @@
 
 <script>
 import { courseList } from '@/api/index.js';
+import { getInfo } from '@/api/user.js';
 export default {
 	data() {
-		return { list: [] };
+		return { list: [], user: null };
 	},
-
+	onLoad() {
+		this.getInfo();
+	},
 	methods: {
 		getList(page, limit) {
 			courseList()
@@ -43,6 +46,11 @@ export default {
 				.catch(res => {
 					this.$refs.paging.complete(false);
 				});
+		},
+		getInfo() {
+			getInfo().then(res => {
+				this.user = res.user;
+			});
 		},
 		goAddCourse() {
 			uni.navigateTo({

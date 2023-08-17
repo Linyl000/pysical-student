@@ -5,35 +5,34 @@
 				<image class="ava" src="@/static/study.png"></image>
 				<div class="camera"><u-icon name="camera-fill" color="#5d4fdc" size="28"></u-icon></div>
 			</view>
-			<!-- <text lines="1" class="my-name">杜若</text> -->
 		</view>
-		<u--form labelPosition="left" :model="form" :rules="rules" ref="uForm">
-			<u-form-item prop="name" borderBottom ref="item1">
+		<u--form labelPosition="left" :model="form" :rules="rules" ref="uForm" label-align="right">
+			<u-form-item prop="name" borderBottom label="姓名">
 				<view class="input_1">
-					<u--input placeholder="请输入真实姓名" v-model="value2" @change="change" border="none" fontSize="18"></u--input>
+					<u--input placeholder="请输入真实姓名" v-model="form.nickName" border="none" fontSize="18" :disable="true"></u--input>
 				</view>
 			</u-form-item>
-			<u-form-item prop="name" borderBottom ref="item1">
+			<u-form-item prop="name" borderBottom label="学号">
 				<view class="input_1">
-					<u--input placeholder="请输入您的学号" v-model="value2" @change="change" border="none" fontSize="18"></u--input>
+					<u--input placeholder="请输入您的学号" v-model="form.studentNo" border="none" fontSize="18" :disable="true"></u--input>
 				</view>
 			</u-form-item>
-			<u-form-item prop="name" borderBottom ref="item1">
+			<u-form-item prop="name" borderBottom label="学院">
 				<view class="input_1">
-					<u--input placeholder="请输入您所在的学院" v-model="value2" @change="change" border="none" fontSize="18"></u--input>
+					<u--input placeholder="请输入您所在的学院" v-model="form.deptName" border="none" fontSize="18" :disable="true"></u--input>
 				</view>
 			</u-form-item>
-			<u-form-item prop="name" borderBottom ref="item1">
+			<u-form-item prop="name" borderBottom label="专业">
 				<view class="input_1">
-					<u--input placeholder="请输入您所学的专业" v-model="value2" @change="change" border="none" fontSize="18"></u--input>
+					<u--input placeholder="请输入您所学的专业" v-model="form.sex" border="none" fontSize="18" :disable="true"></u--input>
 				</view>
 			</u-form-item>
-			<u-form-item prop="name" borderBottom ref="item1">
-				<u-radio-group v-model="value3" placement="row" size="24" labelSize="24">
+			<!-- 			<u-form-item prop="name" borderBottom   >
+				<u-radio-group v-model="form." placement="row" size="24" labelSize="24">
 					<u-radio activeColor="#5d4fdc" label="男"></u-radio>
 					<u-radio activeColor="#5d4fdc" label="女"></u-radio>
 				</u-radio-group>
-			</u-form-item>
+			</u-form-item> -->
 		</u--form>
 		<view class="button_1">保存信息</view>
 	</view>
@@ -45,13 +44,13 @@ export default {
 		return {
 			form: [],
 			rules: {
-				name: [
-					{
-						required: true,
-						message: '请输入真实姓名',
-						trigger: ['blur', 'change']
-					}
-				]
+				// name: [
+				// 	{
+				// 		required: true,
+				// 		message: '请输入真实姓名',
+				// 		trigger: ['blur', 'change']
+				// 	}
+				// ]
 			}
 		};
 	},
@@ -90,7 +89,7 @@ export default {
 	width: 72rpx;
 	height: 48rpx;
 	overflow-wrap: break-word;
- 
+
 	font-size: 36rpx;
 	font-family: PingFangSC-Semibold;
 	font-weight: 600;
@@ -103,7 +102,7 @@ export default {
 	width: 630rpx;
 	margin: auto;
 	padding: 0 30rpx;
-	background-color: rgba(248, 248, 248, 1);
+	// background-color: rgba(248, 248, 248, 1);
 	border-radius: 16rpx;
 	height: 120rpx;
 }

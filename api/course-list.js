@@ -4,7 +4,7 @@ import {
 } from '@/api/api.js'
 
 
-//学生查看所选课程
-export function coureseTaskList() {
-	return get('/wxapi/work/coureseTask/list')
+//课程列表
+export function coureseTaskList(data) {
+	return get('/work/coureseTask/list', data)
 }

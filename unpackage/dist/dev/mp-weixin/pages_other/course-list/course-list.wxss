@@ -312,7 +312,7 @@
   padding: 0 20rpx;
 }
 .type-list .text-wrapper.data-v-7d29cfb9 {
-  width: 322rpx;
+  width: 218rpx;
   border-radius: 36rpx;
   line-height: 66rpx;
   text-align: center;

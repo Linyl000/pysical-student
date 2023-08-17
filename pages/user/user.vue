@@ -2,15 +2,12 @@
 	<view class="page">
 		<view class="section1">
 			<view class="block_5">
-				<image
-					src="https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/c5b841efbf714a2cb7f869bcda97adb7_mergeImage.png"
-					class="image_3"
-				></image>
+				<image :src="list.avatar" class="image_3"></image>
 				<view class="text-group_5">
-					<text lines="1" class="text_3">杜若</text>
-					<text lines="1" class="text_4">大数据二班</text>
+					<text lines="1" class="text_3">{{ list.nickName }}</text>
+					<text lines="1" class="text_4">{{ list.studentNo }}</text>
 				</view>
-				<!-- <u-icon name="edit-pen" color="#fff" size="28" @click="goUserInfo"></u-icon> -->
+				<u-icon name="edit-pen" color="#fff" size="28" @click="goUserInfo"></u-icon>
 			</view>
 		</view>
 		<div class="section2">
@@ -25,15 +22,22 @@
 </template>
 
 <script>
+import { getInfo } from '@/api/user.js';
 export default {
 	data() {
 		return {
-			remarks: '',
-			list: []
+			list: null
 		};
 	},
-	onLoad() {},
+	onLoad() {
+		this.getInfo();
+	},
 	methods: {
+		getInfo() {
+			getInfo().then(res => {
+				this.list = res.user;
+			});
+		},
 		goUserInfo() {
 			uni.navigateTo({
 				url: '/pages_other/user-info/user-info'

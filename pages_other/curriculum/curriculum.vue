@@ -2,34 +2,42 @@
 <template>
 	<view class="page">
 		<!-- 视频课 -->
-		<video id="myVideo" ref="myVideo" class="video-inst" :src="''"></video>
-		<text lines="1" class="course-name">太极八法五步-第六式</text>
-		<view class="course-des">
+		<video v-if="i.courseType === 1" id="myVideo" ref="myVideo" class="video-inst" :src="i.courseVideo"></video>
+		<text lines="1" class="course-name">{{ i.taskName }}</text>
+		<!-- 	<view class="course-des">
 			<text lines="1" class="teacher-name">王佳老师</text>
 			<view class="look-number">2345人浏览</view>
-		</view>
+		</view> -->
 		<view class="course-des-box">
 			<view class="block_3"></view>
-			<text lines="1" class="text_7">课程详情</text>
+			<text lines="1" class="text_7">章节详情</text>
 		</view>
 		<div class="course-video-info">
-			在现有各流派太极拳的基础上，从最为核心的八法五步技术上手，即：棚、捋、挤、按、採、捌、肘、靠八种手法，以及进、退、顾、盼、定五种步法，进行了系统在现有各流派太极拳的基础上，从最为核心的八法五步技术上手，即：棚、捋、挤、按、採、捌、肘、靠八种手法，以及进、退、顾、盼、定五种步法，进行了系统在现有各流派太极拳的基础上，从最为核心的八法五步技术上手，即：棚、捋、挤、按、採、捌、肘、靠八种手法，以及进、退、顾、盼、定五种步法，进行了系统
+			<!-- 在现有各流派太极拳的基础上，从最为核心的八法五步技术上手，即：棚、捋、挤、按、採、捌、肘、靠八种手法，以及进、退、顾、盼、定五种步法，进行了系统在现有各流派太极拳的基础上，从最为核心的八法五步技术上手，即：棚、捋、挤、按、採、捌、肘、靠八种手法，以及进、退、顾、盼、定五种步法，进行了系统在现有各流派太极拳的基础上，从最为核心的八法五步技术上手，即：棚、捋、挤、按、採、捌、肘、靠八种手法，以及进、退、顾、盼、定五种步法，进行了系统 -->
+			{{ i.taskDetails }}
 		</div>
+
 		<div class="course-image-text-info"><div class="content-rich" v-html="noticeContent"></div></div>
 		<!-- 底部固定高度盒子 -->
 		<div class="safe"></div>
 		<!-- 固定底部 -->
-		<div class="button-wrapper">
-			<!-- <view class="text-wrapper" @click="goWait()">开始考核</view> -->
+		<!-- 	<div class="button-wrapper">
+		<view class="text-wrapper" @click="goWait()">开始考核</view> 
 			<view class="active" @click="goWait()">开始练习</view>
-		</div>
+		</div>-->
 	</view>
 </template>
 
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			i: null
+		};
+	},
+	onLoad(option) {
+		this.i = JSON.parse(option.i);
+		console.log(this.i);
 	},
 	methods: {
 		// goResult(i) {
@@ -61,7 +69,7 @@ export default {
 	width: 346rpx;
 	height: 48rpx;
 	overflow-wrap: break-word;
- 
+
 	font-size: 36rpx;
 
 	font-weight: 600;
@@ -86,7 +94,7 @@ export default {
 	width: 112rpx;
 	height: 48rpx;
 	overflow-wrap: break-word;
- 
+
 	font-size: 28rpx;
 	font-family: PingFangSC-Regular;
 	font-weight: normal;
@@ -118,7 +126,6 @@ export default {
 	flex-direction: column;
 }
 .text_7 {
- 
 	font-size: 28rpx;
 }
 .course-video-info,

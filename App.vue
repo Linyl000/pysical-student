@@ -117,6 +117,9 @@ export default {
 // 	max-width: 560px; //最大宽度自己可以调整
 // 	margin: auto !important;
 // }
+.page {
+	min-height: 90;
+}
 /*  #endif  */
 /*每个页面公共css */
 // page {

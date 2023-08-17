@@ -6,5 +6,5 @@ import {
 
 //学生查看所选课程
 export function courseList() {
-	return get('/wxapi/base/course/list')
+	return get('/base/course/list')
 }

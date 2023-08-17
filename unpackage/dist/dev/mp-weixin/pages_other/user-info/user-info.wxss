@@ -66,7 +66,6 @@
   width: 630rpx;
   margin: auto;
   padding: 0 30rpx;
-  background-color: #f8f8f8;
   border-radius: 16rpx;
   height: 120rpx;
 }
