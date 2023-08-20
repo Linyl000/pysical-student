@@ -1,27 +1,72 @@
 <template>
-	<view class="page">
-		<view class="search-box"><u-search placeholder="搜索课程成绩" v-model="keyword"></u-search></view>
-
-		<view class="score-list">
+	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
+		<template #top>
+			<view class="search-box"><u-search placeholder="搜索成绩" v-model="taskName"></u-search></view>
+			<u-tabs
+				lineColor="#5d4fdc"
+				:list="list1"
+				lineWidth="40"
+				:itemStyle="{
+					height: '100rpx'
+				}"
+				:activeStyle="{
+					fontWeight: 'bold'
+				}"
+				lineHeight="5"
+				@change="tabChange"
+			></u-tabs>
+		</template>
+		<view v-for="i in list" class="score-list" :key="i.id">
 			<view class="list-left">
-				<text lines="1" class="title">太极八法五步</text>
-				<view class="teacher">王佳老师</view>
+				<text lines="1" class="title">{{ i.taskName }}</text>
+				<view class="teacher">{{ i.teacherName }}老师</view>
 			</view>
 			<view class="list-right">
 				<view class="details">
-					<text lines="1" class="score-1">88</text>
-					<text lines="1" class="score-2">分</text>
+					<text lines="1" class="score-1">
+						{{ i.workScore == -1 ? '评分中' : i.workScore == -2 ? '成绩出错，等待教师复核' : i.workScore }}
+					</text>
+					<text v-if="i.workScore !== -1 && i.workScore !== -2" lines="1" class="score-2">分</text>
 				</view>
-				<text lines="1" class="timers">202201学期</text>
+				<!-- <text lines="1" class="timers">202201学期</text> -->
 			</view>
 		</view>
-	</view>
+	</z-paging>
 </template>
 
 <script>
+import { resultList } from '@/api/score.js';
 export default {
 	data() {
-		return {};
+		return {
+			list: [],
+			taskName: '',
+			list1: [
+				{
+					name: '作业成绩'
+				},
+				{
+					name: '考核成绩'
+				}
+			],
+			type: 0
+		};
+	},
+	methods: {
+		getList(page, limit) {
+			resultList({ taskType: this.type, taskName: this.taskName })
+				.then(res => {
+					this.list = res.rows;
+					this.$refs.paging.complete(res.rows);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
+				});
+		},
+		tabChange({ index }) {
+			this.type = index;
+			this.$refs.paging.reload();
+		}
 	}
 };
 </script>
@@ -55,7 +100,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
- 
+
 	.title {
 		font-size: 32rpx;
 		font-weight: 600;
@@ -68,13 +113,11 @@ export default {
 .list-right {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
-
+	justify-content: flex-end;
 	.details {
-		width: 86rpx;
-		height: 48rpx;
+		white-space: nowrap;
 		color: rgba(224, 105, 105, 1);
-		text-align: right;
+
 		.score-1 {
 			font-size: 40rpx;
 		}

@@ -13,7 +13,7 @@
 		<div class="section2">
 			<u-cell-group>
 				<u-cell icon="../../../../../../../../../static/study.png" title="学习记录" :isLink="true" @click="goStudyRecords"></u-cell>
-				<u-cell icon="../../../../../../../../../static/teachersay.png" title="教师评价" :isLink="true" @click="goTeacherSay"></u-cell>
+				<u-cell icon="../../../../../../../../../static/teachersay.png" title="课程评价" :isLink="true" @click="goTeacherSay"></u-cell>
 				<u-cell icon="../../../../../../../../../static/number.png" title="积分排名" :isLink="true" @click="goNumber"></u-cell>
 				<!-- 	<u-cell icon="../../../../../../../../../static/logout.png" title="退出" :isLink="true" @click="logout"></u-cell> -->
 			</u-cell-group>

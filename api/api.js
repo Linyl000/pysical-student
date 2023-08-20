@@ -59,7 +59,8 @@ function getRequest(url, data) {
 				// 'user-token': uni.getStorageSync('userinfo').token
 			},
 			success: function(res) {
-				if (res.data.code === 401) {
+				if (res.data.code === 401 || res.data
+					.code === 403) {
 					uni.removeStorageSync('token')
 					uni.redirectTo({
 						url: '/pages_other/first-info/first-info'
@@ -97,7 +98,8 @@ function putRequest(url, data, heads) {
 				'Authorization': uni.getStorageSync('token')
 			},
 			success: function(res) {
-				if (res.data.code === 401) {
+				if (res.data.code === 401 || res.data
+					.code === 403) {
 					uni.removeStorageSync('token')
 					uni.redirectTo({
 						url: '/pages_other/first-info/first-info'
@@ -135,7 +137,8 @@ function delRequest(url, data) {
 				'Authorization': uni.getStorageSync('token')
 			},
 			success: function(res) {
-				if (res.data.code === 401) {
+				if (res.data.code === 401 || res.data
+					.code === 403) {
 					uni.removeStorageSync('token')
 					uni.redirectTo({
 						url: '/pages_other/first-info/first-info'

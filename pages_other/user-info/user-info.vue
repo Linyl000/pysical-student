@@ -2,7 +2,7 @@
 	<view class="page">
 		<view class="my-ava-info">
 			<view class="single-avatar_1">
-				<image class="ava" src="@/static/study.png"></image>
+				<image class="ava" :src="form.avatar"></image>
 				<div class="camera"><u-icon name="camera-fill" color="#5d4fdc" size="28"></u-icon></div>
 			</view>
 		</view>
@@ -27,22 +27,28 @@
 					<u--input placeholder="请输入您所学的专业" v-model="form.sex" border="none" fontSize="18" :disable="true"></u--input>
 				</view>
 			</u-form-item>
-			<!-- 			<u-form-item prop="name" borderBottom   >
-				<u-radio-group v-model="form." placement="row" size="24" labelSize="24">
-					<u-radio activeColor="#5d4fdc" label="男"></u-radio>
-					<u-radio activeColor="#5d4fdc" label="女"></u-radio>
+			<u-form-item prop="phonenumber" borderBottom label="电话">
+				<view class="input_1">
+					<u--input placeholder="请输入您的联系电话" v-model="form.phonenumber" border="none" fontSize="18" :disable="true"></u--input>
+				</view>
+			</u-form-item>
+			<u-form-item label="性别" prop="sex" borderBottom>
+				<u-radio-group v-model="form.sex" placement="row" size="24" labelSize="24" :disabled="true">
+					<u-radio activeColor="#5d4fdc" label="男" name="0"></u-radio>
+					<u-radio activeColor="#5d4fdc" label="女" name="1"></u-radio>
 				</u-radio-group>
-			</u-form-item> -->
+			</u-form-item>
 		</u--form>
-		<view class="button_1">保存信息</view>
+		<!-- <view class="button_1">保存信息</view> -->
 	</view>
 </template>
 
 <script>
+import { getInfo } from '@/api/user.js';
 export default {
 	data() {
 		return {
-			form: [],
+			form: null,
 			rules: {
 				// name: [
 				// 	{
@@ -54,7 +60,16 @@ export default {
 			}
 		};
 	},
-	methods: {}
+	onLoad() {
+		this.getInfo();
+	},
+	methods: {
+		getInfo() {
+			getInfo().then(res => {
+				this.form = res.user;
+			});
+		}
+	}
 };
 </script>
 

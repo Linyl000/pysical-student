@@ -19,7 +19,7 @@
 			<view class="text-wrapper" :class="{ active: current === 0 }" @click="current = 0">未完成</view>
 		</view>
 		<!-- 未开始：不能点  未完成：去题目详情做题   完成：去题目详情可以修改  超时+已完成/待评分：去结果页/评分页  超时+未完成：去题目详情不能做题  -->
-		<view class="list-item" v-for="i in paperList" @click="goCourseIntro(i)">
+		<view class="list-item" v-for="(i, index) in paperList" :key="index" @click="goCourseIntro(i)">
 			<view class="title-and-time">
 				<text lines="1" class="title">{{ '【' + (i.courseType == '1' ? '视频' : '理论') + '】' + i.examPaperName }}</text>
 				<!-- 未开始 已完成 未完成 待评分 超时 -->

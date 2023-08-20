@@ -2,6 +2,7 @@
   "navigationBarTitleText": "积分排名",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging",
     "u-tabs": "/uni_modules/uview-ui/components/u-tabs/u-tabs"
   }
 }

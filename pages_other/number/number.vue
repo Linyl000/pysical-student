@@ -1,5 +1,5 @@
 <template>
-	<view class="page">
+	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
 		<view class="top_bg">
 			<u-tabs
 				lineColor="#fff"
@@ -16,16 +16,17 @@
 					color: 'rgba(255,255,255,0.5)'
 				}"
 				lineHeight="5"
+				@change="tabChange"
 			></u-tabs>
 			<view class="one_box">
 				<!-- 第二名 -->
 				<view class="top3">
 					<view class="num_two">
 						<image class="huangguan2" src="@/static/two.png"></image>
-						<image class="top3_head" src="http://cdn.zhoukaiwen.com/head2.jpg"></image>
+						<image class="top3_head" :src="list[2].avatar"></image>
 						<!-- <view class="top_name">{{twoName}}</view> -->
-						<view class="top_name" style="font-size: 34rpx;">李*</view>
-						<view class="top_sy">运动积分:xxx</view>
+						<view class="top_name" style="font-size: 34rpx;">{{ list[2].nickName }}</view>
+						<view class="top_sy">{{ list[2].allIntegral }}</view>
 					</view>
 				</view>
 
@@ -33,10 +34,10 @@
 				<view class="top3">
 					<view class="num_one">
 						<image class="huangguan1" src="@/static/one.png"></image>
-						<image class="top3_head" src="http://cdn.zhoukaiwen.com/head1.jpg"></image>
+						<image class="top3_head" :src="list[1].avatar"></image>
 						<!-- <view class="top_name" style="font-size: 30rpx;">{{oneName}}</view> -->
-						<view class="top_name text-bold" style="font-size: 38rpx;">王 * 鑫</view>
-						<view class="top_sy">运动积分:xxx</view>
+						<view class="top_name text-bold" style="font-size: 38rpx;">{{ list[1].nickName }}</view>
+						<view class="top_sy">{{ list[1].allIntegral }}</view>
 					</view>
 				</view>
 
@@ -44,9 +45,9 @@
 				<view class="top3">
 					<view class="num_three">
 						<image class="huangguan2" src="@/static/three.png"></image>
-						<image class="top3_head" src="http://cdn.zhoukaiwen.com/head12.jpeg"></image>
-						<view class="top_name">郭 * 杰</view>
-						<view class="top_sy">运动积分:xxx</view>
+						<image class="top3_head" :src="list[3].avatar"></image>
+						<view class="top_name">{{ list[3].nickName }}</view>
+						<view class="top_sy">{{ list[3].allIntegral }}</view>
 					</view>
 				</view>
 			</view>
@@ -54,44 +55,82 @@
 		</view>
 		<!-- 我 -->
 		<view class="four-and-other ">
-			<text lines="1" class="four-and-other-number">111</text>
-			<image
-				src="https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4a05b8cb76ebc7804ae738c784fbd68270042c1743b48740923a5c5acc59475"
-				class="label_2"
-			></image>
-			<text lines="1" class="text_17">名称最多十个字了啦哈</text>
-			<view class="four-and-other-jifen"><text lines="1" class="text_18">150</text></view>
+			<text lines="1" class="four-and-other-number">{{ index === -1 ? '未上榜' : index + 1 }}</text>
+			<image :src="list[0].avatar" class="label_2"></image>
+			<text lines="1" class="text_17">{{ list[0].nickName }}</text>
+			<view class="four-and-other-jifen">
+				<text lines="1" class="text_18">{{ list[0].allIntegral }}</text>
+			</view>
 		</view>
 		<div class="my-number"></div>
 		<!-- 4~10 -->
-		<view class="four-and-other" v-for="(item, index) in 7">
+		<view class="four-and-other" v-for="(item, index) in listOther" :key="index">
 			<text lines="1" class="four-and-other-number">{{ index + 4 }}</text>
-			<image
-				src="https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4a05b8cb76ebc7804ae738c784fbd68270042c1743b48740923a5c5acc59475"
-				class="label_2"
-			></image>
-			<text lines="1" class="text_17">名称最多十个字了啦哈</text>
-			<view class="four-and-other-jifen"><text lines="1" class="text_18">150</text></view>
+			<image :src="item.avater" class="label_2"></image>
+			<text lines="1" class="text_17">{{ item.nickName }}</text>
+			<view class="four-and-other-jifen">
+				<text lines="1" class="text_18">{{ item.allIntegral }}</text>
+			</view>
 		</view>
-	</view>
+	</z-paging>
 </template>
 
 <script>
+import { integralSchool, integralCollege } from '@/api/number.js';
 export default {
 	data() {
 		return {
+			list: [],
+			listOther: [],
 			list1: [
 				{
-					name: '班级排行'
+					name: '学校排行'
 				},
 				{
 					name: '院系排行'
 				}
-			]
+			],
+			type: 0,
+			index: null
 		};
 	},
 	onLoad() {},
-	methods: {}
+	methods: {
+		getList(page, limit) {
+			if (this.type === 0) {
+				integralSchool()
+					.then(res => {
+						this.list = res.data;
+
+						this.listOther = res.data.slice(3);
+						let find = res.data[0];
+						const newList = res.data.slice(1);
+						this.index = newList.findIndex(item => item.userId === find.userId);
+						this.$refs.paging.complete(res.data);
+					})
+					.catch(res => {
+						this.$refs.paging.complete(false);
+					});
+			} else if (this.type === 1) {
+				integralCollege()
+					.then(res => {
+						this.list = res.data;
+						this.listOther = res.data.slice(3);
+						let find = res.data[0];
+						const newList = res.data.slice(1);
+						this.index = newList.findIndex(item => item.userId === find.userId);
+						this.$refs.paging.complete(res.data);
+					})
+					.catch(res => {
+						this.$refs.paging.complete(false);
+					});
+			}
+		},
+		tabChange({ index }) {
+			this.type = index;
+			this.$refs.paging.reload();
+		}
+	}
 };
 </script>
 
@@ -256,7 +295,6 @@ export default {
 .label_2 {
 	width: 72rpx;
 	height: 72rpx;
-	background-color: #2fc04f;
 	border-radius: 50%;
 }
 .text_17 {

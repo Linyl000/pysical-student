@@ -1,13 +1,13 @@
 <template>
 	<view class="page">
-		<div class="teacher-name" @click="showTeacher = true">
+		<div class="teacher-name" @click="listAll">
 			<u-input
 				v-model="teacher"
 				border="none"
 				disabled
 				disabledColor="#fff"
 				suffixIcon="arrow-down"
-				placeholder="请选择要评价的教师"
+				placeholder="请选择要评价的课程"
 				fontSize="22"
 			></u-input>
 		</div>
@@ -15,12 +15,12 @@
 		<view class="input_1">
 			<text lines="1" class="text_5">分数</text>
 			<view class="score-write">
-				<u--input v-model="value" @change="change" border="none" fontSize="30" inputAlign="right" color="rgb(224, 105, 105)"></u--input>
+				<u--input v-model="score" border="none" fontSize="30" inputAlign="right" color="rgb(224, 105, 105)"></u--input>
 				<text style="color: rgb(224, 105, 105);margin-left: 10rpx;">分</text>
 			</view>
 		</view>
-		<view class="stu-says"><u--textarea height="100%" v-model="value1" placeholder="请输入内容" count></u--textarea></view>
-		<view class="button_1"><text lines="1" class="text_5">提交</text></view>
+		<view class="stu-says"><u--textarea height="100%" v-model="evaluateContent" placeholder="请输入内容" count></u--textarea></view>
+		<view class="button_1" @click="evaluate">提交</view>
 		<!-- 选老师 -->
 		<u-picker
 			:show="showTeacher"
@@ -29,23 +29,73 @@
 			immediateChange
 			@cancel="showTeacher = false"
 			@confirm="selectTeacher"
+			keyName="courseName"
 		></u-picker>
 	</view>
 </template>
 
 <script>
+import { listAll, evaluate } from '@/api/teacher-say.js';
 export default {
 	data() {
 		return {
-			teacher: '太极八卦连环掌-王伊伊老师',
+			teacher: '',
 			showTeacher: false,
-			cTeacher: [['深圳', '厦门', '上海', '拉萨']]
+			cTeacher: [],
+			courseId: null,
+			evaluateContent: '',
+			score: ''
 		};
 	},
 	methods: {
+		listAll() {
+			listAll({ evaluateStatus: 0 }).then(res => {
+				if (res.data) {
+					this.showTeacher = true;
+					this.cTeacher.push(res.data);
+				} else {
+					uni.showToast({
+						duration: 2000,
+						title: '您已完成全部课程评价',
+						icon: 'none'
+					});
+				}
+			});
+		},
 		selectTeacher(e) {
-			console.log(e);
+			this.courseId = e.value[0].courseId;
+			this.teacher = e.value[0].courseName;
 			this.showTeacher = false;
+		},
+		evaluate() {
+			if (!this.evaluateContent) {
+				uni.showToast({
+					duration: 2000,
+					title: '请填写评价内容',
+					icon: 'none'
+				});
+				return;
+			}
+			if (!this.score) {
+				uni.showToast({
+					duration: 2000,
+					title: '请填写分数',
+					icon: 'none'
+				});
+				return;
+			}
+			evaluate({ courseId: this.courseId, evaluateContent: this.evaluateContent, score: this.score }).then(res => {
+				if (res.code === 200) {
+					uni.showToast({
+						duration: 2000,
+						title: '提交成功',
+						icon: 'none'
+					});
+				}
+				this.teacher = '';
+				this.evaluateContent = '';
+				this.score = '';
+			});
 		}
 	}
 };
@@ -53,7 +103,7 @@ export default {
 
 <style scoped lang="scss">
 .teacher-name {
-	width: 540rpx;
+	width: 700rpx;
 	height: 100rpx;
 	font-weight: 600;
 	color: #2a2a2a;
@@ -83,7 +133,7 @@ export default {
 .text_5 {
 	height: 122rpx;
 	overflow-wrap: break-word;
- 
+
 	font-size: 32rpx;
 	font-family: PingFangSC-Regular;
 	font-weight: normal;
@@ -113,22 +163,17 @@ export default {
 /deep/.u-textarea__field {
 	font-size: 36rpx !important;
 }
-
 .button_1 {
-	display: flex;
-	flex-direction: column;
 	border-radius: 48rpx;
 	width: 448rpx;
 	height: 96rpx;
 	margin: 40rpx auto;
-	// background-color: #dfe1e5;
-	background-color: rgba(93, 79, 220, 1);
-}
-.text_5 {
-	color: rgba(255, 255, 255, 1);
 	font-size: 32rpx;
 	font-weight: 600;
 	text-align: center;
 	line-height: 96rpx;
+	color: rgba(255, 255, 255, 1);
+	// background-color: #dfe1e5;
+	background-color: rgba(93, 79, 220, 1);
 }
 </style>

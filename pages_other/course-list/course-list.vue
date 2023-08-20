@@ -10,7 +10,7 @@
 
 		<div v-if="current == 0" class="type">
 			<div class="title">【课程】{{ list[0].courseName }}</div>
-			<div class="type-item" v-for="(i, index) in list" @click="goCurriculum(i)">
+			<div class="type-item" v-for="(i, index) in list" :key="index" @click="goCurriculum(i)">
 				<div class="item-title">{{ index + 1 }}.{{ i.taskName }}</div>
 				<u-icon v-if="i.courseType == 0" name="file-text" color="#5d4fdc" size="26"></u-icon>
 				<u-icon v-if="i.courseType == 1" name="play-circle" color="#5d4fdc" size="24"></u-icon>

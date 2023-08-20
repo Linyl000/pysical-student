@@ -29,15 +29,24 @@
 </template>
 
 <script>
+import { studyRecordAdd, studyRecordUp } from '@/api/study-records.js';
 export default {
 	data() {
 		return {
-			i: null
+			i: null,
+			id: null,
+			startTime: null,
+			endTime: null
 		};
 	},
 	onLoad(option) {
 		this.i = JSON.parse(option.i);
-		console.log(this.i);
+		this.startTime = new Date().getTime();
+		this.studyRecordAdd();
+	},
+	onUnload() {
+		this.endTime = new Date().getTime();
+		this.studyRecordUp();
 	},
 	methods: {
 		// goResult(i) {
@@ -49,6 +58,14 @@ export default {
 			uni.navigateTo({
 				url: '/pages_other/wait-result/wait-result'
 			});
+		},
+		studyRecordAdd() {
+			studyRecordAdd({ taskId: this.i.taskId }).then(res => {
+				this.id = res.data;
+			});
+		},
+		studyRecordUp() {
+			studyRecordUp({ recordId: this.id, allTime: this.endTime - this.startTime }).then(res => {});
 		}
 	}
 };

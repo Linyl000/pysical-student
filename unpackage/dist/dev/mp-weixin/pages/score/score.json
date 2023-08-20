@@ -2,6 +2,8 @@
   "navigationBarTitleText": "成绩",
   "enablePullDownRefresh": false,
   "usingComponents": {
-    "u-search": "/uni_modules/uview-ui/components/u-search/u-search"
+    "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging",
+    "u-search": "/uni_modules/uview-ui/components/u-search/u-search",
+    "u-tabs": "/uni_modules/uview-ui/components/u-tabs/u-tabs"
   }
 }

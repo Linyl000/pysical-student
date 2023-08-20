@@ -3,6 +3,7 @@
   "navigationBarBackgroundColor": "#F8F8F8",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "z-paging": "/uni_modules/z-paging/components/z-paging/z-paging",
     "u-search": "/uni_modules/uview-ui/components/u-search/u-search"
   }
 }

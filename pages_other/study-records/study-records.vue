@@ -1,27 +1,53 @@
 <template>
-	<view class="page">
-		<view class="search-box"><u-search placeholder="搜索课程记录" v-model="keyword"></u-search></view>
-		<view class="text-wrapper_1">
-			<text lines="1" class="text_5">02</text>
-			<text lines="1" class="text_6">/23</text>
-		</view>
-		<view class="container" v-for="i in 5">
-			<image class="img-main" src="../../static/study.png"></image>
-			<view class="right-content">
-				<view lines="1" class="title">太极八法五步-第六式</view>
-				<view lines="1" class="details">
-					<span>已学习11分11秒</span>
-					<text style="color: rgb(224, 105, 105);">已播放98%</text>
+	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
+		<template #top>
+			<view class="search-box"><u-search placeholder="搜索课程记录" v-model="courseName"></u-search></view>
+		</template>
+		<div v-for="(i, index) in list" :key="index">
+			<view class="text-wrapper_1">
+				{{ i.recordTime }}
+				<!-- 	<text lines="1" class="text_5">02</text>
+			<text lines="1" class="text_6">/23</text> -->
+			</view>
+			<view class="container" v-for="j in i.tkyStudyRecords" :key="j.taskId" @click="goCurriculum(j)">
+				<image class="img-main" :src="j.taskVideo"></image>
+				<view class="right-content">
+					<view lines="1" class="title">{{ j.taskName }}</view>
+					<view lines="1" class="details">
+						<span>已学习{{ j.allTime }}</span>
+						<!-- <text style="color: rgb(224, 105, 105);">已播放98%</text> -->
+					</view>
 				</view>
 			</view>
-		</view>
-	</view>
+		</div>
+	</z-paging>
 </template>
 
 <script>
+import { studyRecordList, studyRecordAdd, studyRecordUp } from '@/api/study-records.js';
 export default {
 	data() {
-		return {};
+		return {
+			list: [],
+			courseName: ''
+		};
+	},
+	methods: {
+		getList(page, limit) {
+			studyRecordList({ pageSize: page, pageNo: limit, courseName: this.courseName })
+				.then(res => {
+					this.list = res.data;
+					this.$refs.paging.complete(res.data);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
+				});
+		},
+		goCurriculum(i) {
+			uni.navigateTo({
+				url: '/pages_other/curriculum/curriculum?i=' + JSON.stringify(i)
+			});
+		}
 	}
 };
 </script>
@@ -45,7 +71,6 @@ export default {
 	white-space: nowrap;
 	line-height: 64rpx;
 	margin: 32rpx 0 0 32rpx;
- 
 
 	.text_5 {
 		font-size: 36rpx;
@@ -77,7 +102,7 @@ export default {
 		width: 308rpx;
 		height: 48rpx;
 		overflow-wrap: break-word;
-	 
+
 		font-size: 32rpx;
 		font-weight: 600;
 		white-space: nowrap;
