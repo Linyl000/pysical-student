@@ -260,7 +260,6 @@
   display: flex;
   flex-direction: column;
   width: 750rpx;
-  min-height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
   background-color: white;
@@ -299,7 +298,8 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.page.data-v-b1db4d34 {
+.page.data-v-b1db4d34,
+page.data-v-b1db4d34 {
   background-color: #f8f8f8;
 }
 .data-v-b1db4d34 .u-tabs__wrapper__nav__item__text {

@@ -28,7 +28,7 @@
 .wait {
   width: 312rpx;
   height: 380rpx;
-  margin: 312rpx auto 80rpx;
+  margin: 280rpx auto 80rpx;
 }
 .wait image {
   width: 100%;

@@ -40,7 +40,6 @@
   justify-content: space-around;
   width: 686rpx;
   height: 192rpx;
-  background-color: #f8f8f8;
   border-radius: 32rpx;
   margin: 0 auto;
 }

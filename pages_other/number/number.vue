@@ -18,13 +18,12 @@
 				lineHeight="5"
 				@change="tabChange"
 			></u-tabs>
-			<view class="one_box">
+			<view class="one_box" v-if="list.length > 2">
 				<!-- 第二名 -->
 				<view class="top3">
 					<view class="num_two">
 						<image class="huangguan2" src="@/static/two.png"></image>
 						<image class="top3_head" :src="list[2].avatar"></image>
-						<!-- <view class="top_name">{{twoName}}</view> -->
 						<view class="top_name" style="font-size: 34rpx;">{{ list[2].nickName }}</view>
 						<view class="top_sy">{{ list[2].allIntegral }}</view>
 					</view>
@@ -35,7 +34,6 @@
 					<view class="num_one">
 						<image class="huangguan1" src="@/static/one.png"></image>
 						<image class="top3_head" :src="list[1].avatar"></image>
-						<!-- <view class="top_name" style="font-size: 30rpx;">{{oneName}}</view> -->
 						<view class="top_name text-bold" style="font-size: 38rpx;">{{ list[1].nickName }}</view>
 						<view class="top_sy">{{ list[1].allIntegral }}</view>
 					</view>
@@ -54,7 +52,7 @@
 			<image class="one-two-three" src="@/static/one-two-three.png" mode="widthFix"></image>
 		</view>
 		<!-- 我 -->
-		<view class="four-and-other ">
+		<view v-if="list.length" class="four-and-other ">
 			<text lines="1" class="four-and-other-number">{{ index === -1 ? '未上榜' : index + 1 }}</text>
 			<image :src="list[0].avatar" class="label_2"></image>
 			<text lines="1" class="text_17">{{ list[0].nickName }}</text>
@@ -64,7 +62,7 @@
 		</view>
 		<div class="my-number"></div>
 		<!-- 4~10 -->
-		<view class="four-and-other" v-for="(item, index) in listOther" :key="index">
+		<view class="four-and-other" v-if="listOther.length" v-for="(item, index) in listOther" :key="index">
 			<text lines="1" class="four-and-other-number">{{ index + 4 }}</text>
 			<image :src="item.avater" class="label_2"></image>
 			<text lines="1" class="text_17">{{ item.nickName }}</text>

@@ -17,7 +17,7 @@
 			{{ i.taskDetails }}
 		</div>
 
-		<div class="course-image-text-info"><div class="content-rich" v-html="noticeContent"></div></div>
+		<div class="course-image-text-info"><div class="content-rich" v-html="i.noticeContent"></div></div>
 		<!-- 底部固定高度盒子 -->
 		<div class="safe"></div>
 		<!-- 固定底部 -->
@@ -60,7 +60,7 @@ export default {
 			});
 		},
 		studyRecordAdd() {
-			studyRecordAdd({ taskId: this.i.taskId }).then(res => {
+			studyRecordAdd({ taskId: this.i.id }).then(res => {
 				this.id = res.data;
 			});
 		},
@@ -72,7 +72,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page {
+.page,
+page {
 	background-color: rgba(248, 248, 248, 1);
 }
 .video-inst {

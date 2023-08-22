@@ -11,7 +11,7 @@
 		<div v-if="workVideo" class="have-video">
 			<div class="icon"><u-icon name="play-right-fill" color="#fff" size="28"></u-icon></div>
 			<view class="name-and-size">
-				<text lines="1" class="name">{{ originalFilename }}.mp4</text>
+				<text lines="1" class="name">{{ originalFilename }}</text>
 				<text lines="1" class="size">{{ size }}M</text>
 			</view>
 			<div class="delete" @click="deleteVideo">删除</div>
@@ -46,18 +46,22 @@ export default {
 	methods: {
 		selectVideo() {
 			this.start();
-			uni.chooseMedia({
-				maxDuration: 60,
+			uni.chooseFile({
+				// 	maxDuration: 60,
 				count: 1,
+				type: 'video',
 				sourceType: ['album', 'camera'],
-				compressed: true,
-				mediaType: ['video'],
+				extension: ['mp4', 'avi'],
+				// 	compressed: true,
 				success: r => {
-					// console.log('r');
-					// console.log(r);
+					console.log('r');
+					console.log(r);
 					this.vtype = 2;
-					let linShi2 = r.tempFiles[0].tempFilePath;
+					let linShi2 = r.tempFiles[0].path;
+					const fileExtension = r.tempFiles[0].name.substring(r.tempFiles[0].name.lastIndexOf('.') + 1);
 					this.size = (r.tempFiles[0].size / (1024 * 1024)).toFixed(2);
+					// let files = linShi2 + '.' + fileExtension;
+					// console.log(files);
 					//上传中不可提交
 					this.upMediaOrImg = true;
 					uni.uploadFile({
@@ -72,7 +76,12 @@ export default {
 							console.log(uploadFileRes);
 							this.workVideo = JSON.parse(uploadFileRes.data).url;
 							let name = JSON.parse(uploadFileRes.data).originalFilename;
-							this.originalFilename = name.substring(0, 8) + '...' + name.slice(-4);
+							if (name.length > 20) {
+								this.originalFilename = name.substring(0, 8) + '...' + name.slice(-4);
+							} else {
+								this.originalFilename = name;
+							}
+
 							this.upMediaOrImg = false;
 							console.log(this.workVideo);
 						},

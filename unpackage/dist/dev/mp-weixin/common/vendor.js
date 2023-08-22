@@ -21255,7 +21255,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.start = st
 
 //视频练习开始
 function start(data) {
-  return (0, _api.get)('/work/studentWork/practice/video/', data);
+  return (0, _api.get)('/work/studentWork/practice/video/' + data.id);
 }
 
 //视频练习提交
@@ -24108,8 +24108,7 @@ function getRequest(url, data) {
         // 'user-token': uni.getStorageSync('userinfo').token
       },
       success: function success(res) {
-        if (res.data.code === 401 || res.data.
-        code === 403) {
+        if (res.data.code === 401) {
           uni.removeStorageSync('token');
           uni.redirectTo({
             url: '/pages_other/first-info/first-info' });
@@ -24147,8 +24146,7 @@ function putRequest(url, data, heads) {
         'Authorization': uni.getStorageSync('token') },
 
       success: function success(res) {
-        if (res.data.code === 401 || res.data.
-        code === 403) {
+        if (res.data.code === 401) {
           uni.removeStorageSync('token');
           uni.redirectTo({
             url: '/pages_other/first-info/first-info' });
@@ -24186,8 +24184,7 @@ function delRequest(url, data) {
         'Authorization': uni.getStorageSync('token') },
 
       success: function success(res) {
-        if (res.data.code === 401 || res.data.
-        code === 403) {
+        if (res.data.code === 401) {
           uni.removeStorageSync('token');
           uni.redirectTo({
             url: '/pages_other/first-info/first-info' });
@@ -28629,6 +28626,108 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.getInfo = 
 function getInfo() {
   return (0, _api.get)('/getInfo');
 }
+
+/***/ }),
+/* 599 */,
+/* 600 */,
+/* 601 */,
+/* 602 */,
+/* 603 */,
+/* 604 */,
+/* 605 */,
+/* 606 */,
+/* 607 */,
+/* 608 */,
+/* 609 */
+/*!**********************************************************************************!*\
+  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-modal/props.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 是否展示modal
+    show: {
+      type: Boolean,
+      default: uni.$u.props.modal.show },
+
+    // 标题
+    title: {
+      type: [String],
+      default: uni.$u.props.modal.title },
+
+    // 弹窗内容
+    content: {
+      type: String,
+      default: uni.$u.props.modal.content },
+
+    // 确认文案
+    confirmText: {
+      type: String,
+      default: uni.$u.props.modal.confirmText },
+
+    // 取消文案
+    cancelText: {
+      type: String,
+      default: uni.$u.props.modal.cancelText },
+
+    // 是否显示确认按钮
+    showConfirmButton: {
+      type: Boolean,
+      default: uni.$u.props.modal.showConfirmButton },
+
+    // 是否显示取消按钮
+    showCancelButton: {
+      type: Boolean,
+      default: uni.$u.props.modal.showCancelButton },
+
+    // 确认按钮颜色
+    confirmColor: {
+      type: String,
+      default: uni.$u.props.modal.confirmColor },
+
+    // 取消文字颜色
+    cancelColor: {
+      type: String,
+      default: uni.$u.props.modal.cancelColor },
+
+    // 对调确认和取消的位置
+    buttonReverse: {
+      type: Boolean,
+      default: uni.$u.props.modal.buttonReverse },
+
+    // 是否开启缩放效果
+    zoom: {
+      type: Boolean,
+      default: uni.$u.props.modal.zoom },
+
+    // 是否异步关闭，只对确定按钮有效
+    asyncClose: {
+      type: Boolean,
+      default: uni.$u.props.modal.asyncClose },
+
+    // 是否允许点击遮罩关闭modal
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: uni.$u.props.modal.closeOnClickOverlay },
+
+    // 给一个负的margin-top，往上偏移，避免和键盘重合的情况
+    negativeTop: {
+      type: [String, Number],
+      default: uni.$u.props.modal.negativeTop },
+
+    // modal宽度，不支持百分比，可以数值，px，rpx单位
+    width: {
+      type: [String, Number],
+      default: uni.$u.props.modal.width },
+
+    // 确认按钮的样式，circle-圆形，square-方形，如设置，将不会显示取消按钮
+    confirmButtonShape: {
+      type: String,
+      default: uni.$u.props.modal.confirmButtonShape } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 ]]);

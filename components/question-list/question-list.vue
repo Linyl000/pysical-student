@@ -83,6 +83,7 @@
 					<!-- 每个类型的标题和题目 -->
 					<view class="hide_exam_type">
 						<!-- 	<view class="hide_exam_type_title">{{ i + 1 + '、' + item.text }}</view> -->
+
 						<view class="hide_exam_content">
 							<view class="hide_exam_content_item" v-for="(item, i) in examNumData" :key="i" @tap="toAnswerIndex(i + 1)">
 								<view :class="['hide_exam_content_num', Changestate(item.state), i === exampagenum ? 'current' : '']">{{ i + 1 }}</view>
@@ -174,16 +175,18 @@ export default {
 		if (this.isRemaining) {
 			this.getTime();
 		}
-		this.init();
 	},
-	created() {},
+	watch: {
+		answerData: {
+			handler(newValue, oldValue) {
+				this.init();
+			}
+			// immediate:true
+		}
+	},
 	methods: {
 		init() {
-			//-----------
 			this.examNumData = this.answerData.map(item => ({ id: item.id, state: 0 }));
-
-			console.log(this.examNumData);
-			//---------
 			if (this.exampagenum == 0) {
 				this.isQuestionCollect(0);
 			}
@@ -265,7 +268,7 @@ export default {
 		},
 		// 答题卡控制选项样式
 		Changestate(state) {
-			console.log(state);
+			// console.log(state);
 			if (state == 0) {
 				return 'not_done';
 			} else if (state == 1) {
@@ -300,8 +303,8 @@ export default {
 				answerData: this.answerData[this.exampagenum],
 				indexs: this.exampagenum
 			};
-			console.log(obj)
-			this.$emit('changeOptions', obj,this.answerData);
+			// console.log(obj);
+			this.$emit('changeOptions', obj, this.answerData);
 
 			this.$set(this.examNumData[this.exampagenum], 'state', 1);
 		},
@@ -347,7 +350,7 @@ export default {
 		isQuestionCollect(index) {},
 		//交卷对话框显示
 		dialogChangeshow() {
-			this.$emit('runRes',this.answerData);
+			this.$emit('runRes', this.answerData);
 		}
 	}
 };

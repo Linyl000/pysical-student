@@ -72,7 +72,8 @@ export default {
 </script>
 
 <style lang="scss">
-.page {
+.page,
+page {
 	background-color: rgba(248, 248, 248, 1);
 }
 

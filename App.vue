@@ -117,9 +117,6 @@ export default {
 // 	max-width: 560px; //最大宽度自己可以调整
 // 	margin: auto !important;
 // }
-.page {
-	min-height: 100vh;
-}
 /*  #endif  */
 /*每个页面公共css */
 // page {
@@ -137,7 +134,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	width: 750rpx;
-	min-height: 100vh;
+	// min-height: 100vh;
 	overflow: hidden;
 	box-sizing: border-box;
 	background-color: rgba(255, 255, 255, 1);

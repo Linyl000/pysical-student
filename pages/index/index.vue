@@ -9,22 +9,25 @@
 				<!-- <u-icon name="plus-circle" size="28" @click="goAddCourse"></u-icon> -->
 			</view>
 		</template>
-		<view class="group_9">
-			<view class="image-text_6">
-				<view class="box_1"></view>
-				<view class="text-group_4">全部课程</view>
+		<view class="course-all">
+			<view class="title-box">
+				<view class="title-icon"></view>
+				<view class="title-name">全部课程</view>
 			</view>
-			<!-- 	<view class="image-text_7"><text lines="1" class="text-group_2">查看</text></view> -->
+			<!-- 	<view class="title-more">查看</view> -->
 		</view>
 		<div class="course">
 			<!-- <view lines="1" class="co-name">主要课程</view> -->
 			<div class="one-course" v-for="i in list" :key="i.courseId" @click="goMyCourse(i)">
-				<image :src="i.courseVideo" mode=""></image>
-				<view lines="1" class="title">{{ i.courseName }} - {{ i.teacherName }}</view>
-				<view lines="1" class="detail">{{ i.courseIntroduce }}</view>
+				<image :src="i.courseJson" mode=""></image>
+				<view class="title">{{ i.courseName }} - {{ i.teacherName }}</view>
+				<view class="detail">{{ i.courseIntroduce }}</view>
 			</div>
 		</div>
+
+		<!-- #ifdef H5 -->
 		<!-- <div style="width: 100%;height: 50px;"></div> -->
+		<!-- #endif -->
 	</z-paging>
 </template>
 
@@ -33,7 +36,7 @@ import { courseList } from '@/api/index.js';
 import { getInfo } from '@/api/user.js';
 export default {
 	data() {
-		return { list: [], user: null };
+		return { list: [], user: { nickName: '' } };
 	},
 	onLoad() {
 		this.getInfo();
@@ -89,20 +92,20 @@ export default {
 		line-height: 48rpx;
 	}
 }
-.group_9 {
+.course-all {
 	width: 680rpx;
 	// display: flex;
 	// flex-direction: row;
 	justify-content: space-between;
 	margin: 10rpx auto 20rpx;
 
-	.image-text_6 {
+	.title-box {
 		width: 176rpx;
 		height: 48rpx;
 		display: flex;
 		justify-content: space-between;
 	}
-	.box_1 {
+	.title-icon {
 		background-color: rgba(93, 79, 220, 1);
 		border-radius: 8rpx;
 		width: 16rpx;
@@ -110,7 +113,7 @@ export default {
 		display: flex;
 		flex-direction: column;
 	}
-	.text-group_4 {
+	.title-name {
 		width: 146rpx;
 		line-height: 48rpx;
 		font-weight: 600;
@@ -118,7 +121,7 @@ export default {
 		flex-direction: column;
 		justify-content: space-between;
 	}
-	.text-group_2 {
+	.title-more {
 		width: 48rpx;
 		height: 48rpx;
 		overflow-wrap: break-word;
@@ -142,9 +145,8 @@ export default {
 	display: flex;
 	flex-direction: column;
 	margin: 0 0 32rpx 32rpx;
-	background-color: #ccc;
 	border-radius: 20rpx;
-	color: rgba(255, 255, 255, 1);
+	overflow: hidden;
 	image {
 		position: absolute;
 		width: 686rpx;
@@ -153,6 +155,9 @@ export default {
 		left: 0;
 	}
 	.title {
+		background-color: rgba(0, 0, 0, 0.4);
+		color: white;
+		z-index: 100;
 		height: 60rpx;
 		overflow-wrap: break-word;
 		font-size: 40rpx;
@@ -160,17 +165,21 @@ export default {
 		text-align: left;
 		white-space: nowrap;
 		line-height: 60rpx;
-		margin: 154rpx 0 0 36rpx;
+		margin: 154rpx 0 0;
+		padding-left: 36rpx;
 	}
 	.detail {
-		width: 640rpx;
-		height: 34rpx;
+		height: 90rpx;
+		background-color: rgba(0, 0, 0, 0.4);
+		color: white;
+		z-index: 100;
+		box-sizing: border-box;
 		font-size: 28rpx;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		line-height: 34rpx;
-		margin: 0 0 32rpx 32rpx;
+		padding: 0 32rpx 32rpx 32rpx;
 	}
 }
 </style>

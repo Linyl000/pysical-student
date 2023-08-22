@@ -44,7 +44,7 @@ export default {
 	data() {
 		return {
 			current: 0,
-			list: [],
+			list: [{ courseName: '' }],
 			courseId: null
 		};
 	},
@@ -54,7 +54,6 @@ export default {
 	// this.$refs.paging.reload();
 	methods: {
 		getList(page, limit) {
-			console.log(111);
 			if (this.current === 0) {
 				coureseTaskList({ courseId: this.courseId })
 					.then(res => {
@@ -80,7 +79,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page {
+.page,
+page {
 	background-color: rgba(248, 248, 248, 1);
 }
 .type-list {
@@ -115,7 +115,7 @@ export default {
 	border-radius: 16rpx;
 	padding: 32rpx;
 	box-sizing: border-box;
-	margin: 0 auto;
+	margin: 16rpx auto;
 	.title {
 		height: 48rpx;
 		font-size: 32rpx;

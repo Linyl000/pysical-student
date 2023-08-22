@@ -2,6 +2,7 @@
   "navigationBarTitleText": "",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "u-modal": "/uni_modules/uview-ui/components/u-modal/u-modal",
     "questionlist": "/components/question-list/question-list"
   }
 }

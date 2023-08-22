@@ -39,6 +39,7 @@ export default {
 				});
 				return;
 			}
+			uni.removeStorageSync('token');
 			login({ username: this.username, password: this.password }).then(res => {
 				if (res.code === 200) {
 					uni.setStorageSync('token', res.token);
@@ -57,7 +58,6 @@ export default {
 	width: 630rpx;
 	margin: 40rpx 0 0 32rpx;
 	padding: 0 30rpx;
-	background-color: rgba(248, 248, 248, 1);
 	border-radius: 16rpx;
 	height: 120rpx;
 }

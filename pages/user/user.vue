@@ -64,6 +64,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+page,
 .page {
 	background: #f8f8f8;
 }

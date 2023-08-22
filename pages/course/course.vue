@@ -1,27 +1,29 @@
 <template>
-	<view class="page">
-		<u-tabs
-			lineColor="#5d4fdc"
-			:list="list1"
-			lineWidth="40"
-			:itemStyle="{
-				height: '100rpx'
-			}"
-			:activeStyle="{
-				fontWeight: 'bold'
-			}"
-			lineHeight="5"
-			@change="tabChange"
-		></u-tabs>
-		<view class="type-list">
-			<view class="text-wrapper" :class="{ active: current === 2 }" @click="current = 2">全部</view>
-			<view class="text-wrapper" :class="{ active: current === 1 }" @click="current = 1">已完成</view>
-			<view class="text-wrapper" :class="{ active: current === 0 }" @click="current = 0">未完成</view>
-		</view>
+	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="paperList" @query="getPaperList" class="page">
+		<template #top>
+			<u-tabs
+				lineColor="#5d4fdc"
+				:list="list1"
+				lineWidth="40"
+				:itemStyle="{
+					height: '100rpx'
+				}"
+				:activeStyle="{
+					fontWeight: 'bold'
+				}"
+				lineHeight="5"
+				@change="tabChange"
+			></u-tabs>
+			<view class="type-list">
+				<view class="text-wrapper" :class="{ active: current === 2 }" @click="current = 2">全部</view>
+				<view class="text-wrapper" :class="{ active: current === 1 }" @click="current = 1">已完成</view>
+				<view class="text-wrapper" :class="{ active: current === 0 }" @click="current = 0">未完成</view>
+			</view>
+		</template>
 		<!-- 未开始：不能点  未完成：去题目详情做题   完成：去题目详情可以修改  超时+已完成/待评分：去结果页/评分页  超时+未完成：去题目详情不能做题  -->
 		<view class="list-item" v-for="(i, index) in paperList" :key="index" @click="goCourseIntro(i)">
 			<view class="title-and-time">
-				<text lines="1" class="title">{{ '【' + (i.courseType == '1' ? '视频' : '理论') + '】' + i.examPaperName }}</text>
+				<text lines="1" class="title">{{ '【' + (i.courseType == '1' ? '视频' : '理论') + '】' + i.taskName }}</text>
 				<!-- 未开始 已完成 未完成 待评分 超时 -->
 				<view
 					:class="[
@@ -61,7 +63,7 @@
 				<!-- {{ i.finishStatus == '1' ? '得分' + i.workScore : '截止时间' + i.lastTime }} -->
 			</view>
 		</view>
-	</view>
+	</z-paging>
 </template>
 
 <script>
@@ -86,7 +88,8 @@ export default {
 	watch: {
 		current: {
 			handler(newValue, oldValue) {
-				this.getPaperList();
+				// this.getPaperList();
+				this.$refs.paging.reload();
 			}
 			// immediate:true
 		}
@@ -112,28 +115,26 @@ export default {
 			}
 		},
 		getPaperList() {
-			let body = { taskType: this.type };
-			if (!this.current === 2) {
-				body.finishStatus = this.current;
-			}
-
-			request.get('/work/studentWork/list', body).then(({ rows }) => {
-				this.paperList = rows;
-			});
+			request
+				.get('/work/studentWork/list', { taskType: this.type, finishStatus: this.current === 2 ? '' : this.current })
+				.then(({ rows }) => {
+					this.paperList = rows;
+				});
 		},
 		tabChange({ index }) {
 			this.type = index;
-			this.getPaperList();
+			this.$refs.paging.reload();
 		}
-	},
-	mounted() {
-		this.getPaperList();
 	}
+	// mounted() {
+	// 	this.getPaperList();
+	// }
 };
 </script>
 
 <style lang="scss" scoped>
-.page {
+.page,
+page {
 	background-color: rgba(248, 248, 248, 1);
 }
 /deep/.u-tabs__wrapper__nav__item__text {

@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<view class="title">{{ '【' + (item.courseType == '1' ? '视频' : '理论') + '】' + item.examPaperName }}</view>
+		<view class="title">{{ '【' + (item.courseType == '1' ? '视频' : '理论') + '】' + item.taskName }}</view>
 		<view class="cut-off-time">{{ '最后截止时间：' + item.endTime }}</view>
 		<view class="demand-box">
 			<view class="demand-img"></view>
@@ -19,9 +19,7 @@ export default {
 		};
 	},
 	onLoad({ item }) {
-		console.log(item);
 		this.item = JSON.parse(item);
-		console.log(this.item);
 	},
 	methods: {
 		goHomeworkOrTest() {

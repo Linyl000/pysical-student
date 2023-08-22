@@ -260,7 +260,6 @@
   display: flex;
   flex-direction: column;
   width: 750rpx;
-  min-height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
   background-color: white;
@@ -299,7 +298,8 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.page.data-v-7d29cfb9 {
+.page.data-v-7d29cfb9,
+page.data-v-7d29cfb9 {
   background-color: #f8f8f8;
 }
 .type-list.data-v-7d29cfb9 {
@@ -332,7 +332,7 @@
   border-radius: 16rpx;
   padding: 32rpx;
   box-sizing: border-box;
-  margin: 0 auto;
+  margin: 16rpx auto;
 }
 .type .title.data-v-7d29cfb9 {
   height: 48rpx;

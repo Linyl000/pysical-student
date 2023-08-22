@@ -11,19 +11,27 @@
 			@collectChange="collectChange"
 			@runRes="runRes"
 		></questionlist>
+		<u-modal
+			:show="showModel"
+			:title="'是否交卷'"
+			:content="''"
+			confirmColor="#8767f5"
+			:showCancelButton="true"
+			@confirm="runRes"
+		></u-modal>
 	</view>
 </template>
 
 <script>
 import questionlist from '../../components/question-list/question-list.vue';
-import * as request from '@/api/api.js'
+import * as request from '@/api/api.js';
 export default {
 	//声明组件   实例化组件
 	components: {
 		questionlist
 	},
-	onLoad({item}){
-		 this.item=item
+	onLoad({ item }) {
+		this.item = item;
 	},
 	data() {
 		return {
@@ -45,7 +53,8 @@ export default {
 			examNumData: null,
 			//当前为第几题标识
 			exampagenum: 0,
-			item:null
+			item: null,
+			showModel: false
 		};
 	},
 	computed: {
@@ -67,27 +76,26 @@ export default {
 		this.screenheight = uni.getSystemInfoSync().windowHeight;
 		this.getTime();
 	},
-	onLoad({item}) {
-		this.item=JSON.parse(item)
+	onLoad({ item }) {
+		this.item = JSON.parse(item);
 		this.initExam();
 	},
 	methods: {
 		initExam() {
-			console.log(this.item)
-			request.get(`/exam/title/practice/work/${this.item.id}`).then(({data})=>{
-				this.answerData=data.map(i=>{
-					console.log(i,'li')
-					 i.type=1
-					 i.isAnswered=false
-					 i.questionAnswerList=i.questionAnswerList.map(i=>{
-						 i.id=i.content
-						 i.status=0
-						 return i
-					 })
-					 return i
-					 
-				})
-			})
+			console.log(this.item);
+			request.get(`/exam/title/practice/work/${this.item.id}`).then(({ data }) => {
+				this.answerData = data.map(i => {
+					console.log(i, 'li');
+					i.type = 1;
+					i.isAnswered = false;
+					i.questionAnswerList = i.questionAnswerList.map(i => {
+						i.id = i.content;
+						i.status = 0;
+						return i;
+					});
+					return i;
+				});
+			});
 			//this.initExamNumData();
 		},
 
@@ -160,30 +168,30 @@ export default {
 		},
 		//交卷
 		runRes(e) {
-			
-			uni.showModal({
-				title: '是否交卷？',
-				success: res => {
-					if (res.confirm) {
-						let answers=e.map(i=>{
-							return {
-								id:i.id,
-								answer:i.myAnswer
-							}
-						})
-						request.put('/exam/examDetail/practice/work/submit',{examRecordDetails:answers}).then(({code})=>{
-							if(code!=200){
-								 uni.showToast({
-								 					duration: 2000,
-								 					title: '提交失败',
-								 					icon: 'none'
-								 				});
-							}
-						})
-						uni.navigateBack({ delta: 2 });
-					}
+			// console.log(e);
+			// uni.showModal({
+			// 	title: '是否交卷？',
+			// 	success: res => {
+			// 		if (res.confirm) {
+			let answers = this.answerData.map(i => {
+				return {
+					id: i.id,
+					answer: i.myAnswer
+				};
+			});
+			request.put('/exam/examDetail/practice/work/submit', { examRecordDetails: answers }).then(({ code }) => {
+				if (code != 200) {
+					uni.showToast({
+						duration: 2000,
+						title: '提交失败',
+						icon: 'none'
+					});
 				}
 			});
+			uni.navigateBack({ delta: 2 });
+			// 		}
+			// 	}
+			// });
 		}
 	}
 };

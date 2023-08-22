@@ -56,7 +56,7 @@ export default {
 	justify-content: space-around;
 	width: 686rpx;
 	height: 192rpx;
-	background-color: rgba(248, 248, 248, 1);
+
 	border-radius: 32rpx;
 	margin: 0 auto;
 }
@@ -82,7 +82,7 @@ export default {
 	}
 	.show-des-long {
 		// margin-top: 44rpx;
-	 
+
 		font-size: 36rpx;
 		font-weight: 600;
 	}
@@ -96,7 +96,6 @@ export default {
 	justify-content: space-between;
 
 	.tips-title {
-	 
 		font-size: 48rpx;
 		font-weight: 600;
 		text-align: center;
@@ -125,7 +124,7 @@ export default {
 	}
 	.text_11 {
 		overflow-wrap: break-word;
-	 
+
 		font-size: 36rpx;
 		font-weight: 600;
 		white-space: nowrap;

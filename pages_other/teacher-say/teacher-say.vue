@@ -49,6 +49,7 @@ export default {
 	},
 	methods: {
 		listAll() {
+			this.cTeacher = [];
 			listAll({ evaluateStatus: 0 }).then(res => {
 				if (res.data) {
 					this.showTeacher = true;
@@ -93,6 +94,7 @@ export default {
 					});
 				}
 				this.teacher = '';
+
 				this.evaluateContent = '';
 				this.score = '';
 			});

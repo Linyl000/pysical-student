@@ -9,27 +9,62 @@
 		<u--form labelPosition="left" :model="form" :rules="rules" ref="uForm" label-align="right">
 			<u-form-item prop="name" borderBottom label="姓名">
 				<view class="input_1">
-					<u--input placeholder="请输入真实姓名" v-model="form.nickName" border="none" fontSize="18" :disable="true"></u--input>
+					<u--input
+						placeholder="请输入真实姓名"
+						v-model="form.nickName"
+						border="none"
+						fontSize="18"
+						:disabled="true"
+						disabledColor="#fff"
+					></u--input>
 				</view>
 			</u-form-item>
 			<u-form-item prop="name" borderBottom label="学号">
 				<view class="input_1">
-					<u--input placeholder="请输入您的学号" v-model="form.studentNo" border="none" fontSize="18" :disable="true"></u--input>
+					<u--input
+						placeholder="请输入您的学号"
+						v-model="form.studentNo"
+						border="none"
+						fontSize="18"
+						:disabled="true"
+						disabledColor="#fff"
+					></u--input>
 				</view>
 			</u-form-item>
 			<u-form-item prop="name" borderBottom label="学院">
 				<view class="input_1">
-					<u--input placeholder="请输入您所在的学院" v-model="form.deptName" border="none" fontSize="18" :disable="true"></u--input>
+					<u--input
+						placeholder="请输入您所在的学院"
+						v-model="form.deptName"
+						border="none"
+						fontSize="18"
+						:disabled="true"
+						disabledColor="#fff"
+					></u--input>
 				</view>
 			</u-form-item>
-			<u-form-item prop="name" borderBottom label="专业">
+			<!-- <u-form-item prop="name" borderBottom label="专业">
 				<view class="input_1">
-					<u--input placeholder="请输入您所学的专业" v-model="form.sex" border="none" fontSize="18" :disable="true"></u--input>
+					<u--input
+						placeholder="请输入您所学的专业"
+						v-model="form.sex"
+						border="none"
+						fontSize="18"
+						:disabled="true"
+						disabledColor="#fff"
+					></u--input>
 				</view>
-			</u-form-item>
+			</u-form-item> -->
 			<u-form-item prop="phonenumber" borderBottom label="电话">
 				<view class="input_1">
-					<u--input placeholder="请输入您的联系电话" v-model="form.phonenumber" border="none" fontSize="18" :disable="true"></u--input>
+					<u--input
+						placeholder="请输入您的联系电话"
+						v-model="form.phonenumber"
+						border="none"
+						fontSize="18"
+						:disabled="true"
+						disabledColor="#fff"
+					></u--input>
 				</view>
 			</u-form-item>
 			<u-form-item label="性别" prop="sex" borderBottom>
@@ -44,6 +79,8 @@
 </template>
 
 <script>
+// 引入组件
+import Cropping from '@/components/cropping/cropping.vue';
 import { getInfo } from '@/api/user.js';
 export default {
 	data() {
@@ -117,7 +154,6 @@ export default {
 	width: 630rpx;
 	margin: auto;
 	padding: 0 30rpx;
-	// background-color: rgba(248, 248, 248, 1);
 	border-radius: 16rpx;
 	height: 120rpx;
 }
@@ -131,7 +167,7 @@ export default {
 	border: 0 !important;
 }
 /deep/.u-radio-group {
-	flex: 0 !important;
+	flex: 1 !important;
 }
 /deep/.u-radio-group--row {
 	margin: 0 130rpx 0;
@@ -148,7 +184,6 @@ export default {
 	text-align: center;
 	line-height: 96rpx;
 	color: rgba(255, 255, 255, 1);
-	// background-color: #dfe1e5;
 	background-color: rgba(93, 79, 220, 1);
 }
 </style>

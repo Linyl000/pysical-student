@@ -34,7 +34,7 @@ export default {
 	},
 	methods: {
 		getList(page, limit) {
-			studyRecordList({ pageSize: page, pageNo: limit, courseName: this.courseName })
+			studyRecordList({ pageSize: page, pageNum: limit, courseName: this.courseName })
 				.then(res => {
 					this.list = res.data;
 					this.$refs.paging.complete(res.data);
@@ -53,7 +53,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.page {
+.page,
+page {
 	background-color: rgba(248, 248, 248, 1);
 }
 .search-box {
