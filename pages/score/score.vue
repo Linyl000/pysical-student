@@ -1,7 +1,9 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
 		<template #top>
-			<view class="search-box"><u-search placeholder="搜索成绩" v-model="taskName"></u-search></view>
+			<view class="search-box">
+				<u-search placeholder="搜索成绩" v-model="taskName" @search="getList(1, 10)" @custom="getList(1, 10)"></u-search>
+			</view>
 			<u-tabs
 				lineColor="#5d4fdc"
 				:list="list1"

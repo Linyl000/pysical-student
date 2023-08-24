@@ -13,7 +13,7 @@ export default {
 	},
 	methods: {
 		goBack() {
-			uni.navigateBack({ delta: 2 });
+			uni.navigateBack({ delta: 3 });
 		}
 	}
 };

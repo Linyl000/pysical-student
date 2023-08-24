@@ -1,7 +1,9 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
 		<template #top>
-			<view class="search-box"><u-search placeholder="搜索课程记录" v-model="courseName"></u-search></view>
+			<view class="search-box">
+				<u-search placeholder="搜索课程记录" v-model="courseName" @search="getList(1, 10)" @custom="getList(1, 10)"></u-search>
+			</view>
 		</template>
 		<div v-for="(i, index) in list" :key="index">
 			<view class="text-wrapper_1">
@@ -10,7 +12,7 @@
 			<text lines="1" class="text_6">/23</text> -->
 			</view>
 			<view class="container" v-for="j in i.tkyStudyRecords" :key="j.taskId" @click="goCurriculum(j)">
-				<image class="img-main" :src="j.taskVideo"></image>
+				<video class="img-main" :src="j.taskVideo" :controls="false" :show-center-play-btn="false"></video>
 				<view class="right-content">
 					<view lines="1" class="title">{{ j.taskName }}</view>
 					<view lines="1" class="details">
@@ -34,7 +36,7 @@ export default {
 	},
 	methods: {
 		getList(page, limit) {
-			studyRecordList({ pageSize: page, pageNum: limit, courseName: this.courseName })
+			studyRecordList({ pageNum: page, pageSize: limit, courseName: this.courseName })
 				.then(res => {
 					this.list = res.data;
 					this.$refs.paging.complete(res.data);

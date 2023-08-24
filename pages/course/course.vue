@@ -85,6 +85,9 @@ export default {
 			paperList: []
 		};
 	},
+	onShow() {
+		this.$refs.paging.reload();
+	},
 	watch: {
 		current: {
 			handler(newValue, oldValue) {

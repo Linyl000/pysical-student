@@ -159,7 +159,7 @@ try {
       return Promise.all(/*! import() | uni_modules/z-paging/components/z-paging/z-paging */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/z-paging/components/z-paging/z-paging")]).then(__webpack_require__.bind(null, /*! @/uni_modules/z-paging/components/z-paging/z-paging.vue */ 539))
     },
     uTabs: function() {
-      return Promise.all(/*! import() | uni_modules/uview-ui/components/u-tabs/u-tabs */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uview-ui/components/u-tabs/u-tabs")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uview-ui/components/u-tabs/u-tabs.vue */ 318))
+      return Promise.all(/*! import() | uni_modules/uview-ui/components/u-tabs/u-tabs */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uview-ui/components/u-tabs/u-tabs")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uview-ui/components/u-tabs/u-tabs.vue */ 316))
     }
   }
 } catch (e) {
@@ -298,7 +298,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var request = _interopRequireWildcard(__webpack_require__(/*! @/api/api.js */ 185));function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;} //
+var request = _interopRequireWildcard(__webpack_require__(/*! @/api/api.js */ 537));function _getRequireWildcardCache() {if (typeof WeakMap !== "function") return null;var cache = new WeakMap();_getRequireWildcardCache = function _getRequireWildcardCache() {return cache;};return cache;}function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;}if (obj === null || typeof obj !== "object" && typeof obj !== "function") {return { default: obj };}var cache = _getRequireWildcardCache();if (cache && cache.has(obj)) {return cache.get(obj);}var newObj = {};var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;if (desc && (desc.get || desc.set)) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}newObj.default = obj;if (cache) {cache.set(obj, newObj);}return newObj;} //
 //
 //
 //
@@ -366,7 +366,7 @@ var request = _interopRequireWildcard(__webpack_require__(/*! @/api/api.js */ 18
 //
 //
 //
-var _default = { data: function data() {return { list1: [{ name: '作业列表' }, { name: '考核列表' }], current: 2, type: 0, paperList: [] };}, watch: { current: { handler: function handler(newValue, oldValue) {// this.getPaperList();
+var _default = { data: function data() {return { list1: [{ name: '作业列表' }, { name: '考核列表' }], current: 2, type: 0, paperList: [] };}, onShow: function onShow() {this.$refs.paging.reload();}, watch: { current: { handler: function handler(newValue, oldValue) {// this.getPaperList();
         this.$refs.paging.reload();} // immediate:true
     } }, methods: { goCourseIntro: function goCourseIntro(i) {if (i.lastType == 1 && i.finishStatus == '0') {uni.navigateTo({ url: "/pages_other/course-intro/course-intro?item=".concat(JSON.stringify(i)) });} else if (i.lastType == 0) {uni.showToast({ duration: 2000, title: '未开始', icon: 'none' });} else {uni.showToast({ duration: 2000, title: '已结束', icon: 'none' });}}, getPaperList: function getPaperList() {var _this = this;request.get('/work/studentWork/list', { taskType: this.type, finishStatus: this.current === 2 ? '' : this.current }).then(function (_ref) {var rows = _ref.rows;_this.paperList = rows;});}, tabChange: function tabChange(_ref2) {var index = _ref2.index;this.type = index;this.$refs.paging.reload();} } // mounted() {
   // 	this.getPaperList();

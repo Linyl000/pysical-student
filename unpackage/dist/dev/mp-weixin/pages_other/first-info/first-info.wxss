@@ -317,13 +317,10 @@
   color: white;
   background-color: #5d4fdc;
 }
-.data-v-6ef0f2b7 .u-radio-group {
-  flex: 0 !important;
-}
-.data-v-6ef0f2b7 .u-radio-group--row {
-  margin: 40rpx 130rpx 0;
-  justify-content: space-around;
-  height: 120rpx;
+.data-v-6ef0f2b7 .u-checkbox-group--row {
+  justify-content: flex-end;
+  margin-right: 40rpx;
+  margin-top: 20rpx;
 }
 .data-v-6ef0f2b7 .u-input {
   height: 100%;
@@ -331,5 +328,13 @@
 .login-code-img.data-v-6ef0f2b7 {
   width: 200rpx;
   height: 60rpx;
+}
+.data-v-6ef0f2b7 .u-radio-group {
+  flex: 0 !important;
+}
+.data-v-6ef0f2b7 .u-radio-group--row {
+  margin: 40rpx 130rpx 0;
+  justify-content: space-around;
+  height: 120rpx;
 }
 

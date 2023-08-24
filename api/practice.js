@@ -10,5 +10,5 @@ export function start(data) {
 
 //视频练习提交
 export function submit(data) {
-	return get('/work/studentWork/practice/video/submit', data)
+	return post('/work/studentWork/practice/video/submit', data)
 }

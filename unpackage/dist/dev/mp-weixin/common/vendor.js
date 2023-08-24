@@ -19695,8 +19695,197 @@ var _default = store;exports.default = _default;
 /* 181 */,
 /* 182 */,
 /* 183 */,
-/* 184 */,
-/* 185 */,
+/* 184 */
+/*!***************************************************!*\
+  !*** F:/uniApp/pysical-student/api/first-info.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.login = login;var _api = __webpack_require__(/*! @/api/api.js */ 185);
+
+
+
+
+//登录
+function login(data) {
+  return (0, _api.post)('/login', data);
+}
+
+/***/ }),
+/* 185 */
+/*!********************************************!*\
+  !*** F:/uniApp/pysical-student/api/api.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {var _main = _interopRequireDefault(__webpack_require__(/*! @/main.js */ 0));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
+var commoneUrl = "http://120.76.132.152:8091/wxapi"; //公共路径 
+
+//post请求封装
+function postRequest(url, data) {
+  var promise = new Promise(function (resolve, reject) {
+    //data不存在 返回一个空对象
+    if (!data) {
+      data = {};
+    }
+    var postData = data;
+    // if (uni.getStorageSync('userTel')) {
+    // 	//如果本地保存了登陆状态(如手机号)  提供默认传参方式
+    // 	// postData['userid'] = uni.getStorageSync('userinfo').id
+    // }
+    uni.request({
+      url: commoneUrl + url,
+      data: postData,
+      method: 'POST',
+      // dataType:"jsonp",
+      // jsonp:"callbackparam",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名
+      // jsonpCallback:"success_jsonpCallback",
+      header: {
+        'content-type': 'application/json;charset=UTF-8',
+        'Authorization': uni.getStorageSync('token')
+        //token可以不要，看后端
+      },
+      success: function success(res) {
+        if (res.data.code === 401) {
+          uni.removeStorageSync('token');
+          uni.redirectTo({
+            url: '/pages_other/first-info/first-info' });
+
+          return;
+        }
+        resolve(res.data);
+      },
+      fail: function fail(e) {
+        reject('网络出错');
+      } });
+
+  });
+  return promise;
+}
+
+//get请求封装
+function getRequest(url, data) {
+  var promise = new Promise(function (resolve, reject) {
+    uni.request({
+      url: commoneUrl + url,
+      data: data,
+      method: "GET",
+      dataType: 'json',
+      header: {
+        'content-type': 'application/json',
+        'Authorization': uni.getStorageSync('token')
+        // 'user-token': uni.getStorageSync('userinfo').token
+      },
+      success: function success(res) {
+        if (res.data.code === 401) {
+          uni.removeStorageSync('token');
+          uni.redirectTo({
+            url: '/pages_other/first-info/first-info' });
+
+          return;
+        }
+        resolve(res.data);
+      },
+      fail: function fail(e) {
+        reject('网络出错');
+      } });
+
+  });
+  return promise;
+}
+//put请求封装
+function putRequest(url, data, heads) {
+  var promise = new Promise(function (resolve, reject) {
+    //data不存在 返回一个空对象
+    if (!data) {
+      data = {};
+    }
+    var postData = data;
+    if (uni.getStorageSync('userTel')) {
+      //如果本地保存了登陆状态(如手机号)  提供默认传参方式
+      // postData['userid'] = uni.getStorageSync('userinfo').id
+    }
+    uni.request({
+      url: commoneUrl + url,
+      data: postData,
+      method: "PUT",
+      dataType: 'json',
+      header: {
+        'content-type': 'application/json',
+        'Authorization': uni.getStorageSync('token') },
+
+      success: function success(res) {
+        if (res.data.code === 401) {
+          uni.removeStorageSync('token');
+          uni.redirectTo({
+            url: '/pages_other/first-info/first-info' });
+
+          return;
+        }
+        resolve(res.data);
+      },
+      fail: function fail(e) {
+        reject('网络出错');
+      } });
+
+  });
+  return promise;
+}
+//del请求封装
+function delRequest(url, data) {
+  var promise = new Promise(function (resolve, reject) {
+    //data不存在 返回一个空对象
+    if (!data) {
+      data = {};
+    }
+    var postData = data;
+    if (uni.getStorageSync('userTel')) {
+      //如果本地保存了登陆状态(如手机号)  提供默认传参方式
+      // postData['userid'] = uni.getStorageSync('userinfo').id
+    }
+    uni.request({
+      url: commoneUrl + url,
+      data: postData,
+      method: "DELETE",
+      dataType: 'json',
+      header: {
+        'content-type': 'application/json',
+        'Authorization': uni.getStorageSync('token') },
+
+      success: function success(res) {
+        if (res.data.code === 401) {
+          uni.removeStorageSync('token');
+          uni.redirectTo({
+            url: '/pages_other/first-info/first-info' });
+
+          return;
+        }
+        resolve(res.data);
+      },
+      fail: function fail(e) {
+        reject('网络出错');
+      } });
+
+  });
+  return promise;
+}
+module.exports = {
+  post: postRequest,
+  get: getRequest,
+  put: putRequest,
+  del: delRequest,
+  ip: commoneUrl
+  // userId : userId
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
 /* 186 */,
 /* 187 */,
 /* 188 */,
@@ -19773,7 +19962,9 @@ var _default = store;exports.default = _default;
 /* 259 */,
 /* 260 */,
 /* 261 */,
-/* 262 */
+/* 262 */,
+/* 263 */,
+/* 264 */
 /*!******************************************************!*\
   !*** F:/uniApp/pysical-student/static/video-img.jpg ***!
   \******************************************************/
@@ -19783,7 +19974,7 @@ var _default = store;exports.default = _default;
 module.exports = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAcHBwcIBwgJCQgMDAsMDBEQDg4QERoSFBIUEhonGB0YGB0YJyMqIiAiKiM+MSsrMT5IPDk8SFdOTldtaG2Pj8ABBwcHBwgHCAkJCAwMCwwMERAODhARGhIUEhQSGicYHRgYHRgnIyoiICIqIz4xKysxPkg8OTxIV05OV21obY+PwP/CABEIAXcBdwMBIgACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAAAAwQFAgYBCP/aAAgBAQAAAAD9DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACrGALUgAAAAAg88AFzcAAAAAFbAAC1qZ3O59AAAABWwDrWoVgD0kgAAAAK2AT7nMGTGB6SQAAAAFbAJ9fE36uOB6SQAAAAFbAJ91QzOQPSSAAAAArYB90qMQB6SQAAAAFbAAC1s53Ov9AAAABD50AL20AAAAAEPAAn6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQIQAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//EABUBAQEAAAAAAAAAAAAAAAAAAAAB/9oACAEDEAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//xAA1EAABAwECCggGAwAAAAAAAAABAAIDBBEUEiAhIjAzNFNikTFAQVBRYXFyBRMVgZCxEIKh/9oACAEBAAE/APyvSVkDHYJcSfJX+Di5K/wcXJX+Di5K/wAHFyV/g4uSv8HFyV/g4uSv8HFyV/g4uSv8HFyUcrJG2sdaO46lxZBI4dNmkoHETgdhBt7jrNmk0lEQKhlp8VLVwx5LbT4BS10z8jcwKGslY4YTi5vaCgQQCOv1mzSYjGF72tHSSvp8ODZhOt8VNSyw5SLW+I0UOqj9o6/WbNJiUu0Reqmk+VG59ltiinimGafUKehjfaWZrv8AFLFJE6x4s0EOqj9o6/WbNJiUu0ReqrNmk+37UbJHOAjBJ8lCJQwCVwJXxEt+U0duFk0EOqj9o6/WbNJiUu0R+qljEjCw9BTWxwsyANaFPXgWtiH9inPc9xc4knQQ6qP2jr9Zs0mI1xaQQcoK+pZurzvXIpZ5JTa932xgCcgCIINhH8xaqP2jr9Zs0mkotpZ9/wBKSGKUZ7QVL8PcMsbrfIqGgkLgZMje4J2GSF7R0kIgg2HR0EbjNh9jQe5HwQvNrmAlXSn3YV0p92FdKfdhXSn3YV0p92FdKfdhXSn3YV0p92FdKfdhXSn3YTWtaLGgAfli/8QAFBEBAAAAAAAAAAAAAAAAAAAAkP/aAAgBAgEBPwAQP//EABQRAQAAAAAAAAAAAAAAAAAAAJD/2gAIAQMBAT8AED//2Q=="
 
 /***/ }),
-/* 263 */
+/* 265 */
 /*!*****************************************************!*\
   !*** F:/uniApp/pysical-student/static/up-video.png ***!
   \*****************************************************/
@@ -19793,8 +19984,6 @@ module.exports = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAcHBwc
 module.exports = "data:image/png;base64,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"
 
 /***/ }),
-/* 264 */,
-/* 265 */,
 /* 266 */,
 /* 267 */,
 /* 268 */,
@@ -19818,7 +20007,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* 286 */,
 /* 287 */,
 /* 288 */,
-/* 289 */
+/* 289 */,
+/* 290 */,
+/* 291 */
 /*!*******************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-checkbox-group/props.js ***!
   \*******************************************************************************************/
@@ -19907,14 +20098,14 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 290 */,
-/* 291 */,
 /* 292 */,
 /* 293 */,
 /* 294 */,
 /* 295 */,
 /* 296 */,
-/* 297 */
+/* 297 */,
+/* 298 */,
+/* 299 */
 /*!*************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-checkbox/props.js ***!
   \*************************************************************************************/
@@ -19991,14 +20182,14 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 298 */,
-/* 299 */,
 /* 300 */,
 /* 301 */,
 /* 302 */,
 /* 303 */,
 /* 304 */,
-/* 305 */
+/* 305 */,
+/* 306 */,
+/* 307 */
 /*!***************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-cell-group/props.js ***!
   \***************************************************************************************/
@@ -20020,14 +20211,14 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 306 */,
-/* 307 */,
 /* 308 */,
 /* 309 */,
 /* 310 */,
 /* 311 */,
 /* 312 */,
-/* 313 */
+/* 313 */,
+/* 314 */,
+/* 315 */
 /*!*********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-cell/props.js ***!
   \*********************************************************************************/
@@ -20145,14 +20336,14 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 314 */,
-/* 315 */,
 /* 316 */,
 /* 317 */,
 /* 318 */,
 /* 319 */,
 /* 320 */,
-/* 321 */
+/* 321 */,
+/* 322 */,
+/* 323 */
 /*!*********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-tabs/props.js ***!
   \*********************************************************************************/
@@ -20224,14 +20415,14 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 322 */,
-/* 323 */,
 /* 324 */,
 /* 325 */,
 /* 326 */,
 /* 327 */,
 /* 328 */,
-/* 329 */
+/* 329 */,
+/* 330 */,
+/* 331 */
 /*!***********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-search/props.js ***!
   \***********************************************************************************/
@@ -20357,14 +20548,14 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 330 */,
-/* 331 */,
 /* 332 */,
 /* 333 */,
 /* 334 */,
 /* 335 */,
 /* 336 */,
-/* 337 */
+/* 337 */,
+/* 338 */,
+/* 339 */
 /*!**********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-input/props.js ***!
   \**********************************************************************************/
@@ -20559,245 +20750,12 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAF3CAYAAABe
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 338 */,
-/* 339 */,
 /* 340 */,
 /* 341 */,
 /* 342 */,
 /* 343 */,
 /* 344 */,
-/* 345 */,
-/* 346 */,
-/* 347 */,
-/* 348 */,
-/* 349 */,
-/* 350 */
-/*!*************************************************************************************!*\
-  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-textarea/props.js ***!
-  \*************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 输入框的内容
-    value: {
-      type: [String, Number],
-      default: uni.$u.props.textarea.value },
-
-    // 输入框为空时占位符
-    placeholder: {
-      type: [String, Number],
-      default: uni.$u.props.textarea.placeholder },
-
-    // 指定placeholder的样式类，注意页面或组件的style中写了scoped时，需要在类名前写/deep/
-    placeholderClass: {
-      type: String,
-      default: uni.$u.props.input.placeholderClass },
-
-    // 指定placeholder的样式
-    placeholderStyle: {
-      type: [String, Object],
-      default: uni.$u.props.input.placeholderStyle },
-
-    // 输入框高度
-    height: {
-      type: [String, Number],
-      default: uni.$u.props.textarea.height },
-
-    // 设置键盘右下角按钮的文字，仅微信小程序，App-vue和H5有效
-    confirmType: {
-      type: String,
-      default: uni.$u.props.textarea.confirmType },
-
-    // 是否禁用
-    disabled: {
-      type: Boolean,
-      default: uni.$u.props.textarea.disabled },
-
-    // 是否显示统计字数
-    count: {
-      type: Boolean,
-      default: uni.$u.props.textarea.count },
-
-    // 是否自动获取焦点，nvue不支持，H5取决于浏览器的实现
-    focus: {
-      type: Boolean,
-      default: uni.$u.props.textarea.focus },
-
-    // 是否自动增加高度
-    autoHeight: {
-      type: Boolean,
-      default: uni.$u.props.textarea.autoHeight },
-
-    // 如果textarea是在一个position:fixed的区域，需要显示指定属性fixed为true
-    fixed: {
-      type: Boolean,
-      default: uni.$u.props.textarea.fixed },
-
-    // 指定光标与键盘的距离
-    cursorSpacing: {
-      type: Number,
-      default: uni.$u.props.textarea.cursorSpacing },
-
-    // 指定focus时的光标位置
-    cursor: {
-      type: [String, Number],
-      default: uni.$u.props.textarea.cursor },
-
-    // 是否显示键盘上方带有”完成“按钮那一栏，
-    showConfirmBar: {
-      type: Boolean,
-      default: uni.$u.props.textarea.showConfirmBar },
-
-    // 光标起始位置，自动聚焦时有效，需与selection-end搭配使用
-    selectionStart: {
-      type: Number,
-      default: uni.$u.props.textarea.selectionStart },
-
-    // 光标结束位置，自动聚焦时有效，需与selection-start搭配使用
-    selectionEnd: {
-      type: Number,
-      default: uni.$u.props.textarea.selectionEnd },
-
-    // 键盘弹起时，是否自动上推页面
-    adjustPosition: {
-      type: Boolean,
-      default: uni.$u.props.textarea.adjustPosition },
-
-    // 是否去掉 iOS 下的默认内边距，只微信小程序有效
-    disableDefaultPadding: {
-      type: Boolean,
-      default: uni.$u.props.textarea.disableDefaultPadding },
-
-    // focus时，点击页面的时候不收起键盘，只微信小程序有效
-    holdKeyboard: {
-      type: Boolean,
-      default: uni.$u.props.textarea.holdKeyboard },
-
-    // 最大输入长度，设置为 -1 的时候不限制最大长度
-    maxlength: {
-      type: [String, Number],
-      default: uni.$u.props.textarea.maxlength },
-
-    // 边框类型，surround-四周边框，bottom-底部边框
-    border: {
-      type: String,
-      default: uni.$u.props.textarea.border },
-
-    // 用于处理或者过滤输入框内容的方法
-    formatter: {
-      type: [Function, null],
-      default: uni.$u.props.textarea.formatter },
-
-    // 是否忽略组件内对文本合成系统事件的处理
-    ignoreCompositionEvent: {
-      type: Boolean,
-      default: true } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 351 */,
-/* 352 */,
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */
-/*!***********************************************************************************!*\
-  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-picker/props.js ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  props: {
-    // 是否展示picker弹窗
-    show: {
-      type: Boolean,
-      default: uni.$u.props.picker.show },
-
-    // 是否展示顶部的操作栏
-    showToolbar: {
-      type: Boolean,
-      default: uni.$u.props.picker.showToolbar },
-
-    // 顶部标题
-    title: {
-      type: String,
-      default: uni.$u.props.picker.title },
-
-    // 对象数组，设置每一列的数据
-    columns: {
-      type: Array,
-      default: uni.$u.props.picker.columns },
-
-    // 是否显示加载中状态
-    loading: {
-      type: Boolean,
-      default: uni.$u.props.picker.loading },
-
-    // 各列中，单个选项的高度
-    itemHeight: {
-      type: [String, Number],
-      default: uni.$u.props.picker.itemHeight },
-
-    // 取消按钮的文字
-    cancelText: {
-      type: String,
-      default: uni.$u.props.picker.cancelText },
-
-    // 确认按钮的文字
-    confirmText: {
-      type: String,
-      default: uni.$u.props.picker.confirmText },
-
-    // 取消按钮的颜色
-    cancelColor: {
-      type: String,
-      default: uni.$u.props.picker.cancelColor },
-
-    // 确认按钮的颜色
-    confirmColor: {
-      type: String,
-      default: uni.$u.props.picker.confirmColor },
-
-    // 每列中可见选项的数量
-    visibleItemCount: {
-      type: [String, Number],
-      default: uni.$u.props.picker.visibleItemCount },
-
-    // 选项对象中，需要展示的属性键名
-    keyName: {
-      type: String,
-      default: uni.$u.props.picker.keyName },
-
-    // 是否允许点击遮罩关闭选择器
-    closeOnClickOverlay: {
-      type: Boolean,
-      default: uni.$u.props.picker.closeOnClickOverlay },
-
-    // 各列的默认索引
-    defaultIndex: {
-      type: Array,
-      default: uni.$u.props.picker.defaultIndex },
-
-    // 是否在手指松开时立即触发 change 事件。若不开启则会在滚动动画结束后触发 change 事件，只在微信2.21.1及以上有效
-    immediateChange: {
-      type: Boolean,
-      default: uni.$u.props.picker.immediateChange } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-/* 357 */,
-/* 358 */,
-/* 359 */,
-/* 360 */,
-/* 361 */,
-/* 362 */,
-/* 363 */,
-/* 364 */
+/* 345 */
 /*!*********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-icon/icons.js ***!
   \*********************************************************************************/
@@ -21020,7 +20978,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   'uicon-en': "\uE692" };exports.default = _default;
 
 /***/ }),
-/* 365 */
+/* 346 */
 /*!*********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-icon/props.js ***!
   \*********************************************************************************/
@@ -21117,14 +21075,247 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */
+/*!*************************************************************************************!*\
+  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-textarea/props.js ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 输入框的内容
+    value: {
+      type: [String, Number],
+      default: uni.$u.props.textarea.value },
+
+    // 输入框为空时占位符
+    placeholder: {
+      type: [String, Number],
+      default: uni.$u.props.textarea.placeholder },
+
+    // 指定placeholder的样式类，注意页面或组件的style中写了scoped时，需要在类名前写/deep/
+    placeholderClass: {
+      type: String,
+      default: uni.$u.props.input.placeholderClass },
+
+    // 指定placeholder的样式
+    placeholderStyle: {
+      type: [String, Object],
+      default: uni.$u.props.input.placeholderStyle },
+
+    // 输入框高度
+    height: {
+      type: [String, Number],
+      default: uni.$u.props.textarea.height },
+
+    // 设置键盘右下角按钮的文字，仅微信小程序，App-vue和H5有效
+    confirmType: {
+      type: String,
+      default: uni.$u.props.textarea.confirmType },
+
+    // 是否禁用
+    disabled: {
+      type: Boolean,
+      default: uni.$u.props.textarea.disabled },
+
+    // 是否显示统计字数
+    count: {
+      type: Boolean,
+      default: uni.$u.props.textarea.count },
+
+    // 是否自动获取焦点，nvue不支持，H5取决于浏览器的实现
+    focus: {
+      type: Boolean,
+      default: uni.$u.props.textarea.focus },
+
+    // 是否自动增加高度
+    autoHeight: {
+      type: Boolean,
+      default: uni.$u.props.textarea.autoHeight },
+
+    // 如果textarea是在一个position:fixed的区域，需要显示指定属性fixed为true
+    fixed: {
+      type: Boolean,
+      default: uni.$u.props.textarea.fixed },
+
+    // 指定光标与键盘的距离
+    cursorSpacing: {
+      type: Number,
+      default: uni.$u.props.textarea.cursorSpacing },
+
+    // 指定focus时的光标位置
+    cursor: {
+      type: [String, Number],
+      default: uni.$u.props.textarea.cursor },
+
+    // 是否显示键盘上方带有”完成“按钮那一栏，
+    showConfirmBar: {
+      type: Boolean,
+      default: uni.$u.props.textarea.showConfirmBar },
+
+    // 光标起始位置，自动聚焦时有效，需与selection-end搭配使用
+    selectionStart: {
+      type: Number,
+      default: uni.$u.props.textarea.selectionStart },
+
+    // 光标结束位置，自动聚焦时有效，需与selection-start搭配使用
+    selectionEnd: {
+      type: Number,
+      default: uni.$u.props.textarea.selectionEnd },
+
+    // 键盘弹起时，是否自动上推页面
+    adjustPosition: {
+      type: Boolean,
+      default: uni.$u.props.textarea.adjustPosition },
+
+    // 是否去掉 iOS 下的默认内边距，只微信小程序有效
+    disableDefaultPadding: {
+      type: Boolean,
+      default: uni.$u.props.textarea.disableDefaultPadding },
+
+    // focus时，点击页面的时候不收起键盘，只微信小程序有效
+    holdKeyboard: {
+      type: Boolean,
+      default: uni.$u.props.textarea.holdKeyboard },
+
+    // 最大输入长度，设置为 -1 的时候不限制最大长度
+    maxlength: {
+      type: [String, Number],
+      default: uni.$u.props.textarea.maxlength },
+
+    // 边框类型，surround-四周边框，bottom-底部边框
+    border: {
+      type: String,
+      default: uni.$u.props.textarea.border },
+
+    // 用于处理或者过滤输入框内容的方法
+    formatter: {
+      type: [Function, null],
+      default: uni.$u.props.textarea.formatter },
+
+    // 是否忽略组件内对文本合成系统事件的处理
+    ignoreCompositionEvent: {
+      type: Boolean,
+      default: true } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
 /* 366 */,
-/* 367 */,
+/* 367 */
+/*!***********************************************************************************!*\
+  !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-picker/props.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  props: {
+    // 是否展示picker弹窗
+    show: {
+      type: Boolean,
+      default: uni.$u.props.picker.show },
+
+    // 是否展示顶部的操作栏
+    showToolbar: {
+      type: Boolean,
+      default: uni.$u.props.picker.showToolbar },
+
+    // 顶部标题
+    title: {
+      type: String,
+      default: uni.$u.props.picker.title },
+
+    // 对象数组，设置每一列的数据
+    columns: {
+      type: Array,
+      default: uni.$u.props.picker.columns },
+
+    // 是否显示加载中状态
+    loading: {
+      type: Boolean,
+      default: uni.$u.props.picker.loading },
+
+    // 各列中，单个选项的高度
+    itemHeight: {
+      type: [String, Number],
+      default: uni.$u.props.picker.itemHeight },
+
+    // 取消按钮的文字
+    cancelText: {
+      type: String,
+      default: uni.$u.props.picker.cancelText },
+
+    // 确认按钮的文字
+    confirmText: {
+      type: String,
+      default: uni.$u.props.picker.confirmText },
+
+    // 取消按钮的颜色
+    cancelColor: {
+      type: String,
+      default: uni.$u.props.picker.cancelColor },
+
+    // 确认按钮的颜色
+    confirmColor: {
+      type: String,
+      default: uni.$u.props.picker.confirmColor },
+
+    // 每列中可见选项的数量
+    visibleItemCount: {
+      type: [String, Number],
+      default: uni.$u.props.picker.visibleItemCount },
+
+    // 选项对象中，需要展示的属性键名
+    keyName: {
+      type: String,
+      default: uni.$u.props.picker.keyName },
+
+    // 是否允许点击遮罩关闭选择器
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: uni.$u.props.picker.closeOnClickOverlay },
+
+    // 各列的默认索引
+    defaultIndex: {
+      type: Array,
+      default: uni.$u.props.picker.defaultIndex },
+
+    // 是否在手指松开时立即触发 change 事件。若不开启则会在滚动动画结束后触发 change 事件，只在微信2.21.1及以上有效
+    immediateChange: {
+      type: Boolean,
+      default: uni.$u.props.picker.immediateChange } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
 /* 368 */,
 /* 369 */,
 /* 370 */,
 /* 371 */,
 /* 372 */,
-/* 373 */
+/* 373 */,
+/* 374 */,
+/* 375 */
 /*!*********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-form/props.js ***!
   \*********************************************************************************/
@@ -21177,12 +21368,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 374 */,
-/* 375 */,
 /* 376 */,
 /* 377 */,
 /* 378 */,
-/* 379 */
+/* 379 */,
+/* 380 */,
+/* 381 */
 /*!**************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-form-item/props.js ***!
   \**************************************************************************************/
@@ -21238,9 +21429,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 380 */,
-/* 381 */,
-/* 382 */
+/* 382 */,
+/* 383 */,
+/* 384 */
 /*!*************************************************!*\
   !*** F:/uniApp/pysical-student/api/practice.js ***!
   \*************************************************/
@@ -21248,7 +21439,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.start = start;exports.submit = submit;var _api = __webpack_require__(/*! @/api/api.js */ 537);
+Object.defineProperty(exports, "__esModule", { value: true });exports.start = start;exports.submit = submit;var _api = __webpack_require__(/*! @/api/api.js */ 185);
 
 
 
@@ -21260,11 +21451,11 @@ function start(data) {
 
 //视频练习提交
 function submit(data) {
-  return (0, _api.get)('/work/studentWork/practice/video/submit', data);
+  return (0, _api.post)('/work/studentWork/practice/video/submit', data);
 }
 
 /***/ }),
-/* 383 */
+/* 385 */
 /*!**********************************************!*\
   !*** F:/uniApp/pysical-student/api/score.js ***!
   \**********************************************/
@@ -21272,7 +21463,7 @@ function submit(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.resultList = resultList;var _api = __webpack_require__(/*! @/api/api.js */ 537);
+Object.defineProperty(exports, "__esModule", { value: true });exports.resultList = resultList;var _api = __webpack_require__(/*! @/api/api.js */ 185);
 
 
 
@@ -21284,7 +21475,7 @@ function resultList(data) {
 }
 
 /***/ }),
-/* 384 */
+/* 386 */
 /*!***********************************************!*\
   !*** F:/uniApp/pysical-student/api/number.js ***!
   \***********************************************/
@@ -21292,7 +21483,7 @@ function resultList(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.integralCollege = integralCollege;exports.integralSchool = integralSchool;var _api = __webpack_require__(/*! @/api/api.js */ 537);
+Object.defineProperty(exports, "__esModule", { value: true });exports.integralCollege = integralCollege;exports.integralSchool = integralSchool;var _api = __webpack_require__(/*! @/api/api.js */ 185);
 
 
 
@@ -21307,7 +21498,7 @@ function integralSchool(data) {
 }
 
 /***/ }),
-/* 385 */
+/* 387 */
 /*!****************************************************!*\
   !*** F:/uniApp/pysical-student/api/teacher-say.js ***!
   \****************************************************/
@@ -21315,7 +21506,7 @@ function integralSchool(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.listAll = listAll;exports.evaluate = evaluate;var _api = __webpack_require__(/*! @/api/api.js */ 537);
+Object.defineProperty(exports, "__esModule", { value: true });exports.listAll = listAll;exports.evaluate = evaluate;var _api = __webpack_require__(/*! @/api/api.js */ 185);
 
 
 
@@ -21331,7 +21522,7 @@ function evaluate(data) {
 }
 
 /***/ }),
-/* 386 */
+/* 388 */
 /*!******************************************************!*\
   !*** F:/uniApp/pysical-student/api/study-records.js ***!
   \******************************************************/
@@ -21339,7 +21530,7 @@ function evaluate(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.studyRecordList = studyRecordList;exports.studyRecordAdd = studyRecordAdd;exports.studyRecordUp = studyRecordUp;var _api = __webpack_require__(/*! @/api/api.js */ 537);
+Object.defineProperty(exports, "__esModule", { value: true });exports.studyRecordList = studyRecordList;exports.studyRecordAdd = studyRecordAdd;exports.studyRecordUp = studyRecordUp;var _api = __webpack_require__(/*! @/api/api.js */ 185);
 
 
 
@@ -21360,7 +21551,7 @@ function studyRecordUp(data) {
 }
 
 /***/ }),
-/* 387 */
+/* 389 */
 /*!****************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-radio-group/props.js ***!
   \****************************************************************************************/
@@ -21453,14 +21644,14 @@ function studyRecordUp(data) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 388 */,
-/* 389 */,
 /* 390 */,
 /* 391 */,
 /* 392 */,
 /* 393 */,
 /* 394 */,
-/* 395 */
+/* 395 */,
+/* 396 */,
+/* 397 */
 /*!**********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-radio/props.js ***!
   \**********************************************************************************/
@@ -21532,8 +21723,6 @@ function studyRecordUp(data) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 396 */,
-/* 397 */,
 /* 398 */,
 /* 399 */,
 /* 400 */,
@@ -21546,7 +21735,9 @@ function studyRecordUp(data) {
 /* 407 */,
 /* 408 */,
 /* 409 */,
-/* 410 */
+/* 410 */,
+/* 411 */,
+/* 412 */
 /*!*********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-line/props.js ***!
   \*********************************************************************************/
@@ -21587,14 +21778,14 @@ function studyRecordUp(data) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 411 */,
-/* 412 */,
 /* 413 */,
 /* 414 */,
 /* 415 */,
 /* 416 */,
 /* 417 */,
-/* 418 */
+/* 418 */,
+/* 419 */,
+/* 420 */
 /*!**********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-badge/props.js ***!
   \**********************************************************************************/
@@ -21674,8 +21865,6 @@ function studyRecordUp(data) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 419 */,
-/* 420 */,
 /* 421 */,
 /* 422 */,
 /* 423 */,
@@ -21688,7 +21877,9 @@ function studyRecordUp(data) {
 /* 430 */,
 /* 431 */,
 /* 432 */,
-/* 433 */
+/* 433 */,
+/* 434 */,
+/* 435 */
 /*!**********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-popup/props.js ***!
   \**********************************************************************************/
@@ -21775,14 +21966,14 @@ function studyRecordUp(data) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 434 */,
-/* 435 */,
 /* 436 */,
 /* 437 */,
 /* 438 */,
 /* 439 */,
 /* 440 */,
-/* 441 */
+/* 441 */,
+/* 442 */,
+/* 443 */
 /*!************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-toolbar/props.js ***!
   \************************************************************************************/
@@ -21824,14 +22015,14 @@ function studyRecordUp(data) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 442 */,
-/* 443 */,
 /* 444 */,
 /* 445 */,
 /* 446 */,
 /* 447 */,
 /* 448 */,
-/* 449 */
+/* 449 */,
+/* 450 */,
+/* 451 */
 /*!*****************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-loading-icon/props.js ***!
   \*****************************************************************************************/
@@ -21898,14 +22089,14 @@ function studyRecordUp(data) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 450 */,
-/* 451 */,
 /* 452 */,
 /* 453 */,
 /* 454 */,
 /* 455 */,
 /* 456 */,
-/* 457 */
+/* 457 */,
+/* 458 */,
+/* 459 */
 /*!***********************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/libs/util/async-validator.js ***!
   \***********************************************************************************/
@@ -23257,10 +23448,10 @@ Schema.messages = messages;var _default =
 Schema;
 // # sourceMappingURL=index.js.map
 exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/node-libs-browser/mock/process.js */ 458)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/node-libs-browser/mock/process.js */ 460)))
 
 /***/ }),
-/* 458 */
+/* 460 */
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -23291,7 +23482,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 459);
+        if (!path) path = __webpack_require__(/*! path */ 461);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -23304,7 +23495,7 @@ exports.features = {};
 
 
 /***/ }),
-/* 459 */
+/* 461 */
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -23614,15 +23805,15 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 458)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 460)))
 
 /***/ }),
-/* 460 */,
-/* 461 */,
 /* 462 */,
 /* 463 */,
 /* 464 */,
-/* 465 */
+/* 465 */,
+/* 466 */,
+/* 467 */
 /*!************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-overlay/props.js ***!
   \************************************************************************************/
@@ -23654,14 +23845,14 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 466 */,
-/* 467 */,
 /* 468 */,
 /* 469 */,
 /* 470 */,
 /* 471 */,
 /* 472 */,
-/* 473 */
+/* 473 */,
+/* 474 */,
+/* 475 */
 /*!***************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-transition/props.js ***!
   \***************************************************************************************/
@@ -23693,7 +23884,7 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 474 */
+/* 476 */
 /*!********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-transition/transition.js ***!
   \********************************************************************************************/
@@ -23704,7 +23895,7 @@ var substr = 'ab'.substr(-1) === 'b'
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 35));
 
 
-var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 475));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} // 定义一个一定时间后自动成功的promise，让调用nextTick方法处，进入下一个then方法
+var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 477));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} // 定义一个一定时间后自动成功的promise，让调用nextTick方法处，进入下一个then方法
 var nextTick = function nextTick() {return new Promise(function (resolve) {return setTimeout(resolve, 1000 / 50);});}; // nvue动画模块实现细节抽离在外部文件
 
 // 定义类名，通过给元素动态切换类名，赋予元素一定的css动画样式
@@ -23858,7 +24049,7 @@ var getClassNames = function getClassNames(name) {return {
     } } };exports.default = _default;
 
 /***/ }),
-/* 475 */
+/* 477 */
 /*!**********************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-transition/nvue.ani-map.js ***!
   \**********************************************************************************************/
@@ -23934,14 +24125,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     'leave-to': { opacity: 0, transform: 'scale(0.95)' } } };exports.default = _default;
 
 /***/ }),
-/* 476 */,
-/* 477 */,
 /* 478 */,
 /* 479 */,
 /* 480 */,
 /* 481 */,
 /* 482 */,
-/* 483 */
+/* 483 */,
+/* 484 */,
+/* 485 */
 /*!***************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-status-bar/props.js ***!
   \***************************************************************************************/
@@ -23957,14 +24148,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 484 */,
-/* 485 */,
 /* 486 */,
 /* 487 */,
 /* 488 */,
 /* 489 */,
 /* 490 */,
-/* 491 */
+/* 491 */,
+/* 492 */,
+/* 493 */
 /*!****************************************************************************************!*\
   !*** F:/uniApp/pysical-student/uni_modules/uview-ui/components/u-safe-bottom/props.js ***!
   \****************************************************************************************/
@@ -23976,8 +24167,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   props: {} };exports.default = _default;
 
 /***/ }),
-/* 492 */,
-/* 493 */,
 /* 494 */,
 /* 495 */,
 /* 496 */,
@@ -24020,197 +24209,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /* 533 */,
 /* 534 */,
 /* 535 */,
-/* 536 */
-/*!***************************************************!*\
-  !*** F:/uniApp/pysical-student/api/first-info.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.login = login;var _api = __webpack_require__(/*! @/api/api.js */ 537);
-
-
-
-
-//登录
-function login(data) {
-  return (0, _api.post)('/login', data);
-}
-
-/***/ }),
-/* 537 */
-/*!********************************************!*\
-  !*** F:/uniApp/pysical-student/api/api.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {var _main = _interopRequireDefault(__webpack_require__(/*! @/main.js */ 0));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-
-var commoneUrl = "http://120.76.132.152:8091/wxapi"; //公共路径 
-
-//post请求封装
-function postRequest(url, data) {
-  var promise = new Promise(function (resolve, reject) {
-    //data不存在 返回一个空对象
-    if (!data) {
-      data = {};
-    }
-    var postData = data;
-    // if (uni.getStorageSync('userTel')) {
-    // 	//如果本地保存了登陆状态(如手机号)  提供默认传参方式
-    // 	// postData['userid'] = uni.getStorageSync('userinfo').id
-    // }
-    uni.request({
-      url: commoneUrl + url,
-      data: postData,
-      method: 'POST',
-      // dataType:"jsonp",
-      // jsonp:"callbackparam",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名
-      // jsonpCallback:"success_jsonpCallback",
-      header: {
-        'content-type': 'application/json;charset=UTF-8',
-        'Authorization': uni.getStorageSync('token')
-        //token可以不要，看后端
-      },
-      success: function success(res) {
-        if (res.data.code === 401) {
-          uni.removeStorageSync('token');
-          uni.redirectTo({
-            url: '/pages_other/first-info/first-info' });
-
-          return;
-        }
-        resolve(res.data);
-      },
-      fail: function fail(e) {
-        reject('网络出错');
-      } });
-
-  });
-  return promise;
-}
-
-//get请求封装
-function getRequest(url, data) {
-  var promise = new Promise(function (resolve, reject) {
-    uni.request({
-      url: commoneUrl + url,
-      data: data,
-      method: "GET",
-      dataType: 'json',
-      header: {
-        'content-type': 'application/json',
-        'Authorization': uni.getStorageSync('token')
-        // 'user-token': uni.getStorageSync('userinfo').token
-      },
-      success: function success(res) {
-        if (res.data.code === 401) {
-          uni.removeStorageSync('token');
-          uni.redirectTo({
-            url: '/pages_other/first-info/first-info' });
-
-          return;
-        }
-        resolve(res.data);
-      },
-      fail: function fail(e) {
-        reject('网络出错');
-      } });
-
-  });
-  return promise;
-}
-//put请求封装
-function putRequest(url, data, heads) {
-  var promise = new Promise(function (resolve, reject) {
-    //data不存在 返回一个空对象
-    if (!data) {
-      data = {};
-    }
-    var postData = data;
-    if (uni.getStorageSync('userTel')) {
-      //如果本地保存了登陆状态(如手机号)  提供默认传参方式
-      // postData['userid'] = uni.getStorageSync('userinfo').id
-    }
-    uni.request({
-      url: commoneUrl + url,
-      data: postData,
-      method: "PUT",
-      dataType: 'json',
-      header: {
-        'content-type': 'application/json',
-        'Authorization': uni.getStorageSync('token') },
-
-      success: function success(res) {
-        if (res.data.code === 401) {
-          uni.removeStorageSync('token');
-          uni.redirectTo({
-            url: '/pages_other/first-info/first-info' });
-
-          return;
-        }
-        resolve(res.data);
-      },
-      fail: function fail(e) {
-        reject('网络出错');
-      } });
-
-  });
-  return promise;
-}
-//del请求封装
-function delRequest(url, data) {
-  var promise = new Promise(function (resolve, reject) {
-    //data不存在 返回一个空对象
-    if (!data) {
-      data = {};
-    }
-    var postData = data;
-    if (uni.getStorageSync('userTel')) {
-      //如果本地保存了登陆状态(如手机号)  提供默认传参方式
-      // postData['userid'] = uni.getStorageSync('userinfo').id
-    }
-    uni.request({
-      url: commoneUrl + url,
-      data: postData,
-      method: "DELETE",
-      dataType: 'json',
-      header: {
-        'content-type': 'application/json',
-        'Authorization': uni.getStorageSync('token') },
-
-      success: function success(res) {
-        if (res.data.code === 401) {
-          uni.removeStorageSync('token');
-          uni.redirectTo({
-            url: '/pages_other/first-info/first-info' });
-
-          return;
-        }
-        resolve(res.data);
-      },
-      fail: function fail(e) {
-        reject('网络出错');
-      } });
-
-  });
-  return promise;
-}
-module.exports = {
-  post: postRequest,
-  get: getRequest,
-  put: putRequest,
-  del: delRequest,
-  ip: commoneUrl
-  // userId : userId
-};
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
+/* 536 */,
+/* 537 */,
 /* 538 */
 /*!**********************************************!*\
   !*** F:/uniApp/pysical-student/api/index.js ***!
@@ -24219,7 +24219,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.courseList = courseList;var _api = __webpack_require__(/*! @/api/api.js */ 537);
+Object.defineProperty(exports, "__esModule", { value: true });exports.courseList = courseList;var _api = __webpack_require__(/*! @/api/api.js */ 185);
 
 
 
@@ -28597,7 +28597,7 @@ var _zPagingEnum = _interopRequireDefault(__webpack_require__(/*! .././z-paging-
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.coureseTaskList = coureseTaskList;var _api = __webpack_require__(/*! @/api/api.js */ 537);
+Object.defineProperty(exports, "__esModule", { value: true });exports.coureseTaskList = coureseTaskList;var _api = __webpack_require__(/*! @/api/api.js */ 185);
 
 
 
@@ -28617,7 +28617,7 @@ function coureseTaskList(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getInfo = getInfo;var _api = __webpack_require__(/*! @/api/api.js */ 537);
+Object.defineProperty(exports, "__esModule", { value: true });exports.getInfo = getInfo;var _api = __webpack_require__(/*! @/api/api.js */ 185);
 
 
 

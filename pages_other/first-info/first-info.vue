@@ -12,6 +12,11 @@
 			<u-radio activeColor="#5d4fdc" label="男"></u-radio>
 			<u-radio activeColor="#5d4fdc" label="女"></u-radio>
 		</u-radio-group> -->
+
+		<u-checkbox-group v-model="checkboxValue1">
+			<u-checkbox shape="circle" activeColor="#5D4FDC" label="记住密码"></u-checkbox>
+		</u-checkbox-group>
+
 		<view class="button_1" @click="goIndex">登录</view>
 	</view>
 </template>
@@ -26,8 +31,16 @@ export default {
 			pwd: true,
 			codeUrl: null,
 			uuid: null,
-			captchaEnabled: null
+			captchaEnabled: null,
+			checkboxValue1: null
 		};
+	},
+	created() {
+		this.checkboxValue1 = uni.getStorageSync('Mremember') === undefined || uni.getStorageSync('Mremember') === true ? [''] : [];
+		if (this.checkboxValue1.length > 0) {
+			this.username = uni.getStorageSync('Musername');
+			this.password = uni.getStorageSync('Mpassword');
+		}
 	},
 	methods: {
 		goIndex() {
@@ -40,6 +53,15 @@ export default {
 				return;
 			}
 			uni.removeStorageSync('token');
+			if (this.checkboxValue1.length > 0) {
+				uni.setStorageSync('Musername', this.username);
+				uni.setStorageSync('Mpassword', this.password);
+				uni.setStorageSync('Mremember', true);
+			} else {
+				uni.removeStorageSync('Musername');
+				uni.removeStorageSync('Mpassword');
+				uni.setStorageSync('Mremember', false);
+			}
 			login({ username: this.username, password: this.password }).then(res => {
 				if (res.code === 200) {
 					uni.setStorageSync('token', res.token);
@@ -74,13 +96,11 @@ export default {
 	// background-color: #dfe1e5;
 	background-color: rgba(93, 79, 220, 1);
 }
-/deep/.u-radio-group {
-	flex: 0 !important;
-}
-/deep/.u-radio-group--row {
-	margin: 40rpx 130rpx 0;
-	justify-content: space-around;
-	height: 120rpx;
+
+/deep/ .u-checkbox-group--row {
+	justify-content: flex-end;
+	margin-right: 40rpx;
+	margin-top: 20rpx;
 }
 /deep/.u-input {
 	height: 100%;
@@ -88,5 +108,13 @@ export default {
 .login-code-img {
 	width: 200rpx;
 	height: 60rpx;
+}
+/deep/.u-radio-group {
+	flex: 0 !important;
+}
+/deep/.u-radio-group--row {
+	margin: 40rpx 130rpx 0;
+	justify-content: space-around;
+	height: 120rpx;
 }
 </style>

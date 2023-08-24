@@ -54,14 +54,12 @@ export default {
 				extension: ['mp4', 'avi'],
 				// 	compressed: true,
 				success: r => {
-					console.log('r');
-					console.log(r);
+					// console.log('r');
+					// console.log(r);
 					this.vtype = 2;
 					let linShi2 = r.tempFiles[0].path;
 					const fileExtension = r.tempFiles[0].name.substring(r.tempFiles[0].name.lastIndexOf('.') + 1);
 					this.size = (r.tempFiles[0].size / (1024 * 1024)).toFixed(2);
-					// let files = linShi2 + '.' + fileExtension;
-					// console.log(files);
 					//上传中不可提交
 					this.upMediaOrImg = true;
 					uni.uploadFile({
@@ -81,9 +79,7 @@ export default {
 							} else {
 								this.originalFilename = name;
 							}
-
 							this.upMediaOrImg = false;
-							console.log(this.workVideo);
 						},
 						fail() {
 							this.upMediaOrImg = false;
@@ -119,10 +115,17 @@ export default {
 				});
 			}
 			submit({ id: this.item.id, workVideo: this.workVideo }).then(res => {
-				console.log(res);
-				uni.navigateTo({
-					url: `/pages_other/wait-result/wait-result`
-				});
+				if (res.code === 200) {
+					uni.navigateTo({
+						url: `/pages_other/wait-result/wait-result`
+					});
+				} else {
+					uni.showToast({
+						duration: 2000,
+						title: '提交失败！',
+						icon: 'none'
+					});
+				}
 			});
 		}
 	}
