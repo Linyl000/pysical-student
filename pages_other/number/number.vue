@@ -100,7 +100,7 @@ export default {
 					.then(res => {
 						this.list = res.data;
 
-						this.listOther = res.data.slice(3);
+						this.listOther = res.data.slice(4);
 						let find = res.data[0];
 						const newList = res.data.slice(1);
 						this.index = newList.findIndex(item => item.userId === find.userId);

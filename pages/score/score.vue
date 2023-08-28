@@ -56,7 +56,7 @@ export default {
 	},
 	methods: {
 		getList(page, limit) {
-			resultList({ taskType: this.type, taskName: this.taskName })
+			resultList({ pageNum: page, pageSize: limit, taskType: this.type, taskName: this.taskName })
 				.then(res => {
 					this.list = res.rows;
 					this.$refs.paging.complete(res.rows);

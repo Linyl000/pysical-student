@@ -21,10 +21,10 @@
 		</view>
 		<view class="stu-says"><u--textarea height="100%" v-model="evaluateContent" placeholder="请输入内容" count></u--textarea></view>
 		<view class="button_1" @click="evaluate">提交</view>
-		<!-- 选老师 -->
+		<!-- 选课程 -->
 		<u-picker
 			:show="showTeacher"
-			title="请选择老师"
+			title="请选择课程"
 			:columns="cTeacher"
 			immediateChange
 			@cancel="showTeacher = false"
