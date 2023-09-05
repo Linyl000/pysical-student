@@ -91,7 +91,7 @@ page {
 	font-size: 36rpx;
 
 	font-weight: 600;
-	text-align: left;
+	
 	white-space: nowrap;
 	line-height: 48rpx;
 	margin: 16rpx 0 0 32rpx;
@@ -116,7 +116,7 @@ page {
 	font-size: 28rpx;
 	font-family: PingFangSC-Regular;
 	font-weight: normal;
-	text-align: left;
+	
 	white-space: nowrap;
 	line-height: 48rpx;
 	margin-left: 8rpx;

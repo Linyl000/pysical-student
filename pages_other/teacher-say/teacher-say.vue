@@ -139,7 +139,7 @@ export default {
 	font-size: 32rpx;
 	font-family: PingFangSC-Regular;
 	font-weight: normal;
-	text-align: left;
+	
 	white-space: nowrap;
 	line-height: 122rpx;
 	margin-left: 28rpx;

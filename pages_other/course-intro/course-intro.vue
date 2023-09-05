@@ -1,12 +1,12 @@
 <template>
 	<view class="page">
 		<view class="title">{{ '【' + (item.courseType == '1' ? '视频' : '理论') + '】' + item.taskName }}</view>
-		<view class="cut-off-time">{{ '最后截止时间：' + item.endTime }}</view>
+		<view class="cut-off-time">{{ '最后截止时间：' + item.taskEndTime }}</view>
 		<view class="demand-box">
 			<view class="demand-img"></view>
 			<text lines="1" class="demand-text">要求</text>
 		</view>
-		<text class="description">{{ '分数达到' + item.passScore + '视为合格' }}</text>
+		<text class="description">{{ '分数达到' + '60' + '视为合格' }}</text>
 		<view class="button_1" @click="goHomeworkOrTest">去完成</view>
 	</view>
 </template>
@@ -42,15 +42,13 @@ export default {
 	padding: 52rpx 32rpx 0;
 }
 .title {
-	width: 546rpx;
-	height: 48rpx;
+	width: 700rpx;
 	overflow-wrap: break-word;
-
 	font-size: 40rpx;
-	font-family: PingFangSC-Semibold;
 	font-weight: 600;
-	text-align: left;
-	white-space: nowrap;
+	white-space: wrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	line-height: 48rpx;
 }
 .cut-off-time {

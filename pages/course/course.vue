@@ -85,16 +85,11 @@ export default {
 			paperList: []
 		};
 	},
-	onShow() {
-		this.$refs.paging.reload();
-	},
 	watch: {
 		current: {
 			handler(newValue, oldValue) {
-				// this.getPaperList();
 				this.$refs.paging.reload();
 			}
-			// immediate:true
 		}
 	},
 	methods: {
@@ -117,11 +112,20 @@ export default {
 				});
 			}
 		},
-		getPaperList() {
+		getPaperList(page, limit) {
 			request
-				.get('/work/studentWork/list', { taskType: this.type, finishStatus: this.current === 2 ? '' : this.current })
+				.get('/work/studentWork/list', {
+					pageNum: page,
+					pageSize: limit,
+					taskType: this.type,
+					finishStatus: this.current === 2 ? '' : this.current
+				})
 				.then(({ rows }) => {
 					this.paperList = rows;
+					this.$refs.paging.complete(rows);
+				})
+				.catch(res => {
+					this.$refs.paging.complete(false);
 				});
 		},
 		tabChange({ index }) {
@@ -129,9 +133,6 @@ export default {
 			this.$refs.paging.reload();
 		}
 	}
-	// mounted() {
-	// 	this.getPaperList();
-	// }
 };
 </script>
 
@@ -188,11 +189,9 @@ page {
 		width: 436rpx;
 		height: 48rpx;
 		overflow-wrap: break-word;
-
 		font-size: 32rpx;
-		font-family: PingFangSC-Semibold;
 		font-weight: 600;
-		text-align: left;
+		
 		white-space: nowrap;
 		line-height: 48rpx;
 		margin-top: 32rpx;

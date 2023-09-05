@@ -16,7 +16,7 @@
 				<view class="right-content">
 					<view lines="1" class="title">{{ j.taskName }}</view>
 					<view lines="1" class="details">
-						<span>已学习{{ j.allTime }}</span>
+						<span>已学习{{ j.allTime | getAllTime }}</span>
 						<!-- <text style="color: rgb(224, 105, 105);">已播放98%</text> -->
 					</view>
 				</view>
@@ -33,6 +33,18 @@ export default {
 			list: [],
 			courseName: ''
 		};
+	},
+	filters: {
+		getAllTime(data) {
+			let totalSeconds = Math.floor(data / 1000);
+			let totalMinutes = Math.floor(totalSeconds / 60);
+			let totalHours = Math.floor(totalMinutes / 60);
+
+			let minutes = totalMinutes % 60;
+			let seconds = totalSeconds % 60;
+			let milliseconds = data % 1000;
+			return `${totalHours}小时${minutes}分钟${seconds}秒`;
+		}
 	},
 	methods: {
 		getList(page, limit) {
@@ -102,13 +114,14 @@ page {
 		margin-left: 16rpx;
 	}
 	.title {
-		width: 308rpx;
+		width: 484rpx;
 		height: 48rpx;
 		overflow-wrap: break-word;
-
 		font-size: 32rpx;
 		font-weight: 600;
 		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.details {
 		display: flex;

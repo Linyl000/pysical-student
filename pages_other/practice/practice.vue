@@ -1,12 +1,12 @@
 <template>
 	<view class="page">
 		<view class="title">{{ '【' + (item.courseType == '1' ? '视频' : '理论') + '】' + item.examPaperName }}</view>
-		<view class="cut-off-time">{{ '最后截止时间：' + item.endTime }}</view>
+		<view class="cut-off-time">{{ '最后截止时间：' + item.taskEndTime }}</view>
 		<view class="demand-box">
 			<view class="demand-img"></view>
 			<text lines="1" class="demand-text">要求</text>
 		</view>
-		<text class="description">{{ '分数达到' + item.passScore + '视为合格' }}</text>
+		<text class="description">{{ '分数达到' + '60' + '视为合格' }}</text>
 		<!-- 视频图片 -->
 		<div v-if="workVideo" class="have-video">
 			<div class="icon"><u-icon name="play-right-fill" color="#fff" size="28"></u-icon></div>
@@ -144,7 +144,7 @@ export default {
 	font-size: 40rpx;
 	font-family: PingFangSC-Semibold;
 	font-weight: 600;
-	text-align: left;
+
 	white-space: nowrap;
 	line-height: 48rpx;
 }

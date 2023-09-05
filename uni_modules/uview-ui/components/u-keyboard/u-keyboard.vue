@@ -152,7 +152,7 @@
 			}
 
 			&__cancel {
-				text-align: left;
+				
 				color: #888888;
 			}
 

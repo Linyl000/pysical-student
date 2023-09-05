@@ -231,7 +231,7 @@
 			width: 1500rpx;
 			top: 0;
 			background-color: transparent;
-			text-align: left;
+			
 		}
 	}
 	

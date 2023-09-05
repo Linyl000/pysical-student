@@ -43,7 +43,7 @@ export default {
 	},
 	methods: {
 		getList(page, limit) {
-			courseList()
+			courseList({ pageNum: page, pageSize: limit })
 				.then(res => {
 					this.list = res.rows;
 					this.$refs.paging.complete(res.rows);
@@ -85,9 +85,8 @@ export default {
 		height: 48rpx;
 		overflow-wrap: break-word;
 		font-size: 48rpx;
-		font-family: PingFangSC-Semibold;
 		font-weight: 600;
-		text-align: left;
+		
 		white-space: nowrap;
 		line-height: 48rpx;
 	}
@@ -162,7 +161,7 @@ export default {
 		overflow-wrap: break-word;
 		font-size: 40rpx;
 		font-weight: 600;
-		text-align: left;
+		
 		white-space: nowrap;
 		line-height: 60rpx;
 		margin: 154rpx 0 0;

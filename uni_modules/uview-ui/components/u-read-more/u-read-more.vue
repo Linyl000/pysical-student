@@ -139,7 +139,7 @@
 		overflow: hidden;
 		color: $u-content-color;
 		font-size: 15px;
-		text-align: left;
+		
 	}
 
 	&__toggle {

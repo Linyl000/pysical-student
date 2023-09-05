@@ -322,7 +322,7 @@ export default {
 			
 			&__field {
 				line-height: 26px;
-				text-align: left;
+				
 				color: $u-main-color;
 				height: 24px;
 				font-size: 15px;
