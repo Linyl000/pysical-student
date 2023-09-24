@@ -12,6 +12,7 @@
 		</view>
 		<div class="section2">
 			<u-cell-group>
+				<u-cell icon="lock" title="修改密码" :isLink="true" @click="goChangeMima"></u-cell>
 				<u-cell icon="../../../../../../../../../static/study.png" title="学习记录" :isLink="true" @click="goStudyRecords"></u-cell>
 				<u-cell icon="../../../../../../../../../static/teachersay.png" title="课程评价" :isLink="true" @click="goTeacherSay"></u-cell>
 				<u-cell icon="../../../../../../../../../static/number.png" title="积分排名" :isLink="true" @click="goNumber"></u-cell>
@@ -56,6 +57,11 @@ export default {
 		goNumber() {
 			uni.navigateTo({
 				url: '/pages_other/number/number'
+			});
+		},
+		goChangeMima() {
+			uni.navigateTo({
+				url: '/pages_other/changeMima/changeMima'
 			});
 		},
 		logout() {}

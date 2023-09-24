@@ -1,7 +1,7 @@
 <template>
 	<view class="page_big" :style="{ height: screenheight + 'px' }">
 		<questionlist
-			:style="{ height: screenheight - navbarHeight - 75 + 'px' }"
+			:style="{ height: screenheight - navbarHeight - 30 + 'px' }"
 			:exampagenum="exampagenum"
 			:answerData="answerData"
 			:startTime="60"
@@ -82,21 +82,67 @@ export default {
 	},
 	methods: {
 		initExam() {
-			console.log(this.item);
-			request.get(`/exam/title/practice/work/${this.item.id}`).then(({ data }) => {
-				this.answerData = data.map(i => {
-					console.log(i, 'li');
-					i.type = 1;
-					i.isAnswered = false;
-					i.questionAnswerList = i.questionAnswerList.map(i => {
-						i.id = i.content;
-						i.status = 0;
-						return i;
-					});
-					return i;
+			request.get(`/exam/title/exam/work/${this.item.id}`).then(({ data }) => {
+				let datas = data;
+				datas.forEach(item => {
+					if (item.titleType === 1) {
+						item.myAnswer = [];
+					} else {
+						item.myAnswer = '';
+					}
 				});
+				this.answerData = datas;
 			});
-			//this.initExamNumData();
+			// 	this.answerData = [
+			// 		{
+			// 			titleType: '0',
+			// 			titleScore: '11',
+			// 			titleContent: '1',
+			// 			optionA: '1',
+			// 			optionB: '1',
+			// 			optionC: '1',
+			// 			optionD: '1',
+			// 			answer: '1',
+			// 			answerArr: [],
+			// 			myAnswer: ''
+			// 		},
+			// 		{
+			// 			titleType: '1',
+			// 			titleScore: '22',
+			// 			titleContent: '2',
+			// 			optionA: '2',
+			// 			optionB: '2',
+			// 			optionC: '2',
+			// 			optionD: '2',
+			// 			answer: '2',
+			// 			answerArr: [],
+			// 			myAnswer: []
+			// 		},
+			// 		{
+			// 			titleType: '2',
+			// 			titleScore: '33',
+			// 			titleContent: '3',
+			// 			optionA: '3',
+			// 			optionB: '3',
+			// 			optionC: '3',
+			// 			optionD: '3',
+			// 			answer: '3',
+			// 			answerArr: [],
+			// 			myAnswer: ''
+			// 		},
+			// 		{
+			// 			titleType: '3',
+			// 			titleScore: '44',
+			// 			titleContent: '4',
+			// 			optionA: '4',
+			// 			optionB: '4',
+			// 			optionC: '4',
+			// 			optionD: '4',
+			// 			answer: '4',
+			// 			answerArr: [],
+			// 			myAnswer: []
+			// 		}
+			// 	];
 		},
 
 		//获取考试时间
@@ -176,22 +222,28 @@ export default {
 			let answers = this.answerData.map(i => {
 				return {
 					id: i.id,
-					answer: i.myAnswer
+					answer: Array.isArray(i.myAnswer) ? i.myAnswer.join(', ') : i.myAnswer,
+					titleType: i.titleType
 				};
 			});
-			request.put('/exam/examDetail/practice/work/submit', { examRecordDetails: answers }).then(({ code }) => {
+			request.put('/exam/examDetail/exam/work/submit', { examRecordDetails: answers }).then(({ code }) => {
 				if (code != 200) {
 					uni.showToast({
 						duration: 2000,
 						title: '提交失败',
 						icon: 'none'
 					});
+				} else {
+					uni.showToast({
+						duration: 2000,
+						title: '提交成功',
+						icon: 'none'
+					});
+					uni.navigateTo({
+						url: `/pages_other/wait-result/wait-result`
+					});
 				}
 			});
-			uni.navigateBack({ delta: 2 });
-			// 		}
-			// 	}
-			// });
 		}
 	}
 };

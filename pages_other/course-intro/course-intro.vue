@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<view class="title">{{ '【' + (item.courseType == '1' ? '视频' : '理论') + '】' + item.taskName }}</view>
+		<view class="title">{{ item.taskName }}</view>
 		<view class="cut-off-time">{{ '最后截止时间：' + item.taskEndTime }}</view>
 		<view class="demand-box">
 			<view class="demand-img"></view>
@@ -23,15 +23,15 @@ export default {
 	},
 	methods: {
 		goHomeworkOrTest() {
-			if (this.item.courseType == 0) {
-				uni.navigateTo({
-					url: `/pages_other/theory/theory?item=${JSON.stringify(this.item)}` //理论
-				});
-			} else {
-				uni.navigateTo({
-					url: '/pages_other/practice/practice?item=' + JSON.stringify(this.item) //实践
-				});
-			}
+			// if (this.item.courseType == 0) {
+			uni.navigateTo({
+				url: `/pages_other/theory/theory?item=${JSON.stringify(this.item)}` //理论
+			});
+			// } else {
+			// 	uni.navigateTo({
+			// 		url: '/pages_other/practice/practice?item=' + JSON.stringify(this.item) //实践
+			// 	});
+			// }
 		}
 	}
 };

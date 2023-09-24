@@ -1,7 +1,7 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="paperList" @query="getPaperList" class="page">
 		<template #top>
-			<u-tabs
+			<!-- <u-tabs
 				lineColor="#5d4fdc"
 				:list="list1"
 				lineWidth="40"
@@ -13,7 +13,8 @@
 				}"
 				lineHeight="5"
 				@change="tabChange"
-			></u-tabs>
+			></u-tabs> -->
+			<div><u-notice-bar :text="text1" speed="60" duration="1600"></u-notice-bar></div>
 			<view class="type-list">
 				<view class="text-wrapper" :class="{ active: current === 2 }" @click="current = 2">全部</view>
 				<view class="text-wrapper" :class="{ active: current === 1 }" @click="current = 1">已完成</view>
@@ -23,7 +24,8 @@
 		<!-- 未开始：不能点  未完成：去题目详情做题   完成：去题目详情可以修改  超时+已完成/待评分：去结果页/评分页  超时+未完成：去题目详情不能做题  -->
 		<view class="list-item" v-for="(i, index) in paperList" :key="index" @click="goCourseIntro(i)">
 			<view class="title-and-time">
-				<text lines="1" class="title">{{ '【' + (i.courseType == '1' ? '视频' : '理论') + '】' + i.taskName }}</text>
+				<!-- 		<text lines="1" class="title">{{ '【' + (i.courseType == '1' ? '视频' : '理论') + '】' + i.taskName }}</text> -->
+				<text lines="1" class="title">{{ i.taskName }}</text>
 				<!-- 未开始 已完成 未完成 待评分 超时 -->
 				<view
 					:class="[
@@ -82,7 +84,8 @@ export default {
 			],
 			current: 2,
 			type: 0,
-			paperList: []
+			paperList: [],
+			text1: '截止每日22点之前提交，当天晚上10点之后提交的第二天早上8点之前会出结果。'
 		};
 	},
 	watch: {
@@ -117,7 +120,7 @@ export default {
 				.get('/work/studentWork/list', {
 					pageNum: page,
 					pageSize: limit,
-					taskType: this.type,
+					// taskType: this.type,
 					finishStatus: this.current === 2 ? '' : this.current
 				})
 				.then(({ rows }) => {
@@ -191,7 +194,7 @@ page {
 		overflow-wrap: break-word;
 		font-size: 32rpx;
 		font-weight: 600;
-		
+
 		white-space: nowrap;
 		line-height: 48rpx;
 		margin-top: 32rpx;

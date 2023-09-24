@@ -13,7 +13,10 @@ export default {
 	},
 	methods: {
 		goBack() {
-			uni.navigateBack({ delta: 3 });
+			// uni.navigateBack({ delta: 3 });
+			uni.switchTab({
+				url: '/pages/course/course'
+			});
 		}
 	}
 };

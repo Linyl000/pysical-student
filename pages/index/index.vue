@@ -34,6 +34,7 @@
 <script>
 import { courseList } from '@/api/index.js';
 import { getInfo } from '@/api/user.js';
+import { mapGetters, mapMutations, mapState } from 'vuex';
 export default {
 	data() {
 		return { list: [], user: { nickName: '' } };
@@ -42,6 +43,7 @@ export default {
 		this.getInfo();
 	},
 	methods: {
+		...mapMutations(['updateUserInfo']),
 		getList(page, limit) {
 			courseList({ pageNum: page, pageSize: limit })
 				.then(res => {
@@ -55,6 +57,8 @@ export default {
 		getInfo() {
 			getInfo().then(res => {
 				this.user = res.user;
+				uni.setStorageSync('userInfo', res.user);
+				this.updateUserInfo();
 			});
 		},
 		goAddCourse() {
@@ -86,7 +90,7 @@ export default {
 		overflow-wrap: break-word;
 		font-size: 48rpx;
 		font-weight: 600;
-		
+
 		white-space: nowrap;
 		line-height: 48rpx;
 	}
@@ -161,7 +165,7 @@ export default {
 		overflow-wrap: break-word;
 		font-size: 40rpx;
 		font-weight: 600;
-		
+
 		white-space: nowrap;
 		line-height: 60rpx;
 		margin: 154rpx 0 0;

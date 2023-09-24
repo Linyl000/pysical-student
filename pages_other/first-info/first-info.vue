@@ -26,8 +26,10 @@ import { login } from '@/api/first-info.js';
 export default {
 	data() {
 		return {
-			username: '456789',
-			password: '123456',
+			// username: '456789',
+			// password: '123456',
+			username: '',
+			password: '',
 			pwd: true,
 			codeUrl: null,
 			uuid: null,

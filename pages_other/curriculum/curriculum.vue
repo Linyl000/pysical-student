@@ -1,8 +1,6 @@
 <
 <template>
 	<view class="page">
-		<!-- 视频课 -->
-		<video v-if="i.courseType === 1" id="myVideo" ref="myVideo" class="video-inst" :src="i.courseVideo"></video>
 		<text lines="1" class="course-name">{{ i.taskName }}</text>
 		<!-- 	<view class="course-des">
 			<text lines="1" class="teacher-name">王佳老师</text>
@@ -10,8 +8,10 @@
 		</view> -->
 		<view class="course-des-box">
 			<view class="block_3"></view>
-			<text lines="1" class="text_7">章节详情</text>
+			<text lines="1" class="text_7">章节内容</text>
 		</view>
+		<!-- 视频课 -->
+		<video id="myVideo" ref="myVideo" class="video-inst" :src="i.courseVideo"></video>
 		<div class="course-video-info">
 			<!-- 在现有各流派太极拳的基础上，从最为核心的八法五步技术上手，即：棚、捋、挤、按、採、捌、肘、靠八种手法，以及进、退、顾、盼、定五种步法，进行了系统在现有各流派太极拳的基础上，从最为核心的八法五步技术上手，即：棚、捋、挤、按、採、捌、肘、靠八种手法，以及进、退、顾、盼、定五种步法，进行了系统在现有各流派太极拳的基础上，从最为核心的八法五步技术上手，即：棚、捋、挤、按、採、捌、肘、靠八种手法，以及进、退、顾、盼、定五种步法，进行了系统 -->
 			{{ i.taskDetails }}
@@ -91,7 +91,7 @@ page {
 	font-size: 36rpx;
 
 	font-weight: 600;
-	
+
 	white-space: nowrap;
 	line-height: 48rpx;
 	margin: 16rpx 0 0 32rpx;
@@ -116,7 +116,7 @@ page {
 	font-size: 28rpx;
 	font-family: PingFangSC-Regular;
 	font-weight: normal;
-	
+
 	white-space: nowrap;
 	line-height: 48rpx;
 	margin-left: 8rpx;

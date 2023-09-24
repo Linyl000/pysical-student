@@ -17,7 +17,7 @@
 		</view>
 		<view class="page_content">
 			<swiper
-				style="height: 500rpx;"
+				style="height: 90%;"
 				:indicator-dots="false"
 				:circular="false"
 				:autoplay="false"
@@ -30,16 +30,41 @@
 					<view class="" style="height: 100%; overflow: scroll;">
 						<view class="subject_title" v-html="showTitleHtml(index + 1, item)"><!-- {{index}}.{{item.title}} --></view>
 						<view class="answer">
-							<view class="" v-if="item.type == 1">
-								<view
-									:class="[changeAnswer(item2.status)]"
-									v-for="(item2, i2) in item.questionAnswerList"
-									:key="i2"
-									@click="changeOptions(i2)"
-								>
-									<view class="order">{{ item2.answerTitle }}.</view>
-									<view class="answer_detail" v-html="item2.content"></view>
-								</view>
+							<u-radio-group v-if="item.titleType == '0'" v-model="item.myAnswer" placement="column">
+								<u-radio class="answer_options" :label="`A. ${item.optionA}`" name="A"></u-radio>
+								<u-radio class="answer_options" :label="`B. ${item.optionB}`" name="B"></u-radio>
+								<u-radio class="answer_options" :label="`C. ${item.optionC}`" name="C"></u-radio>
+								<u-radio class="answer_options" :label="`D. ${item.optionD}`" name="D"></u-radio>
+							</u-radio-group>
+							<u-checkbox-group v-if="item.titleType == '1'" v-model="item.myAnswer" placement="column" shape="circle">
+								<u-checkbox class="answer_options" :label="`A. ${item.optionA}`" name="A"></u-checkbox>
+								<u-checkbox class="answer_options" :label="`B. ${item.optionB}`" name="B"></u-checkbox>
+								<u-checkbox class="answer_options" :label="`C. ${item.optionC}`" name="C"></u-checkbox>
+								<u-checkbox class="answer_options" :label="`D. ${item.optionD}`" name="D"></u-checkbox>
+							</u-checkbox-group>
+							<u-radio-group v-if="item.titleType == '2'" v-model="item.myAnswer" placement="column">
+								<u-radio class="answer_options" :label="`A. 正确`" name="0"></u-radio>
+								<u-radio class="answer_options" :label="`B. 错误`" name="1"></u-radio>
+							</u-radio-group>
+							<view v-if="item.titleType == '3'">
+								<video :src="item.correctAnswer" style="width: 360rpx; height: 220rpx;"></video>
+								<div style="width: 200rpx;">
+									<u-button color="#8767f5" :plain="true" text="查看视频要求" @click="need = true"></u-button>
+								</div>
+								<!-- 视频图片 -->
+								<div v-if="item.myAnswer" class="have-video">
+									<div class="icon"><u-icon name="play-right-fill" color="#fff" size="28"></u-icon></div>
+									<!-- <view class="name-and-size">
+										<text lines="1" class="name">{{ originalFilename }}</text>
+										<text lines="1" class="size">{{ size }}M</text>
+									</view> -->
+									<div class="delete" @click="deleteVideo(item, index)">删除</div>
+								</div>
+
+								<div class="up-box" v-else @click="selectVideo(item, index)">
+									<img v-if="vtype === 1" src="../../static/video-img.jpg" mode="" />
+									<img v-if="vtype === 2" src="../../static/up-video.png" />
+								</div>
 							</view>
 						</view>
 					</view>
@@ -109,6 +134,17 @@
 				</view>
 			</view>
 		</u-popup>
+		<u-popup :show="need" @close="need = false" mode="center" :round="10">
+			<view style="width:500rpx;padding: 20rpx;">
+				<view>1.视频稳定，确保摄像头保持稳定，人物肢体不超出摄像范围。</view>
+				<view>2.仅允许一个示范者出现在视频中，其他人不得入镜。</view>
+				<view>3.视频清晰度至少为720p。</view>
+				<view>4.在干净、无干扰的环境中进行演示。</view>
+				<view>5.上传视频与模范视频同步开始，并在相同动作结束，学生可自行裁剪视频。</view>
+				<view>6.统一使用mp4格式，并按章节分割上传视频。</view>
+				<view>7.视频必须以正常速度完成，不得加速或减速。</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -126,6 +162,7 @@
  * @event {Function()} collectChange 点击收藏  返回当前题目信息和下标
  * @event {Function()} changeOptions 监听题目选择和题目作答   返回对象 indexs当前下标  answerData.myAnswer当前题目的作答  answerData.isRight当前题目是否回答正确
  */
+import { ip } from '@/api/api.js';
 export default {
 	name: 'question-list',
 	props: {
@@ -168,10 +205,14 @@ export default {
 			collect: false,
 			//倒计时时间
 			remaining: '',
-			thisStartTime: this.startTime
+			thisStartTime: this.startTime,
+			vtype: 1,
+			upMediaOrImg: false,
+			need: false
 		};
 	},
 	mounted() {
+		this.init();
 		if (this.isRemaining) {
 			this.getTime();
 		}
@@ -180,16 +221,17 @@ export default {
 		answerData: {
 			handler(newValue, oldValue) {
 				this.init();
-			}
-			// immediate:true
+			},
+			deep: true
 		}
 	},
 	methods: {
 		init() {
-			this.examNumData = this.answerData.map(item => ({ id: item.id, state: 0 }));
+			this.examNumData = this.answerData.map(item => ({ id: item.id, state: item.myAnswer.length > 0 ? 1 : 0, myAnswer: item.myAnswer }));
 			if (this.exampagenum == 0) {
 				this.isQuestionCollect(0);
 			}
+			console.log(this.examNumData);
 		},
 
 		//获取考试时间
@@ -245,16 +287,16 @@ export default {
 			// return '<p style="float: left;">' + index + '：</p >' + value;
 
 			let typeText = '：';
-			if (item.type == 1) {
+			if (item.titleType == '0') {
 				typeText = '：（单选题）';
-			} else if (item.type == 2) {
+			} else if (item.titleType == '1') {
 				typeText = '：（多选题）';
-			} else if (item.type == 3) {
+			} else if (item.titleType == '2') {
 				typeText = '：（判断题）';
-			} else if (item.type == 4) {
-				typeText = '：（简答题）';
+			} else if (item.titleType == '3') {
+				typeText = '：（视频题）【标准视频如下】';
 			}
-			return '<p style="float: left;">' + index + typeText + '</p>' + item.examTitle;
+			return '<p style="float: left;">' + index + typeText + '</p>' + item.titleContent + '（' + item.titleScore + '分）';
 		},
 		// 答案选项初始样式
 		changeAnswer(state) {
@@ -280,47 +322,6 @@ export default {
 			} else if (state == 4) {
 				return 'error';
 			}
-		},
-		//单选题选择答案改变样式
-		changeOptions(index) {
-			console.log('>>>>>', index);
-			let answerObj = this.answerData[this.exampagenum];
-			for (let i = 0; i < answerObj.questionAnswerList.length; i++) {
-				this.answerData[this.exampagenum].questionAnswerList[i].status = 0;
-			}
-			this.answerData[this.exampagenum].questionAnswerList[index].status = 1;
-			this.answerData[this.exampagenum].isAnswered = true; //添加当前题目是否已答题
-			this.answerData[this.exampagenum].myAnswer = answerObj.questionAnswerList[index].answerTitle;
-			if (this.answerData[this.exampagenum].myAnswer == this.answerData[this.exampagenum].rightkey) {
-				this.answerData[this.exampagenum].isRight = 1;
-			} else {
-				this.answerData[this.exampagenum].isRight = 2;
-			}
-			// let obj={
-			// 	'answerData':
-			// }
-			let obj = {
-				answerData: this.answerData[this.exampagenum],
-				indexs: this.exampagenum
-			};
-			// console.log(obj);
-			this.$emit('changeOptions', obj, this.answerData);
-
-			this.$set(this.examNumData[this.exampagenum], 'state', 1);
-		},
-		handleInput: function(item) {
-			if (item.myAnswer != null && item.myAnswer != undefined && item.myAnswer != '') {
-				item.isAnswered = true;
-				item.isRight = 1;
-			} else {
-				item.isAnswered = false;
-				item.isRight = 2;
-			}
-			let obj = {
-				answerData: item,
-				indexs: this.exampagenum
-			};
-			this.$emit('changeOptions', obj);
 		},
 		//题目轮播切换
 		changeQues(event) {
@@ -351,6 +352,46 @@ export default {
 		//交卷对话框显示
 		dialogChangeshow() {
 			this.$emit('runRes', this.answerData);
+		},
+		selectVideo(item, index) {
+			uni.chooseFile({
+				count: 1,
+				type: 'video',
+				sourceType: ['album', 'camera'],
+				extension: ['mp4', 'avi'],
+				success: r => {
+					this.vtype = 2;
+					let linShi2 = r.tempFiles[0].path;
+					const fileExtension = r.tempFiles[0].name.substring(r.tempFiles[0].name.lastIndexOf('.') + 1);
+					this.size = (r.tempFiles[0].size / (1024 * 1024)).toFixed(2);
+					//上传中不可提交
+					this.upMediaOrImg = true;
+					uni.uploadFile({
+						url: ip + '/common/upload',
+						filePath: linShi2,
+						name: 'file',
+						header: {
+							Authorization: uni.getStorageSync('token')
+						},
+						success: uploadFileRes => {
+							this.vtype = 1;
+							this.answerData[index].myAnswer = JSON.parse(uploadFileRes.data).url;
+							this.upMediaOrImg = false;
+						},
+						fail() {
+							this.upMediaOrImg = false;
+							uni.showToast({
+								title: '视频上传失败',
+								icon: 'none',
+								duration: 2000
+							});
+						}
+					});
+				}
+			});
+		},
+		deleteVideo(item, index) {
+			this.answerData[index].myAnswer = '';
 		}
 	}
 };
@@ -394,7 +435,7 @@ export default {
 
 	.answer {
 		width: 100%;
-		margin-top: 60rpx;
+		margin-top: 50rpx;
 		box-sizing: border-box;
 		// border: 1rpx solid;
 		padding: 0 30rpx 0 30rpx;
@@ -407,7 +448,15 @@ export default {
 			border: 4rpx solid #f0f5fb;
 			margin-top: 30rpx;
 			display: flex;
-
+			// /deep/ .u-radio__text {
+			// 	display: block;
+			// 	width: 100%;
+			// }
+			// /deep/ .u-checkbox {
+			// 	&:nth-child(2) {
+			// 		background-color: #ccc;
+			// 	}
+			// }
 			.answer_detail {
 				padding-left: 20rpx;
 				word-break: break-all;
@@ -747,6 +796,66 @@ export default {
 				}
 			}
 		}
+	}
+}
+
+.have-video {
+	display: flex;
+	align-items: center;
+	width: 260rpx;
+	height: 176rpx;
+	box-sizing: border-box;
+	padding: 20rpx 24rpx;
+	border-radius: 16rpx;
+	margin-top: 36rpx;
+	border: 2rpx solid #ccc;
+	.icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 96rpx;
+		width: 96rpx;
+		background-color: rgba(99, 177, 105, 1);
+		border-radius: 16rpx;
+		margin-right: 36rpx;
+	}
+	.name-and-size {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		.name {
+			// width: 354rpx;
+			// overflow-wrap: break-word;
+			font-size: 32rpx;
+			font-weight: 600;
+			// white-space: normal; /* 允许文本换行 */
+			// line-height: 48rpx;
+			// display: -webkit-box;
+			// -webkit-box-orient: vertical;
+			// -webkit-line-clamp: 1; /* 设置最多显示两行文本 */
+			// text-overflow: ellipsis; /* 超出两行显示省略号 */
+			// overflow: hidden; /* 隐藏超出部分的文本 */
+		}
+		.size {
+			overflow-wrap: break-word;
+			color: rgba(136, 136, 136, 1);
+			font-size: 28rpx;
+			margin-top: 8rpx;
+		}
+	}
+	.delete {
+		color: rgba(224, 105, 105, 1);
+	}
+}
+.up-box {
+	margin-top: 30rpx;
+	width: 220rpx;
+	height: 220rpx;
+	image,
+	img {
+		width: 100%;
+		height: 100%;
 	}
 }
 </style>
