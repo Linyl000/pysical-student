@@ -12,3 +12,11 @@ export function start(data) {
 export function submit(data) {
 	return post('/work/studentWork/practice/video/submit', data)
 }
+//切片上传
+export function upload(data) {
+	return post('/background/file/upload', data)
+}
+//合并
+export function merge(data) {
+	return post('/background/file/merge', data)
+}

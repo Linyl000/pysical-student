@@ -22,15 +22,7 @@ const store = new Vuex.Store({
 			//前台先uni.setStorageSync('userInfo', userInfo)保存数据 再直接调用该函数
 			state.userInfo = uni.getStorageSync('userInfo')
 		},
-		//修改播放状态
-		updatePlayAudio(state) {
-			state.playAudio = uni.getStorageSync('playAudio')
-		},
-		//登出
-		logout(state) {
-			uni.removeStorageSync('userInfo')
-			state.user_info = {}
-		}
+
 	},
 	actions: {}
 })

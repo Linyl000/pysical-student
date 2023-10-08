@@ -9,7 +9,7 @@
 			@changeQues="changeQues"
 			@changeOptions="changeOptions"
 			@collectChange="collectChange"
-			@runRes="runRes"
+			@showRes="showModel = true"
 		></questionlist>
 		<u-modal
 			:show="showModel"
@@ -18,6 +18,7 @@
 			confirmColor="#8767f5"
 			:showCancelButton="true"
 			@confirm="runRes"
+			@cancel="showModel = false"
 		></u-modal>
 	</view>
 </template>
@@ -214,11 +215,6 @@ export default {
 		},
 		//交卷
 		runRes(e) {
-			// console.log(e);
-			// uni.showModal({
-			// 	title: '是否交卷？',
-			// 	success: res => {
-			// 		if (res.confirm) {
 			let answers = this.answerData.map(i => {
 				return {
 					id: i.id,

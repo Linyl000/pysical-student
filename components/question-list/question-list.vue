@@ -65,6 +65,10 @@
 									<img v-if="vtype === 1" src="../../static/video-img.jpg" mode="" />
 									<img v-if="vtype === 2" src="../../static/up-video.png" />
 								</div>
+								<div style="margin:20rpx 0;color:#a1a1a1;font-size: 24rpx;">
+									<u-line-progress v-if="vtype === 2" :percentage="progressPercent" activeColor="#8767f5"></u-line-progress>
+									<span>提示：上传时离开后台可能会造成上传失败！</span>
+								</div>
 							</view>
 						</view>
 					</view>
@@ -163,6 +167,7 @@
  * @event {Function()} changeOptions 监听题目选择和题目作答   返回对象 indexs当前下标  answerData.myAnswer当前题目的作答  answerData.isRight当前题目是否回答正确
  */
 import { ip } from '@/api/api.js';
+import { upload, merge } from '@/api/practice.js';
 export default {
 	name: 'question-list',
 	props: {
@@ -208,7 +213,18 @@ export default {
 			thisStartTime: this.startTime,
 			vtype: 1,
 			upMediaOrImg: false,
-			need: false
+			need: false,
+			//-----
+			chunkSize: 10 * 1024 * 1024, // 每个切片的大小（这里设置为5MB）
+			fileIndex: 0, // 当前切片索引
+			totalChunks: 0, // 总切片数
+			fileKey: Date.now(), // 文件的唯一标识
+			fileChunks: [], // 存储切片的数组
+			retryTimes: 0, // 失败重试次数
+			retryLimit: 5, // 失败重试次数限制
+			urll: ip + '/common/upload',
+			file: null,
+			progressPercent: 0
 		};
 	},
 	mounted() {
@@ -351,7 +367,7 @@ export default {
 		isQuestionCollect(index) {},
 		//交卷对话框显示
 		dialogChangeshow() {
-			this.$emit('runRes', this.answerData);
+			this.$emit('showRes', true);
 		},
 		selectVideo(item, index) {
 			uni.chooseFile({
@@ -361,15 +377,15 @@ export default {
 				extension: ['mp4', 'avi'],
 				success: r => {
 					this.vtype = 2;
-					let linShi2 = r.tempFiles[0].path;
-					const fileExtension = r.tempFiles[0].name.substring(r.tempFiles[0].name.lastIndexOf('.') + 1);
-					this.size = (r.tempFiles[0].size / (1024 * 1024)).toFixed(2);
+					let linShi2 = r.tempFilePaths.length > 0 ? r.tempFilePaths[0] : r.tempFiles[0].path;
+
 					//上传中不可提交
 					this.upMediaOrImg = true;
-					uni.uploadFile({
+					var task = uni.uploadFile({
 						url: ip + '/common/upload',
 						filePath: linShi2,
 						name: 'file',
+						timeout: 1000 * 60 * 60,
 						header: {
 							Authorization: uni.getStorageSync('token')
 						},
@@ -386,10 +402,128 @@ export default {
 								duration: 2000
 							});
 						}
+					}); // 设置进度更新的回调函数
+					task.onProgressUpdate(res => {
+						this.progressPercent = res.progress;
 					});
 				}
 			});
 		},
+
+		// selectVideo(item, index) {
+		// 	// 切片上传相关配置
+		// 	this.fileIndex = 0;
+		// 	this.totalChunks = 0;
+		// 	this.fileKey = Date.now();
+		// 	this.fileChunks = [];
+		// 	uni.chooseFile({
+		// 		count: 1,
+		// 		type: 'video',
+		// 		sourceType: ['album'],
+		// 		extension: ['mp4', 'avi'],
+		// 		success: r => {
+		// 			console.log(r);
+		// 			this.vtype = 2;
+		// 			this.file = r.tempFiles[0];
+		// 			// 计算切片数量
+		// 			this.totalChunks = Math.ceil(this.file.size / this.chunkSize);
+		// 			// 生成文件的唯一标识
+		// 			this.fileKey = Date.now();
+		// 			// 开始切片上传
+		// 			this.uploadChunks(this.file, 0, this.fileIndex, index);
+		// 		}
+		// 	});
+		// },
+		uploadChunks(file, start, index, i) {
+			const self = this;
+			const chunkSize = this.chunkSize;
+			// 切片结束位置
+			const end = Math.min(start + chunkSize, file.size);
+			// 获取当前切片数据
+			const chunkData = file.slice(start, end);
+			let obj = {
+				chunkNumber: index,
+				filename: file.name,
+				identifier: this.fileKey,
+				file: chunkData,
+				chunkSize: this.chunkSize,
+				currentChunkSize: end - start,
+				relativePath: file.name,
+				totalChunks: this.totalChunks,
+				totalSize: file.size
+			};
+			uni.request({
+				url: 'https://4r5923600t.imdo.co/wxapi/background/file/upload',
+				method: 'POST',
+				header: {
+					'Content-Type': 'application/json'
+				},
+				data: obj,
+				success: function(res) {
+					if (start >= file.size) {
+						this.vtype = 1;
+						this.fileIndex = 0;
+						uni.request({
+							url: 'https://example.com/api/endpoint',
+							method: 'POST',
+							header: {
+								'Content-Type': 'application/json'
+							},
+							data: { identifier: this, fileKey, totalSize: file.size, filename: file.name },
+							success: function(res) {
+								this.answerData[i].myAnswer = res.url;
+								uni.showToast({
+									title: '视频上传成功',
+									icon: 'success',
+									duration: 2000
+								});
+							},
+							fail: function(error) {
+								console.error('Error:', error);
+							}
+						});
+					} else {
+						// 继续上传下一个切片
+						start = end;
+						this.fileIndex += 1;
+						this.uploadChunks(file, start, this.fileIndex);
+					}
+				},
+				fail: function(error) {
+					console.error('Error:', error);
+				}
+			});
+			// upload(obj).then(res => {
+			// 	if (start >= file.size) {
+			// 		this.vtype = 1;
+			// 		this.fileIndex = 0;
+			// 		merge({ identifier: this, fileKey, totalSize: file.size, filename: file.name }).then(res => {
+			// 			this.answerData[i].myAnswer = res.url;
+			// 			uni.showToast({
+			// 				title: '视频上传成功',
+			// 				icon: 'success',
+			// 				duration: 2000
+			// 			});
+			// 		});
+			// 	} else {
+			// 		// 继续上传下一个切片
+			// 		start = end;
+			// 		this.fileIndex += 1;
+			// 		this.uploadChunks(file, start, this.fileIndex);
+			// 	}
+			// });
+
+			// },
+			// 	fail() {
+			// 		uni.showToast({
+			// 			title: '视频上传失败，请保持网络稳定后重试',
+			// 			icon: 'none',
+			// 			duration: 2000
+			// 		});
+			// 	}
+			// });
+		},
+		//---------------------
 		deleteVideo(item, index) {
 			this.answerData[index].myAnswer = '';
 		}
@@ -435,7 +569,7 @@ export default {
 
 	.answer {
 		width: 100%;
-		margin-top: 50rpx;
+		margin-top: 30rpx;
 		box-sizing: border-box;
 		// border: 1rpx solid;
 		padding: 0 30rpx 0 30rpx;
