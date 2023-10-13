@@ -58,7 +58,7 @@
 }
 .page_content .answer {
   width: 100%;
-  margin-top: 60rpx;
+  margin-top: 30rpx;
   box-sizing: border-box;
   padding: 0 30rpx 0 30rpx;
 }
@@ -348,5 +348,55 @@
 .hide_answercard .hide_question .hide_exam_tips .hide_exam_tips_item .error_tip_text {
   padding-left: 10rpx;
   color: #e50000;
+}
+.have-video {
+  display: flex;
+  align-items: center;
+  width: 260rpx;
+  height: 176rpx;
+  box-sizing: border-box;
+  padding: 20rpx 24rpx;
+  border-radius: 16rpx;
+  margin-top: 36rpx;
+  border: 2rpx solid #ccc;
+}
+.have-video .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 96rpx;
+  width: 96rpx;
+  background-color: #63b169;
+  border-radius: 16rpx;
+  margin-right: 36rpx;
+}
+.have-video .name-and-size {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.have-video .name-and-size .name {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.have-video .name-and-size .size {
+  overflow-wrap: break-word;
+  color: #888888;
+  font-size: 28rpx;
+  margin-top: 8rpx;
+}
+.have-video .delete {
+  color: #e06969;
+}
+.up-box {
+  margin-top: 30rpx;
+  width: 220rpx;
+  height: 220rpx;
+}
+.up-box image,
+.up-box ._img {
+  width: 100%;
+  height: 100%;
 }
 

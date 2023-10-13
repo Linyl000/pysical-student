@@ -8,7 +8,7 @@
 		</view> -->
 		<view class="course-des-box">
 			<view class="block_3"></view>
-			<text lines="1" class="text_7">章节内容</text>
+			<text lines="1" class="text_7">章节详情</text>
 		</view>
 		<!-- 视频课 -->
 		<video id="myVideo" ref="myVideo" class="video-inst" :src="i.courseVideo"></video>
@@ -127,11 +127,9 @@ page {
 	line-height: 48rpx;
 }
 .course-des-box {
-	width: 144rpx;
 	height: 40rpx;
 	flex-direction: row;
 	display: flex;
-	justify-content: space-between;
 	margin: 32rpx 0 0 32rpx;
 }
 .block_3 {
@@ -144,6 +142,8 @@ page {
 	flex-direction: column;
 }
 .text_7 {
+	margin-left: 10rpx;
+	width: 600rpx;
 	font-size: 28rpx;
 }
 .course-video-info,

@@ -20,7 +20,8 @@
 			</view>
 		</view>
 		<view class="stu-says"><u--textarea height="100%" v-model="evaluateContent" placeholder="请输入内容" count></u--textarea></view>
-		<view class="button_1" @click="evaluate">提交</view>
+		<div style="width: 40rpx;height: 96rpx;"></div>
+		<view :class="colorBtn ? 'button_1' : 'button_2'" @click="evaluate">提交</view>
 		<!-- 选课程 -->
 		<u-picker
 			:show="showTeacher"
@@ -30,6 +31,7 @@
 			@cancel="showTeacher = false"
 			@confirm="selectTeacher"
 			keyName="courseName"
+			confirmColor="#5D4FDC"
 		></u-picker>
 	</view>
 </template>
@@ -46,6 +48,11 @@ export default {
 			evaluateContent: '',
 			score: ''
 		};
+	},
+	computed: {
+		colorBtn() {
+			return this.score !== '' && this.evaluateContent !== '' && !this.teacher == '';
+		}
 	},
 	methods: {
 		listAll() {
@@ -69,18 +76,10 @@ export default {
 			this.showTeacher = false;
 		},
 		evaluate() {
-			if (!this.evaluateContent) {
+			if (!this.colorBtn) {
 				uni.showToast({
 					duration: 2000,
-					title: '请填写评价内容',
-					icon: 'none'
-				});
-				return;
-			}
-			if (!this.score) {
-				uni.showToast({
-					duration: 2000,
-					title: '请填写分数',
+					title: '请选择课程或填写课程分数及评价内容',
 					icon: 'none'
 				});
 				return;
@@ -139,7 +138,7 @@ export default {
 	font-size: 32rpx;
 	font-family: PingFangSC-Regular;
 	font-weight: normal;
-	
+
 	white-space: nowrap;
 	line-height: 122rpx;
 	margin-left: 28rpx;
@@ -165,7 +164,12 @@ export default {
 /deep/.u-textarea__field {
 	font-size: 36rpx !important;
 }
-.button_1 {
+.button_1,
+.button_2 {
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
 	border-radius: 48rpx;
 	width: 448rpx;
 	height: 96rpx;
@@ -175,7 +179,9 @@ export default {
 	text-align: center;
 	line-height: 96rpx;
 	color: rgba(255, 255, 255, 1);
-	// background-color: #dfe1e5;
 	background-color: rgba(93, 79, 220, 1);
+}
+.button_2 {
+	background-color: #a7adbc;
 }
 </style>

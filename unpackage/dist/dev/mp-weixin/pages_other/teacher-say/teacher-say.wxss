@@ -331,7 +331,6 @@
   font-size: 32rpx;
   font-family: PingFangSC-Regular;
   font-weight: normal;
-  text-align: left;
   white-space: nowrap;
   line-height: 122rpx;
   margin-left: 28rpx;
@@ -356,7 +355,13 @@
 .data-v-21321899 .u-textarea__field {
   font-size: 36rpx !important;
 }
-.button_1.data-v-21321899 {
+.button_1.data-v-21321899,
+.button_2.data-v-21321899 {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   border-radius: 48rpx;
   width: 448rpx;
   height: 96rpx;
@@ -367,5 +372,8 @@
   line-height: 96rpx;
   color: white;
   background-color: #5d4fdc;
+}
+.button_2.data-v-21321899 {
+  background-color: #a7adbc;
 }
 

@@ -302,13 +302,42 @@
 page {
   background-color: #f8f8f8;
 }
+.look-score {
+  display: flex;
+  align-items: center;
+}
+.look-score .name {
+  color: #2a2a2a;
+  font-size: 36rpx;
+  font-weight: 600;
+  line-height: 42px;
+  margin: 0px 0 0 16px;
+}
+.look-score .go-look {
+  color: #5d4fdc;
+  font-size: 28rpx;
+  line-height: 42px;
+  margin: 0px 0 0 16px;
+}
 .search-box {
   width: 686rpx;
   height: 72rpx;
   flex-direction: row;
   display: flex;
   justify-content: space-between;
-  margin: 36rpx 0 0 32rpx;
+  margin: 0 0 0 32rpx;
+}
+ .u-search__content {
+  border: 4rpx solid #c1c8d8 !important;
+  border-radius: 10rpx !important;
+}
+ .u-search__action {
+  background-color: #5d4fdc;
+  border: 4rpx solid #5d4fdc;
+  border-radius: 10rpx;
+  color: #fff;
+  height: 64rpx;
+  line-height: 64rpx;
 }
 .score-list {
   display: flex;
@@ -322,7 +351,7 @@ page {
   background-color: white;
 }
 .list-left {
-  flex: 1;
+  width: 490rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -330,17 +359,21 @@ page {
 .list-left .title {
   font-size: 32rpx;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .list-left .teacher {
   font-size: 26rpx;
 }
 .list-right {
+  width: 120rpx;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: end;
 }
 .list-right .details {
-  white-space: nowrap;
   color: #e06969;
 }
 .list-right .details .score-1 {
@@ -348,6 +381,9 @@ page {
 }
 .list-right .details .score-2 {
   font-size: 28rpx;
+}
+.list-right .details .score-3 {
+  font-size: 26rpx;
 }
 .list-right .timers {
   color: #888888;

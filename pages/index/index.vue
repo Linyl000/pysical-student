@@ -20,8 +20,10 @@
 			<!-- <view lines="1" class="co-name">主要课程</view> -->
 			<div class="one-course" v-for="i in list" :key="i.courseId" @click="goMyCourse(i)">
 				<image :src="i.courseJson" mode=""></image>
-				<view class="title">{{ i.courseName }} - {{ i.teacherName }}</view>
-				<view class="detail">{{ i.courseIntroduce }}</view>
+				<div class="title-detail">
+					<view class="title">{{ i.courseName }} - {{ i.teacherName }}</view>
+					<view class="detail">{{ i.courseIntroduce }}</view>
+				</div>
 			</div>
 		</div>
 
@@ -157,32 +159,32 @@ export default {
 		top: 0;
 		left: 0;
 	}
-	.title {
-		background-color: rgba(0, 0, 0, 0.4);
+	.title-detail {
+		width: 100%;
+		height: 140rpx;
 		color: white;
 		z-index: 100;
-		height: 60rpx;
-		overflow-wrap: break-word;
-		font-size: 40rpx;
-		font-weight: 600;
+		margin: 144rpx 0 0;
+		padding-top: 10rpx;
+		background: linear-gradient(transparent 5%, rgba(0, 0, 0, 0.7) 90%);
 
-		white-space: nowrap;
-		line-height: 60rpx;
-		margin: 154rpx 0 0;
-		padding-left: 36rpx;
-	}
-	.detail {
-		height: 90rpx;
-		background-color: rgba(0, 0, 0, 0.4);
-		color: white;
-		z-index: 100;
-		box-sizing: border-box;
-		font-size: 28rpx;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		line-height: 34rpx;
-		padding: 0 32rpx 32rpx 32rpx;
+		.title {
+			overflow-wrap: break-word;
+			font-size: 40rpx;
+			font-weight: 600;
+			white-space: nowrap;
+			line-height: 70rpx;
+			padding-left: 36rpx;
+		}
+		.detail {
+			box-sizing: border-box;
+			font-size: 28rpx;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			line-height: 38rpx;
+			padding: 0 32rpx 16rpx 32rpx;
+		}
 	}
 }
 </style>

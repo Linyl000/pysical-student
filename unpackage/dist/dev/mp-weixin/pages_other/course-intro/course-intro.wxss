@@ -29,14 +29,13 @@
   padding: 52rpx 32rpx 0;
 }
 .title.data-v-2ee69bd2 {
-  width: 546rpx;
-  height: 48rpx;
+  width: 700rpx;
   overflow-wrap: break-word;
   font-size: 40rpx;
-  font-family: PingFangSC-Semibold;
   font-weight: 600;
-  text-align: left;
-  white-space: nowrap;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   line-height: 48rpx;
 }
 .cut-off-time.data-v-2ee69bd2 {

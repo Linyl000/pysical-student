@@ -66,7 +66,6 @@ view.data-v-113bc24f, scroll-view.data-v-113bc24f, swiper-item.data-v-113bc24f {
 }
 .u-input__content__field-wrapper__field.data-v-113bc24f {
   line-height: 26px;
-  text-align: left;
   color: #303133;
   height: 24px;
   font-size: 15px;

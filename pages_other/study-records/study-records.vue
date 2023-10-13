@@ -105,13 +105,15 @@ page {
 	.img-main {
 		width: 144rpx;
 		height: 144rpx;
+		border-radius: 16rpx;
+		overflow: hidden;
 	}
 	.right-content {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
-		margin-left: 16rpx;
+		margin-left: 20rpx;
 	}
 	.title {
 		width: 484rpx;
@@ -131,5 +133,17 @@ page {
 		font-size: 24rpx;
 		line-height: 64rpx;
 	}
+}
+/deep/ .u-search__content {
+	border: 4rpx solid #c1c8d8 !important;
+	border-radius: 10rpx !important;
+}
+/deep/.u-search__action {
+	background-color: #5d4fdc;
+	border: 4rpx solid #5d4fdc;
+	border-radius: 10rpx;
+	color: #fff;
+	height: 64rpx;
+	line-height: 64rpx;
 }
 </style>

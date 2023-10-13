@@ -427,6 +427,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #fff;
 }
 .four-and-other-number.data-v-651386f7 {
   width: 50rpx;

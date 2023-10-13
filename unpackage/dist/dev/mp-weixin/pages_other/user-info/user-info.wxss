@@ -426,7 +426,6 @@
   font-size: 36rpx;
   font-family: PingFangSC-Semibold;
   font-weight: 600;
-  text-align: left;
   white-space: nowrap;
   line-height: 48rpx;
   margin: 16rpx 0 0 44rpx;

@@ -314,7 +314,6 @@ page.data-v-4f5a8e92 {
   overflow-wrap: break-word;
   font-size: 36rpx;
   font-weight: 600;
-  text-align: left;
   white-space: nowrap;
   line-height: 48rpx;
   margin: 16rpx 0 0 32rpx;
@@ -338,7 +337,6 @@ page.data-v-4f5a8e92 {
   font-size: 28rpx;
   font-family: PingFangSC-Regular;
   font-weight: normal;
-  text-align: left;
   white-space: nowrap;
   line-height: 48rpx;
   margin-left: 8rpx;
@@ -349,11 +347,9 @@ page.data-v-4f5a8e92 {
   line-height: 48rpx;
 }
 .course-des-box.data-v-4f5a8e92 {
-  width: 144rpx;
   height: 40rpx;
   flex-direction: row;
   display: flex;
-  justify-content: space-between;
   margin: 32rpx 0 0 32rpx;
 }
 .block_3.data-v-4f5a8e92 {
@@ -366,6 +362,8 @@ page.data-v-4f5a8e92 {
   flex-direction: column;
 }
 .text_7.data-v-4f5a8e92 {
+  margin-left: 10rpx;
+  width: 600rpx;
   font-size: 28rpx;
 }
 .course-video-info.data-v-4f5a8e92,

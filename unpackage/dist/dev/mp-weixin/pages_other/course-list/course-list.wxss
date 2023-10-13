@@ -347,7 +347,7 @@ page.data-v-7d29cfb9 {
 }
 .type .type-item .item-title.data-v-7d29cfb9 {
   flex: 1;
-  color: #888888;
+  color: #a7adbc;
 }
 .type .small-colum.data-v-7d29cfb9 {
   display: flex;

@@ -305,7 +305,8 @@
   border-radius: 16rpx;
   height: 120rpx;
 }
-.button_1.data-v-6ef0f2b7 {
+.button_1.data-v-6ef0f2b7,
+.button_2.data-v-6ef0f2b7 {
   border-radius: 48rpx;
   width: 448rpx;
   height: 96rpx;
@@ -316,6 +317,9 @@
   line-height: 96rpx;
   color: white;
   background-color: #5d4fdc;
+}
+.button_2.data-v-6ef0f2b7 {
+  background-color: #a7adbc;
 }
 .data-v-6ef0f2b7 .u-checkbox-group--row {
   justify-content: flex-end;

@@ -52,14 +52,16 @@
 			<image class="one-two-three" src="@/static/one-two-three.png" mode="widthFix"></image>
 		</view>
 		<!-- 我 -->
-		<view v-if="list.length" class="four-and-other ">
-			<text lines="1" class="four-and-other-number">{{ index === -1 ? '未上榜' : index + 1 }}</text>
-			<image :src="list[0].avatar" class="label_2"></image>
-			<text lines="1" class="text_17">{{ list[0].nickName }}</text>
-			<view class="four-and-other-jifen">
-				<text lines="1" class="text_18">{{ list[0].allIntegral }}</text>
+		<div style="background-color: #5842aa;">
+			<view v-if="list.length" class="four-and-other " style="border-radius: 20rpx 20rpx 0 0;">
+				<text lines="1" class="four-and-other-number">{{ index === -1 ? '未上榜' : index + 1 }}</text>
+				<image :src="list[0].avatar" class="label_2"></image>
+				<text lines="1" class="text_17">{{ list[0].nickName }}</text>
+				<view class="four-and-other-jifen">
+					<text lines="1" class="text_18">{{ list[0].allIntegral }}</text>
+				</view>
 			</view>
-		</view>
+		</div>
 		<div class="my-number"></div>
 		<!-- 4~10 -->
 		<view class="four-and-other" v-if="listOther.length" v-for="(item, index) in listOther" :key="index">
@@ -283,6 +285,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	background-color: #fff;
 }
 .four-and-other-number {
 	width: 50rpx;

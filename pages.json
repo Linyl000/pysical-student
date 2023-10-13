@@ -96,13 +96,6 @@
 			}
 
 		}, {
-			"path": "get-result/get-result",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
 			"path": "theory/theory",
 			"style": {
 				"navigationBarTitleText": "",
@@ -130,25 +123,21 @@
 				"enablePullDownRefresh": false
 			}
 
-		}    ,{
-                    "path" : "result-score/result-score",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "changeMima/changeMima",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+		}, {
+			"path": "result-score/result-score",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "changeMima/changeMima",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}]
 	}],
 	"tabBar": {
 		"color": "#000",

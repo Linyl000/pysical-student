@@ -18,11 +18,12 @@
         "user-info/user-info",
         "course-list/course-list",
         "curriculum/curriculum",
-        "get-result/get-result",
         "theory/theory",
         "practice/practice",
         "wait-result/wait-result",
-        "course-intro/course-intro"
+        "course-intro/course-intro",
+        "result-score/result-score",
+        "changeMima/changeMima"
       ]
     }
   ],

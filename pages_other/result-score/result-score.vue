@@ -12,7 +12,13 @@
 			></u-input>
 		</div>
 		<text lines="1" class="text_4">课程总成绩</text>
-		<view v-if="finalScore" class="score-write">{{ finalScore }}分</view>
+		<view v-if="finalScore" class="score-write">
+			<text style="color:#333;margin-left: 10rpx;	font-weight: 500;font-size: 30rpx;">分数</text>
+			<div>
+				<text style="text-align: right;">{{ finalScore }}</text>
+				<text style="margin-left: 10rpx;	font-weight: 500;font-size: 38rpx;text-align: right;">分</text>
+			</div>
+		</view>
 		<view v-if="teacher && !finalScore" class="score-write">尚未查询到该课程总成绩</view>
 		<!-- 选课程 -->
 		<u-picker
@@ -23,6 +29,7 @@
 			@cancel="showTeacher = false"
 			@confirm="selectTeacher"
 			keyName="courseName"
+			confirmColor="#5D4FDC"
 		></u-picker>
 	</view>
 </template>
@@ -91,10 +98,12 @@ export default {
 	margin: 18rpx 0 8rpx 32rpx;
 }
 .score-write {
-	font-size: 50rpx;
+	display: flex;
+	justify-content: space-between;
+	font-size: 60rpx;
 	font-weight: 600;
 	line-height: 100rpx;
-	margin: 0 0 0 32rpx;
+	margin: 0 32rpx 0;
 	color: rgb(224, 105, 105);
 }
 </style>

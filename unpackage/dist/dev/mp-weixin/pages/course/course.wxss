@@ -302,6 +302,13 @@
 page.data-v-b1db4d34 {
   background-color: #f8f8f8;
 }
+.text_3.data-v-b1db4d34 {
+  color: #2a2a2a;
+  font-size: 36rpx;
+  font-weight: 600;
+  line-height: 52px;
+  margin: 0px 0 0 16px;
+}
 .data-v-b1db4d34 .u-tabs__wrapper__nav__item__text {
   font-size: 36rpx !important;
 }
@@ -311,11 +318,12 @@ page.data-v-b1db4d34 {
   width: 750rpx;
   height: 68rpx;
   box-sizing: border-box;
-  margin: 20rpx auto;
+  margin: 30rpx auto;
   padding: 0 20rpx;
 }
 .type-list .text-wrapper.data-v-b1db4d34 {
-  width: 200rpx;
+  width: 220rpx;
+  border-radius: 36rpx;
   line-height: 66rpx;
   text-align: center;
   border: 1px solid #5d4fdc;
@@ -334,29 +342,20 @@ page.data-v-b1db4d34 {
   width: 686rpx;
   height: 176rpx;
   margin: 0 auto 16rpx;
-  padding: 0 32rpx;
   border-radius: 16rpx;
   background: white;
+  overflow: hidden;
 }
-.title-and-time.data-v-b1db4d34 {
-  width: 654rpx;
-  flex-direction: row;
-  display: flex;
-  justify-content: space-between;
-}
-.title-and-time .title.data-v-b1db4d34 {
+.title.data-v-b1db4d34 {
   width: 436rpx;
-  height: 48rpx;
   overflow-wrap: break-word;
-  font-size: 32rpx;
-  font-family: PingFangSC-Semibold;
+  font-size: 36rpx;
   font-weight: 600;
-  text-align: left;
   white-space: nowrap;
-  line-height: 48rpx;
-  margin-top: 32rpx;
+  line-height: 70rpx;
+  padding: 0 16rpx;
 }
-.title-and-time .time.data-v-b1db4d34 {
+.time.data-v-b1db4d34 {
   display: flex;
   flex-direction: column;
   height: 48rpx;
@@ -365,29 +364,29 @@ page.data-v-b1db4d34 {
   color: #fff;
   text-align: center;
   font-weight: 600;
-  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
 }
-.title-and-time .complete.data-v-b1db4d34 {
+.complete.data-v-b1db4d34 {
   background: #61ad67;
 }
-.title-and-time .uncomplete.data-v-b1db4d34 {
+.uncomplete.data-v-b1db4d34 {
   background: #d56464;
 }
-.title-and-time .wait.data-v-b1db4d34 {
+.wait.data-v-b1db4d34 {
   background: #5c4ed9;
 }
-.title-and-time .expired.data-v-b1db4d34 {
+.expired.data-v-b1db4d34 {
   background: #dcdde1;
 }
 .teacher-and-time.data-v-b1db4d34 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 30rpx;
+  padding: 0 16rpx;
 }
 .teacher-and-time .teacher-name.data-v-b1db4d34 {
   font-size: 28rpx;
-  margin-left: 16rpx;
+  color: #a7adbc;
 }
 .teacher-and-time .remaining-time.data-v-b1db4d34 {
   font-size: 24rpx;

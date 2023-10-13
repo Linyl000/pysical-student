@@ -1,7 +1,10 @@
 <template>
 	<z-paging ref="paging" loading-more-no-more-text="THE END" v-model="list" @query="getList" class="page">
 		<template #top>
-			<u-tag text="点此查看课程总成绩" size="mini" type="warning" @click="goResultScore"></u-tag>
+			<div class="look-score">
+				<span class="name">Hello，{{ user.nickName }}</span>
+				<span class="go-look" @click="goResultScore">查看课程总成绩></span>
+			</div>
 			<view class="search-box">
 				<u-search placeholder="搜索成绩" v-model="taskName" @search="getList(1, 10)" @custom="getList(1, 10)"></u-search>
 			</view>
@@ -40,6 +43,7 @@
 
 <script>
 import { resultList } from '@/api/score.js';
+import { getInfo } from '@/api/user.js';
 export default {
 	data() {
 		return {
@@ -53,8 +57,12 @@ export default {
 					name: '考核成绩'
 				}
 			],
-			type: 0
+			type: 0,
+			user: { nickName: '' }
 		};
+	},
+	onLoad() {
+		this.getInfo();
 	},
 	methods: {
 		getList(page, limit) {
@@ -66,6 +74,13 @@ export default {
 				.catch(res => {
 					this.$refs.paging.complete(false);
 				});
+		},
+		getInfo() {
+			getInfo().then(res => {
+				this.user = res.user;
+				uni.setStorageSync('userInfo', res.user);
+				this.updateUserInfo();
+			});
 		},
 		tabChange({ index }) {
 			this.type = index;
@@ -85,14 +100,42 @@ export default {
 page {
 	background-color: rgba(248, 248, 248, 1);
 }
-
+.look-score {
+	display: flex;
+	align-items: center;
+	.name {
+		color: rgba(42, 42, 42, 1);
+		font-size: 36rpx;
+		font-weight: 600;
+		line-height: 42px;
+		margin: 0px 0 0 16px;
+	}
+	.go-look {
+		color: #5d4fdc;
+		font-size: 28rpx;
+		line-height: 42px;
+		margin: 0px 0 0 16px;
+	}
+}
 .search-box {
 	width: 686rpx;
 	height: 72rpx;
 	flex-direction: row;
 	display: flex;
 	justify-content: space-between;
-	margin: 36rpx 0 0 32rpx;
+	margin: 0 0 0 32rpx;
+}
+/deep/ .u-search__content {
+	border: 4rpx solid #c1c8d8 !important;
+	border-radius: 10rpx !important;
+}
+/deep/.u-search__action {
+	background-color: #5d4fdc;
+	border: 4rpx solid #5d4fdc;
+	border-radius: 10rpx;
+	color: #fff;
+	height: 64rpx;
+	line-height: 64rpx;
 }
 .score-list {
 	display: flex;
@@ -127,9 +170,9 @@ page {
 	width: 120rpx;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-end;
+	justify-content: center;
+	align-items: end;
 	.details {
-		// white-space: nowrap;
 		color: rgba(224, 105, 105, 1);
 
 		.score-1 {

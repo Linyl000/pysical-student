@@ -128,7 +128,7 @@ page {
 		align-items: center;
 		.item-title {
 			flex: 1;
-			color: #888888;
+			color: #a7adbc;
 		}
 	}
 	.small-colum {

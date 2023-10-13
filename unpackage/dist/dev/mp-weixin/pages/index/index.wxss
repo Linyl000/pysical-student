@@ -311,9 +311,7 @@
   height: 48rpx;
   overflow-wrap: break-word;
   font-size: 48rpx;
-  font-family: PingFangSC-Semibold;
   font-weight: 600;
-  text-align: left;
   white-space: nowrap;
   line-height: 48rpx;
 }
@@ -377,31 +375,30 @@
   top: 0;
   left: 0;
 }
-.one-course .title.data-v-57280228 {
-  background-color: rgba(0, 0, 0, 0.4);
+.one-course .title-detail.data-v-57280228 {
+  width: 100%;
+  height: 140rpx;
   color: white;
   z-index: 100;
-  height: 60rpx;
+  margin: 144rpx 0 0;
+  padding-top: 10rpx;
+  background: linear-gradient(transparent 5%, rgba(0, 0, 0, 0.7) 90%);
+}
+.one-course .title-detail .title.data-v-57280228 {
   overflow-wrap: break-word;
   font-size: 40rpx;
   font-weight: 600;
-  text-align: left;
   white-space: nowrap;
-  line-height: 60rpx;
-  margin: 154rpx 0 0;
+  line-height: 70rpx;
   padding-left: 36rpx;
 }
-.one-course .detail.data-v-57280228 {
-  height: 90rpx;
-  background-color: rgba(0, 0, 0, 0.4);
-  color: white;
-  z-index: 100;
+.one-course .title-detail .detail.data-v-57280228 {
   box-sizing: border-box;
   font-size: 28rpx;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 34rpx;
-  padding: 0 32rpx 32rpx 32rpx;
+  line-height: 38rpx;
+  padding: 0 32rpx 16rpx 32rpx;
 }
 
