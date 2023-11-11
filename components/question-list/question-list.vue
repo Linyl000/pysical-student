@@ -224,7 +224,8 @@ export default {
 			retryLimit: 5, // 失败重试次数限制
 			urll: ip + '/common/upload',
 			file: null,
-			progressPercent: 0
+			progressPercent: 0,
+			okSubmit: false
 		};
 	},
 	mounted() {
@@ -300,8 +301,6 @@ export default {
 			return yy + '-' + mm + '-' + dd + ' ' + hh + ':' + mf + ':' + ss;
 		},
 		showTitleHtml(index, item) {
-			// return '<p style="float: left;">' + index + '：</p >' + value;
-
 			let typeText = '：';
 			if (item.titleType == '0') {
 				typeText = '：（单选题）';
@@ -369,17 +368,69 @@ export default {
 		dialogChangeshow() {
 			this.$emit('showRes', true);
 		},
+		// selectVideo(item, index) {
+		// 	uni.chooseFile({
+		// 		count: 1,
+		// 		type: 'video',
+		// 		sourceType: ['album', 'camera'],
+		// 		extension: ['mp4', 'avi'],
+		// 		success: r => {
+		// 			this.vtype = 2;
+		// 			let linShi2 = r.tempFilePaths.length > 0 ? r.tempFilePaths[0] : r.tempFiles[0].path;
+		// 			//上传中不可提交
+		// 			this.upMediaOrImg = true;
+
+		// 			if (r.sourceType === 'album') {
+		// 				const audioContext = uni.createInnerAudioContext();
+		// 				audioContext.src = '../../static/321.mp3'; // 播放声音文件
+		// 				audioContext.onEnded(() => {
+		// 					this.uploadVideo(linShi2, index);
+		// 				});
+		// 				audioContext.play();
+		// 			} else {
+		// 				this.uploadVideo(linShi2, index);
+		// 			}
+		// 		}
+		// 	});
+		// },
+		// uploadVideo(tempFilePath, index) {
+		// 	var task = uni.uploadFile({
+		// 		url: ip + '/common/upload',
+		// 		filePath: tempFilePath,
+		// 		name: 'file',
+		// 		timeout: 1000 * 60 * 60,
+		// 		header: {
+		// 			Authorization: uni.getStorageSync('token')
+		// 		},
+		// 		success: uploadFileRes => {
+		// 			this.vtype = 1;
+		// 			this.answerData[index].myAnswer = JSON.parse(uploadFileRes.data).url;
+		// 			this.upMediaOrImg = false;
+		// 		},
+		// 		fail() {
+		// 			this.upMediaOrImg = false;
+		// 			uni.showToast({
+		// 				title: '视频上传失败',
+		// 				icon: 'none',
+		// 				duration: 2000
+		// 			});
+		// 		}
+		// 	}); // 设置进度更新的回调函数
+		// 	task.onProgressUpdate(res => {
+		// 		this.progressPercent = res.progress;
+		// 	});
+		// },
+		//-----------------------------
 		selectVideo(item, index) {
-			uni.chooseFile({
-				count: 1,
-				type: 'video',
+			uni.chooseVideo({
 				sourceType: ['album', 'camera'],
+				maxDuration: 60 * 60 * 24,
 				extension: ['mp4', 'avi'],
 				success: r => {
 					this.vtype = 2;
-					let linShi2 = r.tempFilePaths.length > 0 ? r.tempFilePaths[0] : r.tempFiles[0].path;
+					let linShi2 = r.tempFilePath;
 
-					//上传中不可提交
+					// 上传中不可提交
 					this.upMediaOrImg = true;
 					var task = uni.uploadFile({
 						url: ip + '/common/upload',
@@ -393,6 +444,7 @@ export default {
 							this.vtype = 1;
 							this.answerData[index].myAnswer = JSON.parse(uploadFileRes.data).url;
 							this.upMediaOrImg = false;
+							this.okSubmit = true;
 						},
 						fail() {
 							this.upMediaOrImg = false;
@@ -409,7 +461,7 @@ export default {
 				}
 			});
 		},
-
+		//----------------------------
 		// selectVideo(item, index) {
 		// 	// 切片上传相关配置
 		// 	this.fileIndex = 0;
@@ -434,98 +486,99 @@ export default {
 		// 		}
 		// 	});
 		// },
-		uploadChunks(file, start, index, i) {
-			const self = this;
-			const chunkSize = this.chunkSize;
-			// 切片结束位置
-			const end = Math.min(start + chunkSize, file.size);
-			// 获取当前切片数据
-			const chunkData = file.slice(start, end);
-			let obj = {
-				chunkNumber: index,
-				filename: file.name,
-				identifier: this.fileKey,
-				file: chunkData,
-				chunkSize: this.chunkSize,
-				currentChunkSize: end - start,
-				relativePath: file.name,
-				totalChunks: this.totalChunks,
-				totalSize: file.size
-			};
-			uni.request({
-				url: 'https://4r5923600t.imdo.co/wxapi/background/file/upload',
-				method: 'POST',
-				header: {
-					'Content-Type': 'application/json'
-				},
-				data: obj,
-				success: function(res) {
-					if (start >= file.size) {
-						this.vtype = 1;
-						this.fileIndex = 0;
-						uni.request({
-							url: 'https://example.com/api/endpoint',
-							method: 'POST',
-							header: {
-								'Content-Type': 'application/json'
-							},
-							data: { identifier: this, fileKey, totalSize: file.size, filename: file.name },
-							success: function(res) {
-								this.answerData[i].myAnswer = res.url;
-								uni.showToast({
-									title: '视频上传成功',
-									icon: 'success',
-									duration: 2000
-								});
-							},
-							fail: function(error) {
-								console.error('Error:', error);
-							}
-						});
-					} else {
-						// 继续上传下一个切片
-						start = end;
-						this.fileIndex += 1;
-						this.uploadChunks(file, start, this.fileIndex);
-					}
-				},
-				fail: function(error) {
-					console.error('Error:', error);
-				}
-			});
-			// upload(obj).then(res => {
-			// 	if (start >= file.size) {
-			// 		this.vtype = 1;
-			// 		this.fileIndex = 0;
-			// 		merge({ identifier: this, fileKey, totalSize: file.size, filename: file.name }).then(res => {
-			// 			this.answerData[i].myAnswer = res.url;
-			// 			uni.showToast({
-			// 				title: '视频上传成功',
-			// 				icon: 'success',
-			// 				duration: 2000
-			// 			});
-			// 		});
-			// 	} else {
-			// 		// 继续上传下一个切片
-			// 		start = end;
-			// 		this.fileIndex += 1;
-			// 		this.uploadChunks(file, start, this.fileIndex);
-			// 	}
-			// });
+		// uploadChunks(file, start, index, i) {
+		// 	const self = this;
+		// 	const chunkSize = this.chunkSize;
+		// 	// 切片结束位置
+		// 	const end = Math.min(start + chunkSize, file.size);
+		// 	// 获取当前切片数据
+		// 	const chunkData = file.slice(start, end);
+		// 	let obj = {
+		// 		chunkNumber: index,
+		// 		filename: file.name,
+		// 		identifier: this.fileKey,
+		// 		file: chunkData,
+		// 		chunkSize: this.chunkSize,
+		// 		currentChunkSize: end - start,
+		// 		relativePath: file.name,
+		// 		totalChunks: this.totalChunks,
+		// 		totalSize: file.size
+		// 	};
+		// 	uni.request({
+		// 		url: 'https://4r5923600t.imdo.co/wxapi/background/file/upload',
+		// 		method: 'POST',
+		// 		header: {
+		// 			'Content-Type': 'application/json'
+		// 		},
+		// 		data: obj,
+		// 		success: function(res) {
+		// 			if (start >= file.size) {
+		// 				this.vtype = 1;
+		// 				this.fileIndex = 0;
+		// 				uni.request({
+		// 					url: 'https://example.com/api/endpoint',
+		// 					method: 'POST',
+		// 					header: {
+		// 						'Content-Type': 'application/json'
+		// 					},
+		// 					data: { identifier: this, fileKey, totalSize: file.size, filename: file.name },
+		// 					success: function(res) {
+		// 						this.answerData[i].myAnswer = res.url;
+		// 						uni.showToast({
+		// 							title: '视频上传成功',
+		// 							icon: 'success',
+		// 							duration: 2000
+		// 						});
+		// 					},
+		// 					fail: function(error) {
+		// 						console.error('Error:', error);
+		// 					}
+		// 				});
+		// 			} else {
+		// 				// 继续上传下一个切片
+		// 				start = end;
+		// 				this.fileIndex += 1;
+		// 				this.uploadChunks(file, start, this.fileIndex);
+		// 			}
+		// 		},
+		// 		fail: function(error) {
+		// 			console.error('Error:', error);
+		// 		}
+		// 	});
+		// 	// upload(obj).then(res => {
+		// 	// 	if (start >= file.size) {
+		// 	// 		this.vtype = 1;
+		// 	// 		this.fileIndex = 0;
+		// 	// 		merge({ identifier: this, fileKey, totalSize: file.size, filename: file.name }).then(res => {
+		// 	// 			this.answerData[i].myAnswer = res.url;
+		// 	// 			uni.showToast({
+		// 	// 				title: '视频上传成功',
+		// 	// 				icon: 'success',
+		// 	// 				duration: 2000
+		// 	// 			});
+		// 	// 		});
+		// 	// 	} else {
+		// 	// 		// 继续上传下一个切片
+		// 	// 		start = end;
+		// 	// 		this.fileIndex += 1;
+		// 	// 		this.uploadChunks(file, start, this.fileIndex);
+		// 	// 	}
+		// 	// });
 
-			// },
-			// 	fail() {
-			// 		uni.showToast({
-			// 			title: '视频上传失败，请保持网络稳定后重试',
-			// 			icon: 'none',
-			// 			duration: 2000
-			// 		});
-			// 	}
-			// });
-		},
+		// 	// },
+		// 	// 	fail() {
+		// 	// 		uni.showToast({
+		// 	// 			title: '视频上传失败，请保持网络稳定后重试',
+		// 	// 			icon: 'none',
+		// 	// 			duration: 2000
+		// 	// 		});
+		// 	// 	}
+		// 	// });
+		// },
 		//---------------------
 		deleteVideo(item, index) {
 			this.answerData[index].myAnswer = '';
+			this.okSubmit = false;
 		}
 	}
 };

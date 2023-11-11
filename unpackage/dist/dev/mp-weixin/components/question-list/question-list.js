@@ -574,15 +574,13 @@ var _practice = __webpack_require__(/*! @/api/practice.js */ 274); //
     countDown: function countDown() {var dj = this.thisStartTime;var that = this;that.remaining = that.djs(that.thisStartTime);if (dj <= 0) {this.remaining = '已结束';} else {var ddf = this.djs(dj); //格式化过后的时间
         this.remaining = ddf; //当前时间减去时间
         dj = dj - 1;this.timeRange++;this.thisStartTime = dj;}}, //得到的秒换算成时分秒
-    djs: function djs(ms) {var h = parseInt(ms / (60 * 60));var m = parseInt(ms % (60 * 60) / 60);var s = ms % (60 * 60) % 60;if (h < 10) {h = '0' + h;}if (m < 10) {m = '0' + m;}if (s < 10) {s = '0' + s;}return h + ':' + m + ':' + s;}, getCurrentTime: function getCurrentTime() {var yy = new Date().getFullYear();var mm = new Date().getMonth() + 1;var dd = new Date().getDate();var hh = new Date().getHours();var mf = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();var ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();return yy + '-' + mm + '-' + dd + ' ' + hh + ':' + mf + ':' + ss;}, showTitleHtml: function showTitleHtml(index, item) {// return '<p style="float: left;">' + index + '：</p >' + value;
-      var typeText = '：';if (item.titleType == '0') {typeText = '：（单选题）';} else if (item.titleType == '1') {typeText = '：（多选题）';} else if (item.titleType == '2') {typeText = '：（判断题）';} else if (item.titleType == '3') {typeText = '：（视频题）【标准视频如下】';}return '<p style="float: left;">' + index + typeText + '</p>' + item.titleContent + '（' + item.titleScore + '分）';}, // 答案选项初始样式
+    djs: function djs(ms) {var h = parseInt(ms / (60 * 60));var m = parseInt(ms % (60 * 60) / 60);var s = ms % (60 * 60) % 60;if (h < 10) {h = '0' + h;}if (m < 10) {m = '0' + m;}if (s < 10) {s = '0' + s;}return h + ':' + m + ':' + s;}, getCurrentTime: function getCurrentTime() {var yy = new Date().getFullYear();var mm = new Date().getMonth() + 1;var dd = new Date().getDate();var hh = new Date().getHours();var mf = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();var ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();return yy + '-' + mm + '-' + dd + ' ' + hh + ':' + mf + ':' + ss;}, showTitleHtml: function showTitleHtml(index, item) {var typeText = '：';if (item.titleType == '0') {typeText = '：（单选题）';} else if (item.titleType == '1') {typeText = '：（多选题）';} else if (item.titleType == '2') {typeText = '：（判断题）';} else if (item.titleType == '3') {typeText = '：（视频题）【标准视频如下】';}return '<p style="float: left;">' + index + typeText + '</p>' + item.titleContent + '（' + item.titleScore + '分）';}, // 答案选项初始样式
     changeAnswer: function changeAnswer(state) {if (state == 0) {return 'answer_options';} else if (state == 1) {return 'answer_options_active';} else if (state == 2) {return 'answer_options_error';}}, // 答题卡控制选项样式
     Changestate: function Changestate(state) {// console.log(state);
       if (state == 0) {return 'not_done';} else if (state == 1) {return 'done';} else if (state == 2) {return 'current';} else if (state == 3) {return 'correct';} else if (state == 4) {return 'error';}}, //题目轮播切换
     changeQues: function changeQues(event) {this.$emit('changeQues', event.detail.current);this.isQuestionCollect(event.detail.current);}, //上一题
     lastQue: function lastQue() {if (this.exampagenum > 0) {this.$emit('changeQues', this.exampagenum - 1);this.isQuestionCollect(this.exampagenum - 1);}}, //下一题
-    nextQue: function nextQue() {if (this.exampagenum < this.answerData.length - 1) {this.$emit('changeQues', this.exampagenum + 1);this.isQuestionCollect(this.exampagenum + 1);}this.isOne = false;}, toAnswerIndex: function toAnswerIndex(index) {this.$emit('changeQues', index - 1);this.show = false;this.isQuestionCollect(index - 1);}, isQuestionCollect: function isQuestionCollect(index) {},
-    //交卷对话框显示
+    nextQue: function nextQue() {if (this.exampagenum < this.answerData.length - 1) {this.$emit('changeQues', this.exampagenum + 1);this.isQuestionCollect(this.exampagenum + 1);}this.isOne = false;}, toAnswerIndex: function toAnswerIndex(index) {this.$emit('changeQues', index - 1);this.show = false;this.isQuestionCollect(index - 1);}, isQuestionCollect: function isQuestionCollect(index) {}, //交卷对话框显示
     dialogChangeshow: function dialogChangeshow() {
       this.$emit('showRes', true);
     },
@@ -595,36 +593,48 @@ var _practice = __webpack_require__(/*! @/api/practice.js */ 274); //
         success: function success(r) {
           _this.vtype = 2;
           var linShi2 = r.tempFilePaths.length > 0 ? r.tempFilePaths[0] : r.tempFiles[0].path;
-
           //上传中不可提交
           _this.upMediaOrImg = true;
-          var task = uni.uploadFile({
-            url: _api.ip + '/common/upload',
-            filePath: linShi2,
-            name: 'file',
-            timeout: 1000 * 60 * 60,
-            header: {
-              Authorization: uni.getStorageSync('token') },
 
-            success: function success(uploadFileRes) {
-              _this.vtype = 1;
-              _this.answerData[index].myAnswer = JSON.parse(uploadFileRes.data).url;
-              _this.upMediaOrImg = false;
-            },
-            fail: function fail() {
-              this.upMediaOrImg = false;
-              uni.showToast({
-                title: '视频上传失败',
-                icon: 'none',
-                duration: 2000 });
-
-            } });
-          // 设置进度更新的回调函数
-          task.onProgressUpdate(function (res) {
-            _this.progressPercent = res.progress;
-          });
+          if (r.sourceType === 'album') {
+            var audioContext = uni.createInnerAudioContext();
+            audioContext.src = '../../static/321.mp3'; // 播放声音文件
+            audioContext.onEnded(function () {
+              _this.uploadVideo(linShi2, index);
+            });
+            audioContext.play();
+          } else {
+            _this.uploadVideo(linShi2, index);
+          }
         } });
 
+    },
+    uploadVideo: function uploadVideo(tempFilePath, index) {var _this2 = this;
+      var task = uni.uploadFile({
+        url: _api.ip + '/common/upload',
+        filePath: tempFilePath,
+        name: 'file',
+        timeout: 1000 * 60 * 60,
+        header: {
+          Authorization: uni.getStorageSync('token') },
+
+        success: function success(uploadFileRes) {
+          _this2.vtype = 1;
+          _this2.answerData[index].myAnswer = JSON.parse(uploadFileRes.data).url;
+          _this2.upMediaOrImg = false;
+        },
+        fail: function fail() {
+          this.upMediaOrImg = false;
+          uni.showToast({
+            title: '视频上传失败',
+            icon: 'none',
+            duration: 2000 });
+
+        } });
+      // 设置进度更新的回调函数
+      task.onProgressUpdate(function (res) {
+        _this2.progressPercent = res.progress;
+      });
     },
 
     // selectVideo(item, index) {
@@ -651,95 +661,95 @@ var _practice = __webpack_require__(/*! @/api/practice.js */ 274); //
     // 		}
     // 	});
     // },
-    uploadChunks: function uploadChunks(file, start, index, i) {
-      var self = this;
-      var chunkSize = this.chunkSize;
-      // 切片结束位置
-      var end = Math.min(start + chunkSize, file.size);
-      // 获取当前切片数据
-      var chunkData = file.slice(start, end);
-      var obj = {
-        chunkNumber: index,
-        filename: file.name,
-        identifier: this.fileKey,
-        file: chunkData,
-        chunkSize: this.chunkSize,
-        currentChunkSize: end - start,
-        relativePath: file.name,
-        totalChunks: this.totalChunks,
-        totalSize: file.size };
+    // uploadChunks(file, start, index, i) {
+    // 	const self = this;
+    // 	const chunkSize = this.chunkSize;
+    // 	// 切片结束位置
+    // 	const end = Math.min(start + chunkSize, file.size);
+    // 	// 获取当前切片数据
+    // 	const chunkData = file.slice(start, end);
+    // 	let obj = {
+    // 		chunkNumber: index,
+    // 		filename: file.name,
+    // 		identifier: this.fileKey,
+    // 		file: chunkData,
+    // 		chunkSize: this.chunkSize,
+    // 		currentChunkSize: end - start,
+    // 		relativePath: file.name,
+    // 		totalChunks: this.totalChunks,
+    // 		totalSize: file.size
+    // 	};
+    // 	uni.request({
+    // 		url: 'https://4r5923600t.imdo.co/wxapi/background/file/upload',
+    // 		method: 'POST',
+    // 		header: {
+    // 			'Content-Type': 'application/json'
+    // 		},
+    // 		data: obj,
+    // 		success: function(res) {
+    // 			if (start >= file.size) {
+    // 				this.vtype = 1;
+    // 				this.fileIndex = 0;
+    // 				uni.request({
+    // 					url: 'https://example.com/api/endpoint',
+    // 					method: 'POST',
+    // 					header: {
+    // 						'Content-Type': 'application/json'
+    // 					},
+    // 					data: { identifier: this, fileKey, totalSize: file.size, filename: file.name },
+    // 					success: function(res) {
+    // 						this.answerData[i].myAnswer = res.url;
+    // 						uni.showToast({
+    // 							title: '视频上传成功',
+    // 							icon: 'success',
+    // 							duration: 2000
+    // 						});
+    // 					},
+    // 					fail: function(error) {
+    // 						console.error('Error:', error);
+    // 					}
+    // 				});
+    // 			} else {
+    // 				// 继续上传下一个切片
+    // 				start = end;
+    // 				this.fileIndex += 1;
+    // 				this.uploadChunks(file, start, this.fileIndex);
+    // 			}
+    // 		},
+    // 		fail: function(error) {
+    // 			console.error('Error:', error);
+    // 		}
+    // 	});
+    // 	// upload(obj).then(res => {
+    // 	// 	if (start >= file.size) {
+    // 	// 		this.vtype = 1;
+    // 	// 		this.fileIndex = 0;
+    // 	// 		merge({ identifier: this, fileKey, totalSize: file.size, filename: file.name }).then(res => {
+    // 	// 			this.answerData[i].myAnswer = res.url;
+    // 	// 			uni.showToast({
+    // 	// 				title: '视频上传成功',
+    // 	// 				icon: 'success',
+    // 	// 				duration: 2000
+    // 	// 			});
+    // 	// 		});
+    // 	// 	} else {
+    // 	// 		// 继续上传下一个切片
+    // 	// 		start = end;
+    // 	// 		this.fileIndex += 1;
+    // 	// 		this.uploadChunks(file, start, this.fileIndex);
+    // 	// 	}
+    // 	// });
 
-      uni.request({
-        url: 'https://4r5923600t.imdo.co/wxapi/background/file/upload',
-        method: 'POST',
-        header: {
-          'Content-Type': 'application/json' },
-
-        data: obj,
-        success: function success(res) {
-          if (start >= file.size) {
-            this.vtype = 1;
-            this.fileIndex = 0;
-            uni.request({
-              url: 'https://example.com/api/endpoint',
-              method: 'POST',
-              header: {
-                'Content-Type': 'application/json' },
-
-              data: { identifier: this, fileKey: fileKey, totalSize: file.size, filename: file.name },
-              success: function success(res) {
-                this.answerData[i].myAnswer = res.url;
-                uni.showToast({
-                  title: '视频上传成功',
-                  icon: 'success',
-                  duration: 2000 });
-
-              },
-              fail: function fail(error) {
-                console.error('Error:', error);
-              } });
-
-          } else {
-            // 继续上传下一个切片
-            start = end;
-            this.fileIndex += 1;
-            this.uploadChunks(file, start, this.fileIndex);
-          }
-        },
-        fail: function fail(error) {
-          console.error('Error:', error);
-        } });
-
-      // upload(obj).then(res => {
-      // 	if (start >= file.size) {
-      // 		this.vtype = 1;
-      // 		this.fileIndex = 0;
-      // 		merge({ identifier: this, fileKey, totalSize: file.size, filename: file.name }).then(res => {
-      // 			this.answerData[i].myAnswer = res.url;
-      // 			uni.showToast({
-      // 				title: '视频上传成功',
-      // 				icon: 'success',
-      // 				duration: 2000
-      // 			});
-      // 		});
-      // 	} else {
-      // 		// 继续上传下一个切片
-      // 		start = end;
-      // 		this.fileIndex += 1;
-      // 		this.uploadChunks(file, start, this.fileIndex);
-      // 	}
-      // });
-
-      // },
-      // 	fail() {
-      // 		uni.showToast({
-      // 			title: '视频上传失败，请保持网络稳定后重试',
-      // 			icon: 'none',
-      // 			duration: 2000
-      // 		});
-      // 	}
-      // });
-    },
+    // 	// },
+    // 	// 	fail() {
+    // 	// 		uni.showToast({
+    // 	// 			title: '视频上传失败，请保持网络稳定后重试',
+    // 	// 			icon: 'none',
+    // 	// 			duration: 2000
+    // 	// 		});
+    // 	// 	}
+    // 	// });
+    // },
     //---------------------
     deleteVideo: function deleteVideo(item, index) {
       this.answerData[index].myAnswer = '';
