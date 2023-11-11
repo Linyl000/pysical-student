@@ -32,11 +32,7 @@ export default {
 		return { checkboxValue1: [''] };
 	},
 	methods: {
-		goUserProtocol() {
-			uni.navigateTo({
-				url: '/pages/test/test'
-			});
-		},
+		goUserProtocol() {},
 		goPrivacyProtocol() {},
 		goFirstInfo() {
 			if (!this.checkboxValue1.length) {

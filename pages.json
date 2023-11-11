@@ -36,16 +36,7 @@
 			}
 
 		}
-	    ,{
-            "path" : "pages/test/test",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"subPackages": [{
 		"root": "pages_other",
 		"pages": [{

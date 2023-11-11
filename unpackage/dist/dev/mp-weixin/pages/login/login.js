@@ -192,8 +192,6 @@ var _default =
     return { checkboxValue1: [''] };
   },
   methods: {
-    goUserProtocol: function goUserProtocol() {},
-    goPrivacyProtocol: function goPrivacyProtocol() {},
     goFirstInfo: function goFirstInfo() {
       if (!this.checkboxValue1.length) {
         uni.showToast({
