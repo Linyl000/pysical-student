@@ -23,7 +23,8 @@
         "wait-result/wait-result",
         "course-intro/course-intro",
         "result-score/result-score",
-        "changeMima/changeMima"
+        "changeMima/changeMima",
+        "test/test"
       ]
     }
   ],

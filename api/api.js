@@ -6,6 +6,7 @@ const commoneUrl = "http://tky.yukexx.com:9100/wxapi"; //公共路径
 
 //post请求封装
 function postRequest(url, data) {
+
 	var promise = new Promise((resolve, reject) => {
 		//data不存在 返回一个空对象
 		if (!data) {
@@ -39,7 +40,7 @@ function postRequest(url, data) {
 				resolve(res.data);
 			},
 			fail: function(e) {
-				reject('网络出错');
+				reject(e);
 			}
 		})
 	});

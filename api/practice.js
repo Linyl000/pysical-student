@@ -16,6 +16,10 @@ export function submit(data) {
 export function upload(data) {
 	return post('/background/file/upload', data)
 }
+//检查上传状态
+export function background(data) {
+	return get('/background/file/upload', data)
+}
 //合并
 export function merge(data) {
 	return post('/background/file/merge', data)

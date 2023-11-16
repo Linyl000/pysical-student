@@ -153,21 +153,10 @@
 </template>
 
 <script>
-/**
- * question-list 题库列表
- * @description 模拟考试练习题列表
- * @property {Boolean} exType 类型 ：exam考试 ,exercise在线练习 , 默认值exam
- * @property {Boolean} isRemaining 是否显示倒计时(默认 true)
- * @property {Number} exampagenum 当前为第几题标识(默认 0 )
- * @property {Array} answerData 题目列表数据
- * @property {Number} startTime 倒计时 (单位秒 , 如 60 秒 , 默认0 ,isRemaining=true时生效)
- * @event {Function()} changeQues 题目轮播切换，返回参数未当前题目的下标 index
- * @event {Function()} runRes 点击交卷按钮
- * @event {Function()} collectChange 点击收藏  返回当前题目信息和下标
- * @event {Function()} changeOptions 监听题目选择和题目作答   返回对象 indexs当前下标  answerData.myAnswer当前题目的作答  answerData.isRight当前题目是否回答正确
- */
 import { ip } from '@/api/api.js';
-import { upload, merge } from '@/api/practice.js';
+import { upload, merge, background } from '@/api/practice.js';
+import SparkMD5 from 'spark-md5';
+
 export default {
 	name: 'question-list',
 	props: {
@@ -215,16 +204,16 @@ export default {
 			upMediaOrImg: false,
 			need: false,
 			//-----
-			chunkSize: 10 * 1024 * 1024, // 每个切片的大小（这里设置为5MB）
+			chunkSize: 10 * 1024 * 1024, // 每个切片的大小（这里设置为10MB）
 			fileIndex: 0, // 当前切片索引
 			totalChunks: 0, // 总切片数
 			fileKey: Date.now(), // 文件的唯一标识
 			fileChunks: [], // 存储切片的数组
-			retryTimes: 0, // 失败重试次数
-			retryLimit: 5, // 失败重试次数限制
-			urll: ip + '/common/upload',
+			uploaded: 0, // 已上传块数
+			md5: null,
 			file: null,
-			progressPercent: 0
+			progressPercent: 0,
+			alreadyUpChunks: [] //已上传的文件块索引
 		};
 	},
 	mounted() {
@@ -370,6 +359,10 @@ export default {
 			this.$emit('showRes', true);
 		},
 		selectVideo(item, index) {
+			if (this.vtype === 2) {
+				return;
+			}
+			let chunkSize;
 			uni.chooseFile({
 				count: 1,
 				type: 'video',
@@ -377,153 +370,116 @@ export default {
 				extension: ['mp4', 'avi'],
 				success: r => {
 					this.vtype = 2;
-					let linShi2 = r.tempFilePaths.length > 0 ? r.tempFilePaths[0] : r.tempFiles[0].path;
-
-					//上传中不可提交
-					this.upMediaOrImg = true;
-					var task = uni.uploadFile({
-						url: ip + '/common/upload',
-						filePath: linShi2,
-						name: 'file',
-						timeout: 1000 * 60 * 60,
-						header: {
-							Authorization: uni.getStorageSync('token')
-						},
-						success: uploadFileRes => {
-							this.vtype = 1;
-							this.answerData[index].myAnswer = JSON.parse(uploadFileRes.data).url;
-							this.upMediaOrImg = false;
-						},
-						fail() {
-							this.upMediaOrImg = false;
-							uni.showToast({
-								title: '视频上传失败',
-								icon: 'none',
-								duration: 2000
-							});
-						}
-					}); // 设置进度更新的回调函数
-					task.onProgressUpdate(res => {
-						this.progressPercent = res.progress;
+					this.file = r.tempFiles[0];
+					this.getMD5(this.file).then(res => {
+						this.md5 = res;
+						background({ identifier: this.md5 }).then(res => {
+							if (res.skipUpload) {
+								this.merge(index);
+							} else {
+								this.alreadyUpChunks = res.uploaded;
+								this.totalChunks = Math.ceil(this.file.size / this.chunkSize);
+								this.upload(index);
+							}
+						});
 					});
 				}
 			});
 		},
+		async upload(index) {
+			for (let i = 0; i < this.totalChunks; i++) {
+				console.log('------' + i);
+				if (this.alreadyUpChunks.includes(i)) {
+					this.uploaded++;
+					this.progressPercent = Math.floor((this.uploaded / this.totalChunks) * 99);
+					continue;
+				}
+				const start = i * this.chunkSize;
+				// 获取当前切片数据 如果前者大则以this.file.size作为结尾
+				const end = Math.min(start + this.chunkSize, this.file.size);
+				const chunkData = this.file.slice(start, end); //块数据
 
-		// selectVideo(item, index) {
-		// 	// 切片上传相关配置
-		// 	this.fileIndex = 0;
-		// 	this.totalChunks = 0;
-		// 	this.fileKey = Date.now();
-		// 	this.fileChunks = [];
-		// 	uni.chooseFile({
-		// 		count: 1,
-		// 		type: 'video',
-		// 		sourceType: ['album'],
-		// 		extension: ['mp4', 'avi'],
-		// 		success: r => {
-		// 			console.log(r);
-		// 			this.vtype = 2;
-		// 			this.file = r.tempFiles[0];
-		// 			// 计算切片数量
-		// 			this.totalChunks = Math.ceil(this.file.size / this.chunkSize);
-		// 			// 生成文件的唯一标识
-		// 			this.fileKey = Date.now();
-		// 			// 开始切片上传
-		// 			this.uploadChunks(this.file, 0, this.fileIndex, index);
-		// 		}
-		// 	});
-		// },
-		uploadChunks(file, start, index, i) {
-			const self = this;
-			const chunkSize = this.chunkSize;
-			// 切片结束位置
-			const end = Math.min(start + chunkSize, file.size);
-			// 获取当前切片数据
-			const chunkData = file.slice(start, end);
-			let obj = {
-				chunkNumber: index,
-				filename: file.name,
-				identifier: this.fileKey,
-				file: chunkData,
-				chunkSize: this.chunkSize,
-				currentChunkSize: end - start,
-				relativePath: file.name,
-				totalChunks: this.totalChunks,
-				totalSize: file.size
-			};
-			uni.request({
-				url: 'https://4r5923600t.imdo.co/wxapi/background/file/upload',
-				method: 'POST',
-				header: {
-					'Content-Type': 'application/json'
-				},
-				data: obj,
-				success: function(res) {
-					if (start >= file.size) {
-						this.vtype = 1;
-						this.fileIndex = 0;
-						uni.request({
-							url: 'https://example.com/api/endpoint',
-							method: 'POST',
+				let obj = {
+					chunkNumber: i,
+					filename: this.file.name ? this.file.name : new Date().getTime(),
+					identifier: this.md5,
+					chunkSize: this.chunkSize,
+					currentChunkSize: end - start,
+					relativePath: this.file.name ? this.file.name : new Date().getTime(),
+					totalChunks: this.totalChunks,
+					totalSize: this.file.size
+				};
+				this.fileChunks.push(
+					new Promise((resolve, reject) => {
+						uni.uploadFile({
+							url: ip + '/background/file/upload',
+							file: chunkData,
+							formData: obj,
+							timeout: 1000 * 60 * 60,
 							header: {
-								'Content-Type': 'application/json'
+								Authorization: uni.getStorageSync('token')
 							},
-							data: { identifier: this, fileKey, totalSize: file.size, filename: file.name },
-							success: function(res) {
-								this.answerData[i].myAnswer = res.url;
-								uni.showToast({
-									title: '视频上传成功',
-									icon: 'success',
-									duration: 2000
-								});
+							success: uploadFileRes => {
+								this.uploaded++;
+								this.progressPercent = Math.floor((this.uploaded / this.totalChunks) * 99);
+
+								resolve();
 							},
-							fail: function(error) {
-								console.error('Error:', error);
+							fail(err) {
+								reject(err);
 							}
 						});
-					} else {
-						// 继续上传下一个切片
-						start = end;
-						this.fileIndex += 1;
-						this.uploadChunks(file, start, this.fileIndex);
-					}
-				},
-				fail: function(error) {
-					console.error('Error:', error);
+					})
+				);
+			}
+			try {
+				await Promise.all(this.fileChunks);
+				this.merge(index);
+			} catch (error) {
+				this.vtype = 1;
+				this.upMediaOrImg = false;
+				uni.showToast({
+					title: '视频上传失败，请重试！',
+					icon: 'none',
+					duration: 2000
+				});
+			}
+		},
+		merge(index) {
+			merge({ identifier: this.md5 }).then(res => {
+				if (res.code === 200) {
+					this.progressPercent = 100;
+					this.vtype = 1;
+					this.answerData[index].myAnswer = res.url;
+					this.upMediaOrImg = false;
+				} else {
+					this.vtype = 1;
+					this.upMediaOrImg = false;
+					uni.showToast({
+						title: '视频切片合并失败，请重试！',
+						icon: 'none',
+						duration: 2000
+					});
 				}
 			});
-			// upload(obj).then(res => {
-			// 	if (start >= file.size) {
-			// 		this.vtype = 1;
-			// 		this.fileIndex = 0;
-			// 		merge({ identifier: this, fileKey, totalSize: file.size, filename: file.name }).then(res => {
-			// 			this.answerData[i].myAnswer = res.url;
-			// 			uni.showToast({
-			// 				title: '视频上传成功',
-			// 				icon: 'success',
-			// 				duration: 2000
-			// 			});
-			// 		});
-			// 	} else {
-			// 		// 继续上传下一个切片
-			// 		start = end;
-			// 		this.fileIndex += 1;
-			// 		this.uploadChunks(file, start, this.fileIndex);
-			// 	}
-			// });
-
-			// },
-			// 	fail() {
-			// 		uni.showToast({
-			// 			title: '视频上传失败，请保持网络稳定后重试',
-			// 			icon: 'none',
-			// 			duration: 2000
-			// 		});
-			// 	}
-			// });
 		},
-		//---------------------
+		getMD5(file) {
+			return new Promise((resolve, reject) => {
+				var fileReader = new FileReader();
+				var spark = new SparkMD5.ArrayBuffer();
+				fileReader.onload = e => {
+					spark.append(e.target.result);
+					const md5 = spark.end();
+					resolve(md5);
+				};
+				fileReader.onerror = error => {
+					reject(error);
+				};
+				// 获取文件二进制数据
+				fileReader.readAsArrayBuffer(file);
+			});
+		},
+
 		deleteVideo(item, index) {
 			this.answerData[index].myAnswer = '';
 		}
