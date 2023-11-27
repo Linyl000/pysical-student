@@ -215,6 +215,17 @@ export default {
 		},
 		//交卷
 		runRes(e) {
+			console.log(this.answerData);
+			const hasStateZero = this.answerData.some(item => item.myAnswer.length === 0);
+			console.log(hasStateZero);
+			if (hasStateZero) {
+				uni.showToast({
+					title: '还有未做完的题，请检查后提交',
+					icon: 'none',
+					duration: 2000
+				});
+				return;
+			}
 			let answers = this.answerData.map(i => {
 				return {
 					id: i.id,

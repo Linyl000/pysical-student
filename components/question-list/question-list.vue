@@ -315,7 +315,6 @@ export default {
 		},
 		// 答题卡控制选项样式
 		Changestate(state) {
-			// console.log(state);
 			if (state == 0) {
 				return 'not_done';
 			} else if (state == 1) {

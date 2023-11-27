@@ -12,8 +12,6 @@ const store = new Vuex.Store({
 	state: {
 		//数据 从本地拿或者设置默认值
 		userInfo: uni.getStorageSync('userInfo') || {},
-		//是否播放音频
-		playAudio: uni.getStorageSync('playAudio') || true
 	},
 	getters: {},
 	mutations: {

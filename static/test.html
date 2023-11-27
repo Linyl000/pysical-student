@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>摄像头和音频示例</title>
+	</head>
+	<body>
+		<video id="videoElement"
+			style="width: 100vw; height: 100vh"></video>
+		<audio id="firstaudioElement"
+			src="./请完成准备动作.MP3"></audio>
+		<audio id="secondaudioElement"
+			src="./321.MP3"></audio>
+		<button style="display: none"
+			id="btn">开始录制</button>
+		<button style="display: none"
+			id="stopbtn">停止录制</button>
+		<img style="display: none"
+			src=""
+			alt=""
+			id="img" />
+		<script
+			src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js">
+		</script>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+
+			#btn,
+			#stopbtn {
+				position: absolute;
+				left: 50%;
+				bottom: 20px;
+				transform: translateX(-50%);
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				border: none;
+				background-color: #ff6666;
+				/* 选取靠近正红色的橘红色 */
+				color: white;
+				font-weight: bold;
+				font-size: 18px;
+				text-align: center;
+				line-height: 50px;
+			}
+		</style>
+		<script type="text/javascript"
+			src="./uni.webview.1.5.4.js">
+		</script>
+		<script>
+			function isMobile() {
+				return navigator.userAgent.match(
+					/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+				)
+			}
+			let pwidth = window.screen.width
+			let pheight = window.screen.height
+			var videoElement = document.getElementById('videoElement')
+			var types = [
+				'video/webm',
+
+				'audio/webm',
+
+				'video/webm\;codecs=vp8',
+
+				'video/webm\;codecs=daala',
+
+				'video/webm\;codecs=h264',
+
+				'audio/webm\;codecs=opus',
+
+				'video/mpeg'
+			]
+			let mediaRecorder
+			let recordedChunks = []
+			// 待触发 `UniAppJSBridgeReady` 事件后，即可调用 uni 的 API。
+			document.addEventListener('UniAppJSBridgeReady', function() {
+				//--------
+
+				uni.getEnv(function(res) {
+					console.log('当前环境：' + JSON.stringify(res));
+				});
+				navigator.mediaDevices
+					.getUserMedia({
+						video: {
+							//让整个video可以完整显示出来
+							width: isMobile() ? pheight : pwidth,
+							height: isMobile() ? pwidth : pheight,
+							facingMode: {
+								exact: 'user' // 前置摄像头
+							}
+						}
+					})
+					.then(function(stream) {
+						// 在video元素中显示摄像头视频
+						videoElement.srcObject = stream
+
+						// 创建MediaRecorder对象，传入视频流和MIME类型
+						mediaRecorder = new MediaRecorder(stream, {
+							audioBitsPerSecond: 128000, //音频数据的比特率
+
+							videoBitsPerSecond: 2500000, //视频数据的比特率
+
+							mimeType: types[0] //视频相关
+						})
+
+						// 监听录制的数据，将数据存储到recordedChunks数组中
+						videoElement.setAttribute('crossOrigin',
+							'anonymous') //处理跨域资源访问的权限问题
+						let audio = document.getElementById(
+							'firstaudioElement')
+						audio.addEventListener('ended', function() {
+							audio.pause() // 在音频结束时暂停
+						})
+						let audioTwo = document.getElementById(
+							'secondaudioElement')
+						audioTwo.addEventListener('ended', function() {
+							audioTwo.pause() // 在音频结束时暂停
+						})
+						let btn = document.getElementById('btn')
+						let stopbtn = document.getElementById('stopbtn')
+						audio.play()
+						let CavansDom = document.createElement('canvas')
+						CavansDom.style.width = '100vw'
+						CavansDom.style.height = '100vh'
+						CavansDom.width = pwidth
+						CavansDom.height = pheight
+						let ctx = CavansDom.getContext('2d')
+						videoElement.addEventListener('loadedmetadata',
+							() => {
+								//视频元数据加载后播放
+								videoElement.play()
+								setTimeout(() => {
+									//在canvas上画一个当下的视频帧图片并转成base64
+									ctx.drawImage(
+										videoElement,
+										0,
+										0,
+										CavansDom.width,
+										CavansDom.height
+									)
+									document.getElementById(
+											'img').src =
+										CavansDom.toDataURL(
+											'image/png')
+
+									setTimeout(() => {
+										// 模拟请求
+										// audio.pause()
+										btn.onclick =
+											() => {
+
+												// 按钮点击事件绑定录制视频函数
+												audioTwo
+													.play()
+												recordedChunks
+													= [] // 清空已录制的数据
+												mediaRecorder
+													.start() // 开始录制
+												btn.style
+													.display =
+													'none'; // 隐藏btn按钮
+												stopbtn
+													.style
+													.display =
+													'block'; // 显示stopbtn按钮
+											}
+										stopbtn.onclick =
+											() => {
+												console
+													.log(
+														'停止录制'
+													)
+												mediaRecorder
+													.stop()
+												// audioTwo.pause()
+												// 监听数据可用事件
+												mediaRecorder
+													.ondataavailable =
+													(
+														e
+													) => {
+														//e.data是数据
+														console
+															.log(
+																e,
+																e
+																.data,
+																'dataavailable'
+															)
+														if (e
+															.data
+															.size >
+															0
+														) {
+															recordedChunks
+																.push(
+																	e
+																	.data
+																)
+														}
+														const
+															blob =
+															new Blob(
+																[e
+																	.data
+																], {
+																	type: types[
+																		0
+																	]
+																}
+															)
+														// let blob = new Blob(recordedChunks, { type: 'video/mp4' })
+														// 创建一个新的 File 对象
+														let file =
+															new File(
+																[
+																	blob
+																],
+																'recordedFile.webm', {
+																	type: 'video/webm'
+																}
+															);
+														// uni.postMessage({
+														// 	data: {
+														// 		action: 'message'
+														// 	}
+														// });
+														window
+															.parent
+															.postMessage({
+																	action: 'message',
+																	data: {
+																		action: file,
+																		timer: Date
+																			.now()
+																	},
+																	source: 'native-h5'
+																},
+																'*'
+															);
+														uni.navigateBack({
+															delta: 1
+														});
+													}
+											}
+										btn.style
+											.display =
+											'block'
+										stopbtn.style
+											.display =
+											'none'
+									}, 1000)
+								}, 2900)
+							})
+					})
+					.catch(function(error) {
+						console.log('访问摄像头失败：', error)
+					})
+				//--------
+			})
+		</script>
+	</body>
+</html>

@@ -3,10 +3,10 @@
 		<template #top>
 			<view class="group_8">
 				<view class="text-wrapper_1">
+					<!-- @click="goUserProtocol()" -->
 					<text lines="1" style="color: #000;">Hello，</text>
 					<text lines="1" style="color: #5D4FDC;">{{ user.nickName }}</text>
 				</view>
-				<!-- <u-icon name="plus-circle" size="28" @click="goAddCourse"></u-icon> -->
 			</view>
 		</template>
 		<view class="course-all">
@@ -43,9 +43,23 @@ export default {
 	},
 	onLoad() {
 		this.getInfo();
+		window.addEventListener('message', event => {
+			var message = event.data;
+			// 在这里处理接收到的消息
+			if (message.source === 'testBack' && message.action === 'message') {
+				// 处理消息
+				console.log('index:', message.data.action);
+				return;
+			}
+		});
 	},
 	methods: {
 		...mapMutations(['updateUserInfo']),
+		goUserProtocol() {
+			uni.navigateTo({
+				url: '/pages_other/test/test'
+			});
+		},
 		getList(page, limit) {
 			courseList({ pageNum: page, pageSize: limit })
 				.then(res => {
