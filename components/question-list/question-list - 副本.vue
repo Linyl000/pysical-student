@@ -372,52 +372,20 @@ export default {
 					this.file = r.tempFiles[0];
 					this.getMD5(this.file).then(res => {
 						this.md5 = res;
-						this.totalChunks = Math.ceil(this.file.size / this.chunkSize);
-						//检查切片上传情况
-						this.checkUploadStatus(this.md5, this.totalChunks, index);
+						background({ identifier: this.md5 }).then(res => {
+							if (res.skipUpload) {
+								this.merge(index);
+							} else {
+								this.alreadyUpChunks = res.uploaded;
+								this.totalChunks = Math.ceil(this.file.size / this.chunkSize);
+								this.upload(index);
+							}
+						});
 					});
 				}
 			});
 		},
-		//检查文件
-		async checkUploadStatus(md5, totalChunks, index) {
-			const client = new OSS({
-				region: 'your-region',
-				accessKeyId: 'your-access-key-id',
-				accessKeySecret: 'your-access-key-secret',
-				bucket: 'your-bucket-name'
-			});
-
-			// 检查文件是否已合并
-			if (await client.doesObjectExist(md5)) {
-				const result = await client.getObjectUrl(md5);
-				this.progressPercent = 100;
-				this.vtype = 1;
-				this.answerData[index].myAnswer = result.url;
-				this.upMediaOrImg = false;
-				return;
-			}
-
-			const parts = Array.from({ length: this.totalChunks }, (_, i) => `${this.md5}/${i}`);
-
-			this.alreadyUpChunks = [];
-			for (let i = 0; i < totalChunks; i++) {
-				const exists = await client.doesObjectExist(parts[i]);
-				console.log(`切片 ${i}：${exists ? '已上传' : '未上传'}`);
-				if (exists) {
-					this.alreadyUpChunks.push(i);
-				}
-			}
-			this.uploadToOSS(index);
-		},
-		async uploadToOSS(index) {
-			const client = new OSS({
-				region: 'your-region', // OSS地域
-				accessKeyId: 'your-access-key-id', // 阿里云AccessKeyId
-				accessKeySecret: 'your-access-key-secret', // 阿里云AccessKeySecret
-				bucket: 'your-bucket-name' // OSS Bucket名称
-			});
-
+		async upload(index) {
 			for (let i = 0; i < this.totalChunks; i++) {
 				console.log('------' + i);
 				if (this.alreadyUpChunks.includes(i)) {
@@ -430,49 +398,69 @@ export default {
 				const end = Math.min(start + this.chunkSize, this.file.size);
 				const chunkData = this.file.slice(start, end); //块数据
 
-				try {
-					const result = await client.put(`${this.md5}/${i}`, chunkData); // 上传至OSS
+				let obj = {
+					chunkNumber: i,
+					filename: this.file.name ? this.file.name : new Date().getTime(),
+					identifier: this.md5,
+					chunkSize: this.chunkSize,
+					currentChunkSize: end - start,
+					relativePath: this.file.name ? this.file.name : new Date().getTime(),
+					totalChunks: this.totalChunks,
+					totalSize: this.file.size
+				};
+				this.fileChunks.push(
+					new Promise((resolve, reject) => {
+						uni.uploadFile({
+							url: ip + '/background/file/upload',
+							file: chunkData,
+							formData: obj,
+							timeout: 1000 * 60 * 60,
+							header: {
+								Authorization: uni.getStorageSync('token')
+							},
+							success: uploadFileRes => {
+								this.uploaded++;
+								this.progressPercent = Math.floor((this.uploaded / this.totalChunks) * 99);
 
-					this.uploaded++;
-					this.progressPercent = Math.floor((this.uploaded / this.totalChunks) * 99);
-				} catch (error) {
-					// 上传失败处理逻辑
-					this.vtype = 1;
-					this.upMediaOrImg = false;
-					uni.showToast({
-						title: '视频上传失败，请重试！',
-						icon: 'none',
-						duration: 2000
-					});
-					return;
-				}
+								resolve();
+							},
+							fail(err) {
+								reject(err);
+							}
+						});
+					})
+				);
 			}
-			this.merge(index);
-		},
-		//合并
-		async merge(index) {
-			const client = new OSS({
-				region: 'your-region',
-				accessKeyId: 'your-access-key-id',
-				accessKeySecret: 'your-access-key-secret',
-				bucket: 'your-bucket-name'
-			});
-			const parts = Array.from({ length: this.totalChunks }, (_, i) => `${this.md5}/${i}`);
 			try {
-				const result = await client.multipartUpload(this.md5, parts);
-				this.progressPercent = 100;
-				this.vtype = 1;
-				this.answerData[index].myAnswer = result.res.requestUrls[0];
-				this.upMediaOrImg = false;
+				await Promise.all(this.fileChunks);
+				this.merge(index);
 			} catch (error) {
 				this.vtype = 1;
 				this.upMediaOrImg = false;
 				uni.showToast({
-					title: '视频切片合并失败，请重试！',
+					title: '视频上传失败，请重试！',
 					icon: 'none',
 					duration: 2000
 				});
 			}
+		},
+		merge(index) {
+			merge({ identifier: this.md5 }).then(res => {
+				if (res.code === 200) {
+					this.progressPercent = 100;
+					this.vtype = 1;
+					this.answerData[index].myAnswer = res.url;
+					this.upMediaOrImg = false;
+				} else {
+					this.vtype = 1;
+					this.upMediaOrImg = false;
+					uni.showToast({
+						title: '视频切片合并失败，请重试！',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+			});
 		},
 		getMD5(file) {
 			return new Promise((resolve, reject) => {
